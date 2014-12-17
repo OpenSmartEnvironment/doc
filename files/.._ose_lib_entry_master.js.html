@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>../ose/lib/entry/master.js - ose-bundle</title>
+  <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
+  <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+  <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+  <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+  <div id="doc">
+    <div class="yui3-g">
+
+      <div id="sidebar" class="yui3-u">
+        <a href="../index.html"><h2>OSE documentation</h2></a>
+
+        <div class="sidebox">
+          <div class="hd">
+            <h2 class="no-toc">Type to filter sidebar:</h2>
+          </div>
+          <div class="bd">
+            <input id="filter-input" />
+          </div>
+        </div>
+
+        
+
+
+
+
+
+
+
+<div id="modules" class="sidebox">
+    <div class="hd">
+        <h2 class="no-toc">All packages and components</h2>
+    </div>
+    <div class="bd">
+        <ul>
+            
+                <li><a href="../modules/bb.html">bb</a>
+                
+                    <ul>
+                        
+                            <!-- <li><a href="../modules/bb.html#bb.box">bb.box</a></li> -->
+                            <li><a href="../modules/bb.box.html">bb.box</a></li>
+                        
+                            <!-- <li><a href="../modules/bb.html#bb.dialog">bb.dialog</a></li> -->
+                            <li><a href="../modules/bb.dialog.html">bb.dialog</a></li>
+                        
+                            <!-- <li><a href="../modules/bb.html#bb.pagelet">bb.pagelet</a></li> -->
+                            <li><a href="../modules/bb.pagelet.html">bb.pagelet</a></li>
+                        
+                            <!-- <li><a href="../modules/bb.html#bb.widget">bb.widget</a></li> -->
+                            <li><a href="../modules/bb.widget.html">bb.widget</a></li>
+                        
+                            <!-- <li><a href="../modules/bb.html#bb.stateObj">bb.stateObj</a></li> -->
+                            <li><a href="../modules/bb.stateObj.html">bb.stateObj</a></li>
+                        
+                    </ul>
+                
+                </li>
+            
+                <li><a href="../modules/boards.html">boards</a>
+                
+                </li>
+            
+                <li><a href="../modules/bundle.html">bundle</a>
+                
+                    <ul>
+                        
+                            <!-- <li><a href="../modules/bundle.html#bundle.media">bundle.media</a></li> -->
+                            <li><a href="../modules/bundle.media.html">bundle.media</a></li>
+                        
+                    </ul>
+                
+                </li>
+            
+                <li><a href="../modules/control.html">control</a>
+                
+                    <ul>
+                        
+                            <!-- <li><a href="../modules/control.html#control.distributor">control.distributor</a></li> -->
+                            <li><a href="../modules/control.distributor.html">control.distributor</a></li>
+                        
+                            <!-- <li><a href="../modules/control.html#control.pin">control.pin</a></li> -->
+                            <li><a href="../modules/control.pin.html">control.pin</a></li>
+                        
+                            <!-- <li><a href="../modules/control.html#control.room">control.room</a></li> -->
+                            <li><a href="../modules/control.room.html">control.room</a></li>
+                        
+                            <!-- <li><a href="../modules/control.html#control.remote">control.remote</a></li> -->
+                            <li><a href="../modules/control.remote.html">control.remote</a></li>
+                        
+                    </ul>
+                
+                </li>
+            
+                <li><a href="../modules/dvb.html">dvb</a>
+                
+                </li>
+            
+                <li><a href="../modules/fs.html">fs</a>
+                
+                </li>
+            
+                <li><a href="../modules/icecast.html">icecast</a>
+                
+                </li>
+            
+                <li><a href="../modules/lirc.html">lirc</a>
+                
+                </li>
+            
+                <li><a href="../modules/media.html">media</a>
+                
+                    <ul>
+                        
+                            <!-- <li><a href="../modules/media.html#media.history">media.history</a></li> -->
+                            <li><a href="../modules/media.history.html">media.history</a></li>
+                        
+                            <!-- <li><a href="../modules/media.html#media.player">media.player</a></li> -->
+                            <li><a href="../modules/media.player.html">media.player</a></li>
+                        
+                            <!-- <li><a href="../modules/media.html#media.stream">media.stream</a></li> -->
+                            <li><a href="../modules/media.stream.html">media.stream</a></li>
+                        
+                            <!-- <li><a href="../modules/media.html#media.source">media.source</a></li> -->
+                            <li><a href="../modules/media.source.html">media.source</a></li>
+                        
+                    </ul>
+                
+                </li>
+            
+                <li><a href="../modules/ose.html">ose</a>
+                
+                    <ul>
+                        
+                            <!-- <li><a href="../modules/ose.html#ose.data">ose.data</a></li> -->
+                            <li><a href="../modules/ose.data.html">ose.data</a></li>
+                        
+                            <!-- <li><a href="../modules/ose.html#ose.http">ose.http</a></li> -->
+                            <li><a href="../modules/ose.http.html">ose.http</a></li>
+                        
+                            <!-- <li><a href="../modules/ose.html#ose.peer">ose.peer</a></li> -->
+                            <li><a href="../modules/ose.peer.html">ose.peer</a></li>
+                        
+                            <!-- <li><a href="../modules/ose.html#ose.link">ose.link</a></li> -->
+                            <li><a href="../modules/ose.link.html">ose.link</a></li>
+                        
+                            <!-- <li><a href="../modules/ose.html#ose.logger">ose.logger</a></li> -->
+                            <li><a href="../modules/ose.logger.html">ose.logger</a></li>
+                        
+                            <!-- <li><a href="../modules/ose.html#ose.plugin">ose.plugin</a></li> -->
+                            <li><a href="../modules/ose.plugin.html">ose.plugin</a></li>
+                        
+                            <!-- <li><a href="../modules/ose.html#ose.wrap">ose.wrap</a></li> -->
+                            <li><a href="../modules/ose.wrap.html">ose.wrap</a></li>
+                        
+                    </ul>
+                
+                </li>
+            
+                <li><a href="../modules/pa.html">pa</a>
+                
+                </li>
+            
+                <li><a href="../modules/rpi.html">rpi</a>
+                
+                </li>
+            
+                <li><a href="../modules/videolan.html">videolan</a>
+                
+                </li>
+            
+                <li><a href="../modules/xorg.html">xorg</a>
+                
+                </li>
+            
+                <li><a href="../modules/youtube.html">youtube</a>
+                
+                </li>
+            
+        </ul>
+    </div>
+</div>
+
+<div id="classes" class="sidebox">
+    <div class="hd">
+        <h2 class="no-toc">All modules</h2>
+    </div>
+    <div class="bd">
+        <ul>
+            
+                <li><a href="../classes/bb.content.html">bb.content</a></li>
+            
+                <li><a href="../classes/bb.lib.html">bb.lib</a></li>
+            
+                <li><a href="../classes/bb.lib.box.content.html">bb.lib.box.content</a></li>
+            
+                <li><a href="../classes/bb.lib.box.left.html">bb.lib.box.left</a></li>
+            
+                <li><a href="../classes/bb.lib.dialog.html">bb.lib.dialog</a></li>
+            
+                <li><a href="../classes/bb.lib.dialog.action.html">bb.lib.dialog.action</a></li>
+            
+                <li><a href="../classes/bb.lib.dialog.confirm.html">bb.lib.dialog.confirm</a></li>
+            
+                <li><a href="../classes/bb.lib.dialog.info.html">bb.lib.dialog.info</a></li>
+            
+                <li><a href="../classes/bb.lib.dialog.valueSelector.html">bb.lib.dialog.valueSelector</a></li>
+            
+                <li><a href="../classes/bb.lib.pagelet.html">bb.lib.pagelet</a></li>
+            
+                <li><a href="../classes/bb.lib.pagelet.dashboard.html">bb.lib.pagelet.dashboard</a></li>
+            
+                <li><a href="../classes/bb.lib.pagelet.detail.html">bb.lib.pagelet.detail</a></li>
+            
+                <li><a href="../classes/bb.lib.pagelet.entry.html">bb.lib.pagelet.entry</a></li>
+            
+                <li><a href="../classes/bb.lib.pagelet.gesture.html">bb.lib.pagelet.gesture</a></li>
+            
+                <li><a href="../classes/bb.lib.pagelet.list.html">bb.lib.pagelet.list</a></li>
+            
+                <li><a href="../classes/bb.lib.pagelet.listItem.html">bb.lib.pagelet.listItem</a></li>
+            
+                <li><a href="../classes/bb.lib.widget.html">bb.lib.widget</a></li>
+            
+                <li><a href="../classes/bb.lib.widget.button.html">bb.lib.widget.button</a></li>
+            
+                <li><a href="../classes/bb.lib.widget.checkbox.html">bb.lib.widget.checkbox</a></li>
+            
+                <li><a href="../classes/bb.lib.widget.list.html">bb.lib.widget.list</a></li>
+            
+                <li><a href="../classes/bb.lib.widget.listItem.html">bb.lib.widget.listItem</a></li>
+            
+                <li><a href="../classes/bb.lib.widget.search.html">bb.lib.widget.search</a></li>
+            
+                <li><a href="../classes/bb.lib.widget.slider.html">bb.lib.widget.slider</a></li>
+            
+                <li><a href="../classes/bb.lib.widget.slideswitch.html">bb.lib.widget.slideswitch</a></li>
+            
+                <li><a href="../classes/bb.lib.widget.toolbar.html">bb.lib.widget.toolbar</a></li>
+            
+                <li><a href="../classes/boards.content.html">boards.content</a></li>
+            
+                <li><a href="../classes/boards.lib.html">boards.lib</a></li>
+            
+                <li><a href="../classes/bundle.doc.html">bundle.doc</a></li>
+            
+                <li><a href="../classes/bundle.example.media.html">bundle.example.media</a></li>
+            
+                <li><a href="../classes/bundle.examples.media.config.html">bundle.examples.media.config</a></li>
+            
+                <li><a href="../classes/bundle.Gruntfile.html">bundle.Gruntfile</a></li>
+            
+                <li><a href="../classes/control.content.html">control.content</a></li>
+            
+                <li><a href="../classes/control.lib.html">control.lib</a></li>
+            
+                <li><a href="../classes/control.lib.activity.html">control.lib.activity</a></li>
+            
+                <li><a href="../classes/control.lib.din.html">control.lib.din</a></li>
+            
+                <li><a href="../classes/control.lib.din.pin.html">control.lib.din.pin</a></li>
+            
+                <li><a href="../classes/control.lib.distributor.html">control.lib.distributor</a></li>
+            
+                <li><a href="../classes/control.lib.door.html">control.lib.door</a></li>
+            
+                <li><a href="../classes/control.lib.door.pin.html">control.lib.door.pin</a></li>
+            
+                <li><a href="../classes/control.lib.flowMeter.html">control.lib.flowMeter</a></li>
+            
+                <li><a href="../classes/control.lib.heater.html">control.lib.heater</a></li>
+            
+                <li><a href="../classes/control.lib.heater.pin.html">control.lib.heater.pin</a></li>
+            
+                <li><a href="../classes/control.lib.heater.tariff.html">control.lib.heater.tariff</a></li>
+            
+                <li><a href="../classes/control.lib.light.html">control.lib.light</a></li>
+            
+                <li><a href="../classes/control.lib.light.pin.html">control.lib.light.pin</a></li>
+            
+                <li><a href="../classes/control.lib.light.remote.html">control.lib.light.remote</a></li>
+            
+                <li><a href="../classes/control.lib.light.switch.html">control.lib.light.switch</a></li>
+            
+                <li><a href="../classes/control.lib.pin.html">control.lib.pin</a></li>
+            
+                <li><a href="../classes/control.lib.pin.commands.html">control.lib.pin.commands</a></li>
+            
+                <li><a href="../classes/control.lib.pin.counter.html">control.lib.pin.counter</a></li>
+            
+                <li><a href="../classes/control.lib.pin.din.html">control.lib.pin.din</a></li>
+            
+                <li><a href="../classes/control.lib.pin.dout.html">control.lib.pin.dout</a></li>
+            
+                <li><a href="../classes/control.lib.pin.light.html">control.lib.pin.light</a></li>
+            
+                <li><a href="../classes/control.lib.pin.list.html">control.lib.pin.list</a></li>
+            
+                <li><a href="../classes/control.lib.pin.pwm.html">control.lib.pin.pwm</a></li>
+            
+                <li><a href="../classes/control.lib.pin.switch.html">control.lib.pin.switch</a></li>
+            
+                <li><a href="../classes/control.lib.remote.html">control.lib.remote</a></li>
+            
+                <li><a href="../classes/control.lib.room.html">control.lib.room</a></li>
+            
+                <li><a href="../classes/control.lib.switch.html">control.lib.switch</a></li>
+            
+                <li><a href="../classes/control.lib.switch.relay.html">control.lib.switch.relay</a></li>
+            
+                <li><a href="../classes/control.lib.switch.socket.html">control.lib.switch.socket</a></li>
+            
+                <li><a href="../classes/dvb.content.html">dvb.content</a></li>
+            
+                <li><a href="../classes/dvb.lib.html">dvb.lib</a></li>
+            
+                <li><a href="../classes/dvb.lib.channel.html">dvb.lib.channel</a></li>
+            
+                <li><a href="../classes/fs.content.html">fs.content</a></li>
+            
+                <li><a href="../classes/fs.lib.html">fs.lib</a></li>
+            
+                <li><a href="../classes/fs.lib.dir.html">fs.lib.dir</a></li>
+            
+                <li><a href="../classes/fs.lib.file.html">fs.lib.file</a></li>
+            
+                <li><a href="../classes/icecast.content.html">icecast.content</a></li>
+            
+                <li><a href="../classes/icecast.lib.html">icecast.lib</a></li>
+            
+                <li><a href="../classes/icecast.lib.stream.html">icecast.lib.stream</a></li>
+            
+                <li><a href="../classes/lirc.content.html">lirc.content</a></li>
+            
+                <li><a href="../classes/lirc.lib.html">lirc.lib</a></li>
+            
+                <li><a href="../classes/lirc.lib.lirc.html">lirc.lib.lirc</a></li>
+            
+                <li><a href="../classes/media.content.html">media.content</a></li>
+            
+                <li><a href="../classes/media.lib.html">media.lib</a></li>
+            
+                <li><a href="../classes/media.lib.item.html">media.lib.item</a></li>
+            
+                <li><a href="../classes/media.lib.player.html">media.lib.player</a></li>
+            
+                <li><a href="../classes/media.lib.player.commands.html">media.lib.player.commands</a></li>
+            
+                <li><a href="../classes/media.lib.player.dvb.html">media.lib.player.dvb</a></li>
+            
+                <li><a href="../classes/media.lib.player.playback.html">media.lib.player.playback</a></li>
+            
+                <li><a href="../classes/media.lib.player.volume.html">media.lib.player.volume</a></li>
+            
+                <li><a href="../classes/media.lib.sources.html">media.lib.sources</a></li>
+            
+                <li><a href="../classes/media.lib.stream.html">media.lib.stream</a></li>
+            
+                <li><a href="../classes/ose.content.html">ose.content</a></li>
+            
+                <li><a href="../classes/ose.core.html">ose.core</a></li>
+            
+                <li><a href="../classes/ose.lib.browser.html">ose.lib.browser</a></li>
+            
+                <li><a href="../classes/ose.lib.cli.html">ose.lib.cli</a></li>
+            
+                <li><a href="../classes/ose.lib.counter.html">ose.lib.counter</a></li>
+            
+                <li><a href="../classes/ose.lib.entry.html">ose.lib.entry</a></li>
+            
+                <li><a href="../classes/ose.lib.entry.link.html">ose.lib.entry.link</a></li>
+            
+                <li><a href="../classes/ose.lib.entry.master.html">ose.lib.entry.master</a></li>
+            
+                <li><a href="../classes/ose.lib.entry.slave.html">ose.lib.entry.slave</a></li>
+            
+                <li><a href="../classes/ose.lib.http.html">ose.lib.http</a></li>
+            
+                <li><a href="../classes/ose.lib.http.content.html">ose.lib.http.content</a></li>
+            
+                <li><a href="../classes/ose.lib.kind.html">ose.lib.kind</a></li>
+            
+                <li><a href="../classes/ose.lib.link.html">ose.lib.link</a></li>
+            
+                <li><a href="../classes/ose.lib.logger.html">ose.lib.logger</a></li>
+            
+                <li><a href="../classes/ose.lib.node.html">ose.lib.node</a></li>
+            
+                <li><a href="../classes/ose.lib.peer.here.html">ose.lib.peer.here</a></li>
+            
+                <li><a href="../classes/ose.lib.peer.list.html">ose.lib.peer.list</a></li>
+            
+                <li><a href="../classes/ose.lib.peer.remote.html">ose.lib.peer.remote</a></li>
+            
+                <li><a href="../classes/ose.lib.peer.rx.html">ose.lib.peer.rx</a></li>
+            
+                <li><a href="../classes/ose.lib.plugins.html">ose.lib.plugins</a></li>
+            
+                <li><a href="../classes/ose.lib.scope.html">ose.lib.scope</a></li>
+            
+                <li><a href="../classes/ose.lib.shard.html">ose.lib.shard</a></li>
+            
+                <li><a href="../classes/ose.lib.shard.master.html">ose.lib.shard.master</a></li>
+            
+                <li><a href="../classes/ose.lib.shard.slave.html">ose.lib.shard.slave</a></li>
+            
+                <li><a href="../classes/ose.lib.space.html">ose.lib.space</a></li>
+            
+                <li><a href="../classes/ose.lib.space.list.html">ose.lib.space.list</a></li>
+            
+                <li><a href="../classes/ose.lib.ws.html">ose.lib.ws</a></li>
+            
+                <li><a href="../classes/ose.lib.ws.browser.html">ose.lib.ws.browser</a></li>
+            
+                <li><a href="../classes/ose.lib.ws.master.html">ose.lib.ws.master</a></li>
+            
+                <li><a href="../classes/ose.lib.ws.node.html">ose.lib.ws.node</a></li>
+            
+                <li><a href="../classes/ose.lib.ws.relay.html">ose.lib.ws.relay</a></li>
+            
+                <li><a href="../classes/ose.lib.ws.slave.html">ose.lib.ws.slave</a></li>
+            
+                <li><a href="../classes/ose.wrap.class.html">ose.wrap.class</a></li>
+            
+                <li><a href="../classes/ose.wrap.common.html">ose.wrap.common</a></li>
+            
+                <li><a href="../classes/ose.wrap.module.html">ose.wrap.module</a></li>
+            
+                <li><a href="../classes/ose.wrap.package.html">ose.wrap.package</a></li>
+            
+                <li><a href="../classes/ose.wrap.singleton.html">ose.wrap.singleton</a></li>
+            
+                <li><a href="../classes/pa.content.html">pa.content</a></li>
+            
+                <li><a href="../classes/pa.lib.html">pa.lib</a></li>
+            
+                <li><a href="../classes/pa.lib.dbus.html">pa.lib.dbus</a></li>
+            
+                <li><a href="../classes/rpi.content.html">rpi.content</a></li>
+            
+                <li><a href="../classes/rpi.lib.html">rpi.lib</a></li>
+            
+                <li><a href="../classes/rpi.lib.camera.html">rpi.lib.camera</a></li>
+            
+                <li><a href="../classes/rpi.lib.rpi.html">rpi.lib.rpi</a></li>
+            
+                <li><a href="../classes/videolan.content.html">videolan.content</a></li>
+            
+                <li><a href="../classes/videolan.lib.html">videolan.lib</a></li>
+            
+                <li><a href="../classes/videolan.lib.dvblast.html">videolan.lib.dvblast</a></li>
+            
+                <li><a href="../classes/videolan.lib.dvblast.master.html">videolan.lib.dvblast.master</a></li>
+            
+                <li><a href="../classes/videolan.lib.vlc.html">videolan.lib.vlc</a></li>
+            
+                <li><a href="../classes/xorg.content.html">xorg.content</a></li>
+            
+                <li><a href="../classes/xorg.lib.html">xorg.lib</a></li>
+            
+                <li><a href="../classes/xorg.lib.xorg.html">xorg.lib.xorg</a></li>
+            
+                <li><a href="../classes/youtube.content.html">youtube.content</a></li>
+            
+                <li><a href="../classes/youtube.lib.html">youtube.lib</a></li>
+            
+                <li><a href="../classes/youtube.lib.video.html">youtube.lib.video</a></li>
+            
+        </ul>
+    </div>
+</div>
+
+
+      </div>
+
+      <div id="main" class="yui3-u">
+        <div class="content"><h4>../ose/lib/entry/master.js</h4>
+
+<pre class="code prettyprint linenums">
+&#x27;use strict&#x27;;
+
+var Ose = require(&#x27;ose&#x27;);
+var M = Ose.class(module, C);
+
+/** Doc {{{1
+ * @module ose
+ * @submodule ose.data
+ */
+
+/**
+ * @caption Master entry response socket
+ *
+ * @readme
+ * Reponse socket for slave entry requests. Is registered in &#x60;entry.slaves&#x60;.
+ *
+ * @class ose.lib.entry.master
+ * @type class
+ */
+
+// Public {{{1
+function C(entry, req, socket) {  // {{{2
+/**
+ * Class constructor
+ *
+ * @param entry {Object} Entry instance
+ * @param req {Object} Request object
+ * @param req.drev {Object} Current data revision. Specifies whether to request entry data.
+ * @param req.dtrack {Boolean} Whether to track data changes
+ * @param req.srev {Object} Current state revision. Specifies whether to request entry state.
+ * @param req.strack {Boolean} Whether to track state changes
+ *
+ * @param socket {Object} Slave socket
+ *
+ * @method constructor
+ */
+
+  if (entry.slaves) {
+    this.slaveId = ++entry.slaveId;
+  } else {
+    entry.dtc = 0;
+    entry.stc = 0;
+    entry.slaves = {};
+    this.slaveId = entry.slaveId = 1;
+  }
+
+//  console.log(&#x27;ENTRY MASTER CONSTRUCTOR&#x27;, entry.id, this.slaveId);
+
+  this.entry = entry;
+  entry.slaves[this.slaveId] = this;
+
+  var that = this;
+
+  entry.track(
+    (this.dtrack = req.dtrack) ? 1 : 0,
+    (this.strack = req.strack) ? 1 : 0,
+    function(err) {
+//      console.log(&#x27;ENTRY MASTER AFTER TRACK&#x27;, entry.id, that.slaveId);
+
+      if (entry.kind) {
+        Ose.link.open(that, socket, entry.respond(req));
+        return;
+      }
+
+      Ose.link.error(
+        that,
+        err || M.log.todo(&#x27;Entry has no kind but entry.track (entry.linMaster) returned no error!&#x27;, entry, arguments)
+      );
+      that.close();
+      return;
+    }
+  );
+
+  return;
+};
+
+exports.close = function() {  // {{{2
+/**
+ * Close handler
+ *
+ * @method close
+ */
+
+  var e = this.entry;
+
+  if (! e) {  // Socket was already closed.
+    return;
+  }
+
+//  console.log(&#x27;ENTRY MASTER CLOSE&#x27;, e.id, this.slaveId);
+
+  delete this.entry;
+  delete e.slaves[this.slaveId];
+  delete this.slaveId;
+
+  if (! Ose._.isEmpty(e.slaves)) {  // Entry has some other slaves
+    e.track(
+      this.dtrack ? -1 : 0,
+      this.strack ? -1 : 0,
+      function(err) {
+        if (err) M.log.error(err);
+      }
+    );
+    return;
+  }
+
+  // No &#x60;entry.slaves&#x60; left, stop all tracking and close the link to the master.
+  if (this.dtrack) --e.dtc;
+  if (this.strack) --e.stc;
+
+  if (e.dtc || e.stc) {
+    throw Ose.error(e, &#x27;INVALID_TRACK_COUNT&#x27;, {data: e.dtc, state: e.stc});
+  }
+
+  delete e.dtc;
+  delete e.stc;
+  delete e.slaves;
+
+  if (e.master) {
+    Ose.link.close(e.master);
+  }
+
+  delete this.dtrack;
+  delete this.strack;
+};
+
+exports.error = function(err) {  // {{{2
+/**
+ * Error handler
+ *
+ * @method error
+ */
+
+  this.close();
+};
+
+exports.track = function(req) {  // {{{2
+/**
+ * Track handler
+ *
+ * @param req {Object} Request object
+ * @param req.dtrack {Boolean} Whether to track data changes
+ * @param req.strack {Boolean} Whether to track state changes
+ *
+ * @method track
+ */
+
+  var e = this.entry;
+
+//  console.log(&#x27;ENTRY MASTER TRACK&#x27;, e.id, {drev: e.drev, srev: e.srev}, req);
+
+  var dc = 0;
+  var sc = 0;
+
+  if ((&#x27;dtrack&#x27; in req)) {
+    if (this.dtrack) {
+      if (! req.dtrack) {
+        dc = -1;
+        this.dtrack = false;
+      }
+    } else {
+      if (req.dtrack) {
+        dc = 1;
+        this.dtrack = true;
+      }
+    }
+  }
+
+  if ((&#x27;strack&#x27; in req)) {
+    if (this.strack) {
+      if (! req.strack) {
+        sc = -1;
+        this.strack = false;
+      }
+    } else {
+      if (req.strack) {
+        sc = 1;
+        this.strack = true;
+      }
+    }
+  }
+
+  if (! (dc || sc)) return;
+
+  var resp;
+  if ((dc &gt; 0) &amp;&amp; req.drev !== e.drev) {
+    resp = {
+      drev: e.drev,
+      data: e.data
+    };
+  }
+  if ((sc &gt; 0) &amp;&amp; req.srev !== e.srev) {
+    if (! resp) resp = {};
+
+    resp.srev = e.srev;
+    resp.state = e.state;
+  }
+
+  if (resp) {
+    this.link.update(resp);
+  }
+
+  e.track(dc, sc);
+
+  return;
+};
+
+// }}}1
+
+</pre>
+
+</div>
+      </div>
+
+    </div>
+  </div>
+  <script src="../assets/vendor/prettify/prettify-min.js"></script>
+  <script>prettyPrint();</script>
+  <script src="../assets/js/yui-prettify.js"></script>
+  <!--script src="../assets/js/tabs.js"></script-->
+  <script src="../assets/js/ose.js"></script>
+</body>
+</html>

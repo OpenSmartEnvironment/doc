@@ -180,6 +180,10 @@
                 
                 </li>
             
+                <li><a href="../modules/yoctopuce.html">yoctopuce</a>
+                
+                </li>
+            
                 <li><a href="../modules/youtube.html">youtube</a>
                 
                 </li>
@@ -467,6 +471,12 @@
             
                 <li><a href="../classes/xorg.lib.xorg.html">xorg.lib.xorg</a></li>
             
+                <li><a href="../classes/yoctopuce.content.html">yoctopuce.content</a></li>
+            
+                <li><a href="../classes/yoctopuce.lib.html">yoctopuce.lib</a></li>
+            
+                <li><a href="../classes/yoctopuce.lib.meteo.html">yoctopuce.lib.meteo</a></li>
+            
                 <li><a href="../classes/youtube.content.html">youtube.content</a></li>
             
                 <li><a href="../classes/youtube.lib.html">youtube.lib</a></li>
@@ -551,6 +561,7 @@ exports.build = function(grunt, pkg, cb) {  // {{{2
       &#x27;../rpi&#x27;,
       &#x27;../videolan&#x27;,
       &#x27;../xorg&#x27;,
+      &#x27;../yoctopuce&#x27;,
       &#x27;../youtube&#x27;,
     ],
     project: {
@@ -562,8 +573,9 @@ exports.build = function(grunt, pkg, cb) {  // {{{2
   };
 
   grunt.log.writeln(&#x27;READING ...&#x27;);
+  Fs.renameSync(&#x27;../doc/.git&#x27;, &#x27;../OLD_doc&#x27;);
   Json = (new Y.YUIDoc(options)).run();
-  grunt.file.write(&#x27;../doc/data1.json&#x27;, JSON.stringify(Json, null, 2));
+//  grunt.file.write(&#x27;../doc/data1.json&#x27;, JSON.stringify(Json, null, 2));
 
   grunt.log.writeln(&#x27;PREPARING ...&#x27;);
 
@@ -607,6 +619,7 @@ exports.build = function(grunt, pkg, cb) {  // {{{2
   var builder = new Y.DocBuilder(options, Json);
 
   builder.compile(function() {
+    Fs.renameSync(&#x27;../OLD_doc&#x27;, &#x27;../doc/.git&#x27;);
     grunt.log.writeln(&#x27;DONE&#x27;);
     cb();
   });
@@ -621,6 +634,7 @@ var License;
 var Status;
 var Starting;
 var StartingLink;
+var GhUri = &#x27;http://opensmartenvironment.github.io/doc&#x27;;
 
 function prepFile(key) {  // {{{2
 //  console.log(&#x27;PREP FILE&#x27;, key);
@@ -922,14 +936,14 @@ function linkKeywords(text, link) {  // {{{2
 function mdLink(text, key, type) {  // {{{2
   switch (type) {
   case &#x27;module&#x27;:
-    return &#x27;[&#x27; + text + &#x27;]&#x27;;
+    return &#x27;[&#x27; + text + &#x27;](&#x27; + GhUri + &#x27;/modules/&#x27; + key + &#x27;.html)&#x27;;
   case &#x27;class&#x27;:
-    return &#x27;[&#x27; + text + &#x27;]&#x27;;
+    return &#x27;[&#x27; + text + &#x27;](&#x27; + GhUri + &#x27;/classes/&#x27; + key + &#x27;.html)&#x27;;
   case &#x27;classitem&#x27;:
-    var i = Json.classitems;
-    return &#x27;[&#x27; + text + &#x27;]&#x27;;
+    var i = Json.classitems[key];
+    return &#x27;[&#x27; + text + &#x27;](&#x27; + GhUri + &#x27;/classes/&#x27; + i.class + &#x27;.html)&#x27;;
   case &#x27;file&#x27;:
-    return &#x27;[&#x27; + text + &#x27;]&#x27;;
+    return &#x27;[&#x27; + text + &#x27;](&#x27; + GhUri + &#x27;/files/&#x27; + key + &#x27;.html)&#x27;;
   }
 
   throw new Error(&#x27;Invalid LINK type: &#x27; + JSON.stringify(arguments));

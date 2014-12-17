@@ -1365,6 +1365,35 @@
             "fors": {},
             "namespaces": {}
         },
+        "../yoctopuce/lib/hub/index.js": {
+            "name": "../yoctopuce/lib/hub/index.js",
+            "modules": {},
+            "classes": {
+                "yoctopuce.lib.meteo": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../yoctopuce/lib/index.js": {
+            "name": "../yoctopuce/lib/index.js",
+            "modules": {
+                "yoctopuce": 1
+            },
+            "classes": {
+                "yoctopuce.lib": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../yoctopuce/content.js": {
+            "name": "../yoctopuce/content.js",
+            "modules": {},
+            "classes": {
+                "yoctopuce.content": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "../youtube/lib/video/index.js": {
             "name": "../youtube/lib/video/index.js",
             "modules": {},
@@ -1408,10 +1437,10 @@
             "namespaces": {},
             "module": "bundle",
             "file": "examples/media/run.js",
-            "line": 122,
+            "line": 123,
             "caption": "Media player example application",
             "readme": "This example is an stand-alone application based on\nthe OSE framework, showcasing some of its principles and\ncapabilities. This application works as a currently half-featured\nmedia player and remote control on Linux boxes. The example\napplication has the following features:\n\n- Node.js backend\n- Control via HTML5 frontend instances\n- Near-realtime synchronization among all front- and backend\n  instances\n- Keyboard and pointer remote control using xdotool\n- Playback of different media using VLC\n- Predefined media streams\n- Icecast directory search and playback\n<!--- - DVB sources -->\n- Youtube search and playback\n- Local files playback\n- Playback from history\n<!--- - IR remote control using LIRC -->\n\nOther example applications consisting of multiple instances working\nas a single whole are coming.",
-            "description": "## Prerequisites\n\nThe main prerequisite is a working installation of a recent\ninstallation of\n[Node.js](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager)\n(>= 0.10).\n\nOn Debian Jessie, you can install the default package:\n\n    sudo apt-get install nodejs\n\nOn Raspbian, install Node.js by doing:\n    wget http://node-arm.herokuapp.com/node_latest_armhf.deb\n    sudo dpkg -i node_latest_armhf.deb\n\nTo work fully, the example depends on:\n\n- PulseAudio configured with the D-Bus control interface\n- Python 3\n- The libdbus-1-dev package or its equivalent for your distribution\n- VLC\n<!--- - dvblast -->\n<!--- - LIRC -->\n\nIf you run Debian Jessie, just run:\n\n    sudo apt-get install pulseaudio python3 libdbus-1-dev vlc <!--- dvblast lirc -->\n\n\nTo enable the dbus control interface, do:\n\n    pactl load-module module-dbus-protocol\n\n\n## Installation\n\nThe easiest way of getting a working OSE installation is to install\nthe [ose-bundle] package:\n\nFrom shell at your home directory run:\n\n    npm install ose-bundle\n\n\n\"ose-bundle\" package contains all official ose packages as its dependencies.\n\n\n## Getting it to run\n\nTo start the example OSE application, change to the installation\ndirectory and execute the startup script from an X.Org session. To\nrun the example from outside an X.Org session (in a console or\nthrough ssh), export the display variable in the shell:\n\n    export DISPLAY=\":0.0\"\n\nTo start an application from shell:\n\n    cd node_modules/ose-bundle/examples/media\n    ./run.js\n\nTo access the [HTML5 frontend], open the following URL in [supported browser].\n\n    http://localhost:4430\n\n\nConfiguration\n\nAll configuration files are self-explanatory or documented in the code.\n\n- The startup script is stored in `run.js`.\n- The basic configuration is stored in `config.js`.\n- To configure predefined media streams, edit `streams.js`.\n<!--- - To configure DVB sources, edit `dvb.js`. -->\n<!--- - To configure IR remote behaviour, edit `lirc.js`. -->",
+            "description": "## Prerequisites\n\nTODO: Check all prerequisites\n\nThe main prerequisite is a working installation of a recent\ninstallation of\n[Node.js](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager)\n(>= 0.10).\n\nOn Debian Jessie, you can install the default package:\n\n    sudo apt-get install nodejs\n\nOn Raspbian, install Node.js by doing:\n    wget http://node-arm.herokuapp.com/node_latest_armhf.deb\n    sudo dpkg -i node_latest_armhf.deb\n\nTo work fully, the example depends on:\n\n- PulseAudio configured with the D-Bus control interface\n- Python 3\n- The libdbus-1-dev package or its equivalent for your distribution\n- VLC\n<!--- - dvblast -->\n<!--- - LIRC -->\n\nIf you run Debian Jessie, just run:\n\n    sudo apt-get install pulseaudio python3 libdbus-1-dev vlc <!--- dvblast lirc -->\n\n\nTo enable the dbus control interface, do:\n\n    pactl load-module module-dbus-protocol\n\n\n## Installation\n\nThe easiest way of getting a working OSE installation is to install\nthe [ose-bundle] package:\n\nFrom shell at your home directory run:\n\n    npm install ose-bundle\n\n\n\"ose-bundle\" package contains all official ose packages as its dependencies.\n\n\n## Getting it to run\n\nTo start the example OSE application, change to the installation\ndirectory and execute the startup script from an X.Org session. To\nrun the example from outside an X.Org session (in a console or\nthrough ssh), export the display variable in the shell:\n\n    export DISPLAY=\":0.0\"\n\nTo start an application from shell:\n\n    cd node_modules/ose-bundle/examples/media\n    ./run.js\n\nTo access the [HTML5 frontend], open the following URL in [supported browser].\n\n    http://localhost:4430\n\n\nConfiguration\n\nAll configuration files are self-explanatory or documented in the code.\n\n- The startup script is stored in `run.js`.\n- The basic configuration is stored in `config.js`.\n- To configure predefined media streams, edit `streams.js`.\n<!--- - To configure DVB sources, edit `dvb.js`. -->\n<!--- - To configure IR remote behaviour, edit `lirc.js`. -->",
             "tag": "main",
             "itemtype": "main"
         },
@@ -1435,10 +1464,10 @@
             "line": 14,
             "caption": "Open Smart Environment Bundle",
             "readme": "This package wraps all official OSE packages, contains examples and\nallows documentation building using YUIDoc.\n\nThe main advantage of OSE is the easy creation of applications\nconsisting of multiple instances working as a single whole. The\nobjective is to develop an all-encompassing personal mesh running\nvarious devices including HTPCs, phones, tablets, workstations,\nservers, Raspberry PIs, home automation gadgets, drones etc.",
-            "getting_started": "To get started with OSE, refer to the [Media player example\napplication].",
-            "getting_started_link": "To get started with OSE, refer to the [ose-bundle] package and\n[Media player example application].",
+            "getting_started": "To get started with OSE, refer to the [Media player example\napplication]. You can read the entire OSE documentation [here](\nhttp://opensmartenvironment.github.io/doc).",
+            "getting_started_link": "To get started with OSE, refer to the [ose-bundle] package and\n[Media player example application]. You can read the entire OSE\ndocumentation [here]( http://opensmartenvironment.github.io/doc).",
             "contributions": "To get started contributing or coding, it is good to read about the\ntwo main npm packages [ose] and [ose-bb].\n\nThis software is in the pre-alpha stage. At the moment, it is\npremature to file bugs. Input is, however, much welcome in the form\nof ideas, comments and general suggestions.  Feel free to contact\nus via\n[github.com/opensmartenvironment](https://github.com/opensmartenvironment).",
-            "status": "- Pre-alpha stage (insecure and buggy)\n- Unstable API\n- Gaps in the documentation\n- No test suite\n\nThis is not yet a piece of download-and-use software. Its important\nto understand the basic principles covered by this documentation.\n\nUse of this software is currently recommended only for users that\nwish participate in the development process (see Contributions).\n\nTODO: Make contribution a link",
+            "status": "- Pre-alpha stage (insecure and buggy)\n- Unstable API\n- Gaps in the documentation\n- No test suite\n\nThis is not yet a piece of download-and-use software. Its important\nto understand the basic principles covered by this documentation.\n\nUse of this software is currently recommended only for users that\nwish participate in the development process (see Contributions).\n\nTODO: Make \"Contributions\" a link",
             "license": "This software is licensed under the terms of the [GNU GPL version\n3](../LICENCE) or later",
             "documentation": "# Open Smart Environment documentation\n\n## State of documentation\nThis documentation is currently under construction and being\ncontinuously improved. Links may be broken and information\nincomplete or erroneous.\n\n\n## Packages and components\nOSE documentation is compiled from source files of all official OSE\nnpm packages using YUIDoc.\n\nPackages are listed in the sidebar.\n\nEach package consists of components. Component is some logical\nconcept coded into modules. Each package description contains basic\ninformation about the package, its components and modules not\nassigned to any component.\n\nEach component description contains basic information about the\ncomponent and its modules.\n\n\n## Modules\nThe module view is a reference of methods, properties and events\nprovided by the module.\n\nA module can be one of the following:\n\n- class definition\n- singleton\n- class or singleton extension\n- simple module with exported methods and properties\n\nIn the module view, the sidebar contains lists of methods,\nproperties and events\n\nDue to a technical limitation of YUIDocs, periods (\".\") are used\ninstead of slashes (\"/\") in module names (see [issue\nNo. 165](https://github.com/yui/yuidoc/issues/165)).",
             "itemtype": "main"
@@ -2150,7 +2179,7 @@
             "file": "../media/lib/sources.js",
             "line": 29,
             "caption": "Media sources",
-            "readme": "Each media source is a reference to some [entry kind] describing\nsource of media items. Media player use sources to select media to\nplay. Registration to sources is done during initialization of the\nnpm package containing the source. Any OSE package can contain one\nor more media sources. Examples are the [DVB], [Icecast] or\n[Youtube] packages.",
+            "readme": "Each media source is a reference to some [entry kind] describing\nsource of media items. Media player use sources to select media to\nplay. Registration to sources is done during initialization of the\nnpm package containing the source. Any OSE package can contain one\nor more media sources. Examples are the [DVB], [Icecast] or\n[YouTube] packages.",
             "description": "## Description\nMedia source kind must implement two methods:\n- `getMediaKeys()`\n- `playItem()`\n\nDescription of these methods can be found at [Media stream kind].",
             "tag": "main",
             "itemtype": "main"
@@ -2203,7 +2232,7 @@
             "tag": "main",
             "file": "../rpi/content.js",
             "line": 12,
-            "caption": "Open Smart Environment Raspberry package",
+            "caption": "Open Smart Environment Raspberry Pi package",
             "readme": "This package contains [entry kinds] for integrating hardware from\nthe Raspberry Pi Foundation into OSE.",
             "aliases": "raspberry raspberryPi raspberryCamera",
             "itemtype": "main"
@@ -2242,6 +2271,23 @@
             "line": 12,
             "caption": "Open Smart Environment X.Org package",
             "readme": "This package allows to control the X.Org server with xdotool.",
+            "itemtype": "main"
+        },
+        "yoctopuce": {
+            "name": "yoctopuce",
+            "submodules": {},
+            "classes": {
+                "yoctopuce.lib.meteo": 1,
+                "yoctopuce.lib": 1,
+                "yoctopuce.content": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "main",
+            "file": "../yoctopuce/content.js",
+            "line": 12,
+            "caption": "Open Smart Environment Yoctopuce package",
+            "readme": "This package integrates some Yoctopuce sensor into\nthe OSE ecosystem.",
             "itemtype": "main"
         },
         "youtube": {
@@ -2291,7 +2337,7 @@
             "submodule": "bundle.media",
             "namespace": "",
             "file": "examples/media/run.js",
-            "line": 122,
+            "line": 123,
             "caption": "Startup script",
             "readme": "This scripts starts OSE instance with configuration from config file.",
             "type": "module"
@@ -4673,6 +4719,56 @@
             "type": "singleton",
             "extends": "ose.lib.http.content"
         },
+        "yoctopuce.lib.meteo": {
+            "name": "yoctopuce.lib.meteo",
+            "shortname": "yoctopuce.lib.meteo",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "yoctopuce",
+            "namespace": "",
+            "file": "../yoctopuce/lib/hub/index.js",
+            "line": 11,
+            "caption": "Yoctopuce meteo kind",
+            "readme": "[Entry kind] representing Yoctopuce meteo sensors.",
+            "extends": "ose.lib.kind",
+            "type": "singleton"
+        },
+        "yoctopuce.lib": {
+            "name": "yoctopuce.lib",
+            "shortname": "yoctopuce.lib",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "yoctopuce",
+            "namespace": "",
+            "file": "../yoctopuce/lib/index.js",
+            "line": 18,
+            "caption": "OSE yoctopuce core",
+            "readme": "Core singleton of ose-yoctopuce npm package. Registers [entry kinds]\ndefined by this package to the `\"control\"` [scope].",
+            "type": "singleton"
+        },
+        "yoctopuce.content": {
+            "name": "yoctopuce.content",
+            "shortname": "yoctopuce.content",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "yoctopuce",
+            "namespace": "",
+            "file": "../yoctopuce/content.js",
+            "line": 12,
+            "caption": "OSE yoctopuce content",
+            "readme": "Provides files of OSE yoctopuce package to the browser.",
+            "type": "singleton",
+            "extends": "ose.lib.http.content"
+        },
         "youtube.lib.video": {
             "name": "youtube.lib.video",
             "shortname": "youtube.lib.video",
@@ -4685,8 +4781,8 @@
             "namespace": "",
             "file": "../youtube/lib/video/index.js",
             "line": 11,
-            "caption": "Youtube video kind",
-            "readme": "[Entry kind] representing Youtube videos.",
+            "caption": "YouTube video kind",
+            "readme": "[Entry kind] representing YouTube videos.",
             "extends": "ose.lib.kind",
             "type": "singleton"
         },
@@ -13506,19 +13602,19 @@
         },
         {
             "message": "unknown tag: caption",
-            "line": " examples/media/run.js:10"
+            "line": " examples/media/run.js:9"
         },
         {
             "message": "unknown tag: readme",
-            "line": " examples/media/run.js:10"
+            "line": " examples/media/run.js:9"
         },
         {
             "message": "unknown tag: caption",
-            "line": " examples/media/run.js:122"
+            "line": " examples/media/run.js:123"
         },
         {
             "message": "unknown tag: readme",
-            "line": " examples/media/run.js:122"
+            "line": " examples/media/run.js:123"
         },
         {
             "message": "unknown tag: caption",
@@ -15311,6 +15407,42 @@
         {
             "message": "unknown tag: readme",
             "line": " ../xorg/content.js:12"
+        },
+        {
+            "message": "unknown tag: caption",
+            "line": " ../yoctopuce/lib/hub/index.js:11"
+        },
+        {
+            "message": "unknown tag: readme",
+            "line": " ../yoctopuce/lib/hub/index.js:11"
+        },
+        {
+            "message": "replacing incorrect tag: extend with extends",
+            "line": " ../yoctopuce/lib/hub/index.js:11"
+        },
+        {
+            "message": "unknown tag: caption",
+            "line": " ../yoctopuce/lib/index.js:7"
+        },
+        {
+            "message": "unknown tag: readme",
+            "line": " ../yoctopuce/lib/index.js:7"
+        },
+        {
+            "message": "unknown tag: caption",
+            "line": " ../yoctopuce/lib/index.js:18"
+        },
+        {
+            "message": "unknown tag: readme",
+            "line": " ../yoctopuce/lib/index.js:18"
+        },
+        {
+            "message": "unknown tag: caption",
+            "line": " ../yoctopuce/content.js:12"
+        },
+        {
+            "message": "unknown tag: readme",
+            "line": " ../yoctopuce/content.js:12"
         },
         {
             "message": "unknown tag: caption",

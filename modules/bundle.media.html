@@ -511,12 +511,10 @@ instances</li>
 <li>Keyboard and pointer remote control using xdotool</li>
 <li>Playback of different media using VLC</li>
 <li>Predefined media streams</li>
-<li>Icecast directory search and playback<!--- - DVB sources --></li>
+<li>Icecast directory search and playback</li>
 <li>Youtube search and playback</li>
 <li>Local files playback</li>
-<li>Playback from history<!--- - IR remote control using LIRC -->
-
-</li>
+<li>Playback from history</li>
 </ul>
 <p>Other example applications consisting of multiple instances working
 as a single whole are coming.</p>
@@ -536,13 +534,11 @@ sudo dpkg -i node_latest_armhf.deb</code></pre>
 <li>PulseAudio configured with the D-Bus control interface</li>
 <li>Python 3</li>
 <li>The libdbus-1-dev package or its equivalent for your distribution</li>
-<li>VLC<!--- - dvblast -->
-<!--- - LIRC -->
-
-</li>
+<li>The pkg-config package or its equivalent in your distribution</li>
+<li>VLC</li>
 </ul>
 <p>If you run Debian Jessie, just run:</p>
-<pre class="code prettyprint"><code>sudo apt-get install pulseaudio python3 libdbus-1-dev vlc &lt;!--- dvblast lirc --&gt;</code></pre>
+<pre class="code prettyprint"><code>sudo apt-get install pulseaudio python3 libdbus-1-dev pkg-config vlc</code></pre>
 <p>To enable the dbus control interface, do:</p>
 <pre class="code prettyprint"><code>pactl load-module module-dbus-protocol</code></pre>
 <h2 id="installation">Installation</h2>
@@ -560,17 +556,15 @@ through ssh), export the display variable in the shell:</p>
 <p>To start an application from shell:</p>
 <pre class="code prettyprint"><code>cd node_modules/ose-bundle/examples/media
 ./run.js</code></pre>
-<p>To access the <a href="../modules/bb.html">HTML5 frontend</a>, open the following URL in <a href="../modules/ose.html">supported browser</a>.</p>
+<p>To access the <a href="../modules/bb.html">HTML5 frontend</a>, open the following URL in a
+<a href="../modules/ose.html#platforms">supported browser</a>.</p>
 <pre class="code prettyprint"><code>http://localhost:4431</code></pre>
 <p>Configuration</p>
 <p>All configuration files are self-explanatory or documented in the code.</p>
 <ul>
 <li>The startup script is stored in <code>run.js</code>.</li>
 <li>The basic configuration is stored in <code>config.js</code>.</li>
-<li>To configure predefined media streams, edit <code>streams.js</code>.<!--- - To configure DVB sources, edit <code>dvb.js</code>. -->
-<!--- - To configure IR remote behaviour, edit <code>lirc.js</code>. -->
-
-</li>
+<li>To configure predefined media streams, edit <code>streams.js</code>.</li>
 </ul>
 <h2 id="modules">Modules</h2>
 <p>Media player example application consists of the following modules:</p>
@@ -601,7 +595,7 @@ object defines the configuration for one <a href="../modules/ose.plugin.html">OS
 </div -->
 
 <br><br>
-<span class="foundat">Source file: <a href="../files/examples_media_run.js.html#l124"><code>examples&#x2F;media&#x2F;run.js:124</code></a></span>
+<span class="foundat">Source file: <a href="../files/examples_media_run.js.html#l120"><code>examples&#x2F;media&#x2F;run.js:120</code></a></span>
 </div>
       </div>
 

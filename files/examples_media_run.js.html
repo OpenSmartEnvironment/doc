@@ -520,11 +520,9 @@
  * - Playback of different media using VLC
  * - Predefined media streams
  * - Icecast directory search and playback
- * &lt;!--- - DVB sources --&gt;
  * - Youtube search and playback
  * - Local files playback
  * - Playback from history
- * &lt;!--- - IR remote control using LIRC --&gt;
  *
  * Other example applications consisting of multiple instances working
  * as a single whole are coming.
@@ -555,13 +553,12 @@
  * - PulseAudio configured with the D-Bus control interface
  * - Python 3
  * - The libdbus-1-dev package or its equivalent for your distribution
+ * - The pkg-config package or its equivalent in your distribution
  * - VLC
- * &lt;!--- - dvblast --&gt;
- * &lt;!--- - LIRC --&gt;
  *
  * If you run Debian Jessie, just run:
  *
- *     sudo apt-get install pulseaudio python3 libdbus-1-dev vlc &lt;!--- dvblast lirc --&gt;
+ *     sudo apt-get install pulseaudio python3 libdbus-1-dev pkg-config vlc
  *
  *
  * To enable the dbus control interface, do:
@@ -596,7 +593,8 @@
  *     cd node_modules/ose-bundle/examples/media
  *     ./run.js
  *
- * To access the [HTML5 frontend], open the following URL in [supported browser].
+ * To access the [HTML5 frontend], open the following URL in a
+ * [supported browser](../modules/ose.html#platforms).
  *
  *     http://localhost:4431
  *
@@ -608,8 +606,6 @@
  * - The startup script is stored in &#x60;run.js&#x60;.
  * - The basic configuration is stored in &#x60;config.js&#x60;.
  * - To configure predefined media streams, edit &#x60;streams.js&#x60;.
- * &lt;!--- - To configure DVB sources, edit &#x60;dvb.js&#x60;. --&gt;
- * &lt;!--- - To configure IR remote behaviour, edit &#x60;lirc.js&#x60;. --&gt;
  *
  *
  * @module bundle

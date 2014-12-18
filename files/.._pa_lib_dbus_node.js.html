@@ -777,13 +777,15 @@ function connect(that) {  // {{{2
     that.child.stderr.setEncoding(&#x27;utf8&#x27;);
     that.child.stderr.on(&#x27;data&#x27;, onStderr.bind(that, that.child.pid));
 
+    /*
     that.lastPong = new Date().getTime();
     that.pingTimer = setInterval(function() {
       if ((new Date().getTime() - that.lastPong) &gt; 120000) {
         connect(that);
       }
       send(that, {ping: 1})
-    }, 60000);
+    }, 10000);
+    */
 
     M.log.debug(&#x27;Spawning new child&#x27;);
   }, that.connectTimeout);

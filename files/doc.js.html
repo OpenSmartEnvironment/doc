@@ -574,6 +574,7 @@ exports.build = function(grunt, pkg, cb) {  // {{{2
 
   grunt.log.writeln(&#x27;READING ...&#x27;);
   Fs.renameSync(&#x27;../doc/.git&#x27;, &#x27;../OLD_doc&#x27;);
+  Fs.renameSync(&#x27;../doc/.gitignore&#x27;, &#x27;../OLD_doc/.gitignore&#x27;);
   Json = (new Y.YUIDoc(options)).run();
 //  grunt.file.write(&#x27;../doc/data1.json&#x27;, JSON.stringify(Json, null, 2));
 
@@ -619,6 +620,7 @@ exports.build = function(grunt, pkg, cb) {  // {{{2
   var builder = new Y.DocBuilder(options, Json);
 
   builder.compile(function() {
+    Fs.renameSync(&#x27;../OLD_doc/.gitignore&#x27;, &#x27;../doc/.gitignore&#x27;);
     Fs.renameSync(&#x27;../OLD_doc&#x27;, &#x27;../doc/.git&#x27;);
     grunt.log.writeln(&#x27;DONE&#x27;);
     cb();
@@ -736,7 +738,6 @@ function doPackage(name) {  // {{{2
   doComps(comp, d);
   doModules(comp, d, true);
 
-  d.push(&#x27;## Contributions&#x27;);
   d.push(Contrib);
   d.push(&#x27;&#x27;);
 
@@ -877,6 +878,8 @@ function linkKeywords(text, link) {  // {{{2
       var args;
       if (text.length &gt; i + 3) {
         if ((text[i + 2] === &#x27;(&#x27;) &amp;&amp; (text[i + 4] === &#x27;)&#x27;) &amp;&amp; ! text[i + 1].trim()) {
+          continue;
+          /*
           if (text[i + 3].trim().toLowerCase().match(/^http/)) {
             continue;
           }
@@ -885,7 +888,12 @@ function linkKeywords(text, link) {  // {{{2
             continue;
           }
 
+          if (text[i + 3].charAt(0) === &#x27;.&#x27;) {
+            continue;
+          }
+
           args = text[i + 4];
+          */
         }
       }
 

@@ -575,7 +575,7 @@ function playUri(req) {  // {{{2
  * @method playUri
  */
 
-  console.log(&#x27;VLC PLAY URI&#x27;);
+//  console.log(&#x27;VLC PLAY URI&#x27;);
 
   getObject(this.entry, openUri.bind(null, this.entry, req));
 };
@@ -613,7 +613,7 @@ function stop(req) {  // {{{2
  * @method stop
  */
 
-  console.log(&#x27;VLC STOP&#x27;, req);
+//  console.log(&#x27;VLC STOP&#x27;, req);
 
   this.entry.object.Stop();
 };
@@ -855,13 +855,13 @@ function readMetadata(that, data) {  // {{{2
 };
 
 function openUri(that, uri) {  // {{{2
-  console.log(&#x27;VLC OPEN URI&#x27;, uri);
+//  console.log(&#x27;VLC OPEN URI&#x27;, uri);
 
   if (typeof uri !== &#x27;string&#x27;) {
     M.log.unhandled(&#x27;Invalid uri&#x27;, uri);
   } else {
     that.object &amp;&amp; that.object.OpenUri(uri, function(err) {
-      console.log(&#x27;VLC OPEN URI RESPONSE&#x27;, arguments);
+//      console.log(&#x27;VLC OPEN URI RESPONSE&#x27;, arguments);
       if (err) {
         M.log.error(err);
       }
@@ -870,7 +870,7 @@ function openUri(that, uri) {  // {{{2
 };
 
 function getObject(that, params, cb) {  // {{{2
-  console.log(&#x27;VLC GET OBJECT&#x27;);
+//  console.log(&#x27;VLC GET OBJECT&#x27;);
 
   var counter;
 
@@ -966,11 +966,14 @@ function getObject(that, params, cb) {  // {{{2
 
     var bus = Dbus();
 
-    if (VlcVersion.match(/\d\.\d/) &gt;= &#x27;2.1&#x27;)  {
+    // TODO Test in different distributions
+    if (VlcVersion &gt;= 2.2) {
+      var name = &#x27;org.mpris.MediaPlayer2.vlc&#x27;;
+    } else if (VlcVersion &gt;= 2.1) {
       var name = &#x27;org.mpris.MediaPlayer2.vlc.instance&#x27; + pid;
     } else {
       var name = &#x27;org.mpris.MediaPlayer2.vlc&#x27; + &#x27;-&#x27; + pid;
-    }
+    } 
 
     bus.proxy(name, &#x27;/org/mpris/MediaPlayer2&#x27;, &#x27;org.mpris.MediaPlayer2&#x27;, onCore);
     bus.proxy(name, &#x27;/org/mpris/MediaPlayer2&#x27;, &#x27;org.mpris.MediaPlayer2.Player&#x27;, onPlayer);
@@ -1168,9 +1171,7 @@ function removeArray(value) {  // {{{2
 function getVersion(cb) {  // {{{2
   Process.exec(&#x27;vlc --version&#x27;, function(err, stdout, stderr) {
     if (err) {
-//      VlcVersion = &#x27;NOT_FOUND&#x27;;
       cb(err);
-//      M.log.unhandled(&#x27;VLC version error&#x27;, err);
       return;
     }
 
@@ -1179,11 +1180,17 @@ function getVersion(cb) {  // {{{2
     for (var i = 0; i &lt; data.length; i++) {
       if (! data[i]) continue;
 
-      var match = data[i].match(/VLC version (\d\.\d\.\d)/);
+      var match = data[i].match(/VLC version (\d+\.\d+)/);
 
       if (match) {
-//        VlcVersion = match[1];
-        cb(null, match[1]);
+        try {
+          var data = parseFloat(match[1]);
+        } catch (err) {
+          cb(err);
+          return;
+        }
+
+        cb(null, data);
         return;
       }
     }

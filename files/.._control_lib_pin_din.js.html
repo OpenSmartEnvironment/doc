@@ -512,10 +512,12 @@ var Ose = require(&#x27;ose&#x27;);
  */
 
 // Public {{{1
-module.exports = function(pin, req, state, resp) {
+module.exports = function(pin, req, state, resp, cb) {
   if (req.debounce) {
     pin.send = Ose._.debounce(pin.send.bind(pin), req.debounce);
   }
+
+  cb();
 };
 
 

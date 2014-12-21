@@ -599,36 +599,38 @@ exports.register = function(req, socket) {  // {{{2
 
 //  console.log(&#x27;REGISTER PIN&#x27;, req);
 
+  var that = this;
+
   if (req.index in this.pins) {
-    Ose.link.error(socket, Ose.error(this, &#x27;alreadyRegistered&#x27;, req.index));
+    Ose.link.error(socket, Ose.error(this, &#x27;ALREADY_REGISTERED&#x27;, req));
     return;
   }
 
   var type = this.types[req.type];
   if (! type) {
-    Ose.link.error(socket, Ose.error(this, &#x27;missingCaps&#x27;, req.type));
+    Ose.link.error(socket, Ose.error(this, &#x27;CAPS_NOT_FOUND&#x27;, req));
     return;
   }
 
   var caps = this.pinCaps[req.index];
   if (! caps) {
-    Ose.link.error(socket, Ose.error(this, &#x27;pinNotFound&#x27;, req.index));
+    Ose.link.error(socket, Ose.error(this, &#x27;PIN_NOT_FOUND&#x27;, req));
     return;
   }
 
   if (! (req.type in caps)) {
-    Ose.link.error(socket, Ose.error(this, &#x27;missingCaps&#x27;, req.type));
+    Ose.link.error(socket, Ose.error(this, &#x27;CAPS_NOT_FOUND&#x27;, req));
     return;
   }
 
-  var setup = req.flavour || req.type;
-  if (setup.indexOf(&#x27;/&#x27;) &lt; 0) {
-    setup = &#x27;ose-control/lib/pin/&#x27; + setup;
+  var setupPath = req.flavour || req.type;
+  if (setupPath.indexOf(&#x27;/&#x27;) &lt; 0) {
+    setupPath = &#x27;ose-control/lib/pin/&#x27; + setupPath;
   }
-  setup = require(setup);
+  var setup = require(setupPath);
 
   if (typeof setup !== &#x27;function&#x27;) {
-    Ose.link.error(socket, Ose.error(this, &#x27;invalidflavour&#x27;, req.flavour));
+    Ose.link.error(socket, Ose.error(this, &#x27;FLAVOUR_NOT_FOUND&#x27;, req));
     return;
   }
 
@@ -644,33 +646,52 @@ exports.register = function(req, socket) {  // {{{2
     flavour: req.flavour,
     registered: result.registered,
     caps: caps,
+    path: setupPath,
   };
 
   if (! result.send) {
     result.send = pinSend;
   }
 
-  if (setup(result, req, state, resp, socket) === false) {
+  setup(result, req, state, resp, function(err) {  // {{{3
+    if (err) {
+      done(err);
+      return;
+    }
+
+    if (type.setup) {
+      type.setup(result, req, state, resp, done);
+      return;
+    }
+
+    done();
+    return;
+  });
+
+  return;
+
+  function done(err) {  // {{{3
+    if (err) {
+      Ose.link.error(result, err);
+      Ose.link.error(socket, err);
+      return;
+    }
+
+    var s = that.master.state.pins[result.index];
+    if (s) {
+      Ose._.extend(state, s);
+    }
+
+    // Write pin state info to &quot;master.state&quot;.
+    s = {};
+    s[result.index] = state;
+    that.master.setState({pins: s});
+
+    Ose.link.open(result, socket, resp);
     return;
   }
 
-  if (type.setup &amp;&amp; (type.setup(result, req, state, resp, socket) ===  false)) {
-    return;
-  }
-
-  var s = this.master.state.pins[result.index];
-  if (s) {
-    Ose._.extend(state, s);
-  }
-
-  // Write pin state info to &quot;master.state&quot;.
-  s = {};
-  s[result.index] = state;
-  this.master.setState({pins: s});
-
-  Ose.link.open(result, socket, resp);
-
-  return result;
+  // }}}3
 };
 
 exports.remove = function(pin) {  // {{{2

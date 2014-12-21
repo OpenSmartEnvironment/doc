@@ -509,7 +509,9 @@
  * @type module
  */
 
-module.exports = function(pin, req, state, resp) {};
+module.exports = function(pin, req, state, resp, cb) {
+  cb();
+};
 
 
 </pre>

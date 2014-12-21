@@ -515,13 +515,15 @@ var M = Ose.module(module);
  */
 
 // Public {{{1
-module.exports = function(pin, req, state, resp) {
+module.exports = function(pin, req, state, resp, cb) {
   pin.debounce = req.debounce;
   pin.holdTimeout = req.hold;
   pin.tapTimeout = req.tap;
 
   pin.send = Ose._.debounce(send.bind(pin), req.debounce);
   pin.read = read;
+
+  cb();
 };
 
 // Private {{{1
@@ -531,6 +533,10 @@ function read(req, socket) {  // {{{2
 
 function send(value) {  // {{{2
 //  console.log(&#x27;SWITCH CHANGE&#x27;, value);
+
+  var s = {};
+  s[this.index] = {value: value};
+  this.pins.master.setState({pins: s});
 
   var that = this;
   var now = Ose._.now();

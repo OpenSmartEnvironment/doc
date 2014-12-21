@@ -500,6 +500,24 @@
 <div><p>This component defines basic room entry kinds. By configuring
 entries of these kinds, it is possible to define an indoor
 environment and its behaviour.</p>
+<p>For a simple example of how to control a light using a switch, see
+the <a href="../modules/bundle.rpi.html">Raspberry Pi example application</a>.</p>
+<h2 id="description">Description</h2>
+<p>Each light channel can be controlled either through a digital
+output pin or a pin supporting PWM. Smooth changes of light
+intensity can be controlled through the <code>speed</code> value, which
+defines the time in milliseconds it takes change the light
+intensity from 0 to 100% or vice versa.</p>
+<p>Each light supports auto-off timeout since last change with
+configurable dim speed.</p>
+<p>Every light can be controlled by a <a href="../classes/control.lib.switch.html" class="crosslink">switch entry</a> with the
+following behaviour:</p>
+<ul>
+<li>One tap when shining: Switch the light off.</li>
+<li>One tap when off: Switch to the default configurable value.</li>
+<li>Two taps: Switch the light fully on.</li>
+<li>Hold: Switch the light off.</li>
+</ul>
 <h2 id="modules">Modules</h2>
 <p>Rooms consists of the following modules:</p>
 <ul>
@@ -550,19 +568,6 @@ controller. It is possible to use dimming when the controller
 supports it. This component allows to easily create lights composed
 of LED strips that can smoothly change the colour and intensity,
 and do any other effects.</p>
-<p>Smooth changes of light intensity can be controlled through the
-<code>speed</code> value, which defines the time in milliseconds it takes
-change the light intensity from 0 to 100% or vice versa.</p>
-<p>Each light supports auto-off timeout since last change with
-configurable dim speed.</p>
-<p>Every light can be controlled by a <a href="../classes/control.lib.switch.html" class="crosslink">switch entry</a> with the
-following behaviour:</p>
-<ul>
-<li>One tap when shining: Switch the light off.</li>
-<li>One tap when off: Switch to the default configurable value.</li>
-<li>Two taps: Switch the light fully on.</li>
-<li>Hold: Switch the light off.</li>
-</ul>
 <p>Module <a href="../classes/control.lib.light.html" class="crosslink">Light kind</a> reference ... </p>
 <h3 id="light-chanell-to-controller-pin-client-socket">Light chanell-to-controller pin client socket</h3>
 <p>Establishes a link for a channel to the <code>data.master</code>
@@ -609,6 +614,8 @@ are then relayed to the <code>slave</code> socket.</p>
 <p>For example, a <a href="../classes/control.lib.light.html" class="crosslink">light entry</a> connects to a switch (if defined in
 <code>light.data.switch</code>) as a slave and is turned on or off depending
 on pressing the switch.</p>
+<p>Currently, only momentary switches (push-to-make) are
+supported. Support for all other kinds of switches is planned.</p>
 <p>Module <a href="../classes/control.lib.switch.html" class="crosslink">Switch kind</a> reference ... </p>
 <h3 id="switch-to-controller-client-socket">Switch-to-controller client socket</h3>
 <p>Establishes a link to the <code>data.master</code> controller. The controller

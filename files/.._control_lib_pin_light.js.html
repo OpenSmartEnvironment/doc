@@ -513,22 +513,22 @@ var Ose = require(&#x27;ose&#x27;);
  */
 
 // Public {{{1
-module.exports = function(pin, req, state, resp, socket) {  // {{{2
+module.exports = function(pin, req, state, resp, cb) {  // {{{2
   switch (req.type) {
   case &#x27;pwm&#x27;:
     pin.update = updatePwm;
-    break;
+    pin.send = send;
+
+    cb();
+    return;
   case &#x27;dout&#x27;:
-    break;
-  default:
-    var err = Ose.error(pin, &#x27;INVALID_ARGS&#x27;, req);
-    Ose.link.error(pin, err);
-    Ose.link.error(socket, err);
-    return false;
+    pin.update = updateDout;
+
+    cb();
+    return;
   }
 
-  pin.send = send;
-
+  cb(Ose.error(pin, &#x27;INVALID_ARGS&#x27;, req));
   return;
 };
 
@@ -542,6 +542,15 @@ function send(value) {  // {{{2
   this.value = tout(value, this.caps);
 
   setState(this, value, this.value, Ose._.now());
+};
+
+function updateDout(req) {  // {{{2
+/**
+ * This method is assigned to the &#x60;Pin&#x60; instance and replaces the
+ * original &#x60;update()&#x60; method.  &#x60;this&#x60; is a &#x60;Pin&#x60; instance.
+ */
+
+  this.type.write(this, req.value ? 1 : 0);
 };
 
 function updatePwm(req) {  // {{{2

@@ -557,11 +557,17 @@ function C(entry, req, socket) {  // {{{2
         return;
       }
 
-      Ose.link.error(
-        that,
-        err || M.log.todo(&#x27;Entry has no kind but entry.track (entry.linMaster) returned no error!&#x27;, entry, arguments)
-      );
-      that.close();
+      if (! err) {
+        M.log.todo(&#x27;Entry has no kind but entry.track (entry.linMaster) returned no error!&#x27;, entry, arguments);
+        return;
+      }
+
+      Ose.link.error(socket, err);
+
+      if (that.entry) {
+        that.close();
+      }
+
       return;
     }
   );
@@ -625,6 +631,8 @@ exports.error = function(err) {  // {{{2
  *
  * @method error
  */
+
+//  console.log(&#x27;ENTRY MASTER ERROR&#x27;, this.entry &amp;&amp; this.entry.id, err);
 
   this.close();
 };

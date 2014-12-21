@@ -495,6 +495,9 @@
 <pre class="code prettyprint linenums">
 &#x27;use strict&#x27;;
 
+var Ose = require(&#x27;ose&#x27;);
+var M = Ose.module(module);
+
 /** Doc {{{
  * @submodule control.pin
  */
@@ -524,36 +527,16 @@ exports.registerPin = function(req, socket) {  // {{{2
   this.entry.pins.register(req, socket);
 };
 
-exports.updatePin = function(entry, action, cb) {  // Update PIC PIN value. {{{2
-  M.log.todo();
-  return;
+exports.updatePin = function(req, socket) {  // Update PIC PIN value. {{{2
+  var pin = this.entry.pins.pins[req.index];
 
-
-
-
-  var pin = entry.pins.pins[action.data.index];
-
-//  console.log(&#x27;UPDATE PIN&#x27;, action.data, typeof pin.write);
-
-  if (
-    pin &amp;&amp;
-    ((action.source === pin.slave) || (action.source === entry)) &amp;&amp;
-    (action.data.confirmed || ! pin.confirm)
-  ) {
-    if (pin.write) {
-      pin.write(action.data);
-      cb();  // TODO Call &quot;cb()&quot; after successfull write.
-      return;
-    }
-
-    if (pin.type.write) {
-      pin.type.write(entry, pin, action.data.value);
-      cb();  // TODO Call &quot;cb()&quot; after successfull write.
-      return;
-    }
+  if (! pin) {
+    Ose.link.error(socket, Ose.error(this, &#x27;PIN_NOT_FOUND&#x27;, req));
+    return;
   }
 
-  cb(Ose.error(this, &#x27;INVALID_ARGS&#x27;));
+  pin.type.write(pin, req.value);
+  Ose.link.close(socket);
   return;
 };
 

@@ -710,7 +710,7 @@ exports.read = function(req, socket) {  // {{{2
   } else {
     Ose.link.error(
       socket || this,
-      Ose.error(this, &#x27; notImplemented&#x27;, &#x27;read&#x27;)
+      Ose.error(this, &#x27; NOT_IMPLEMENTED&#x27;, &#x27;read&#x27;, req)
     );
   }
 };

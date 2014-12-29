@@ -1,0 +1,164 @@
+/* All {{{1 */
+
+body {
+  font-family: "Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;
+  height: 100%;
+  width: 100%;
+  margin: 0 0 0 0;
+}
+
+a {
+  text-decoration: none;
+  color: grey;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Sidebars {{{1 */
+
+.sidebar {
+  position: fixed;
+  height: 100%;
+  width: 16rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar > div.head {
+  padding: 0 1.5rem 0.2rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.sidebar > div.head::first-letter {
+  font-size: 1.3rem;
+}
+
+input#search {
+  width: 13rem;
+  margin: 0 1rem;
+}
+
+.sidebar ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.sidebar>ul {
+  padding: 0 1rem;
+}
+
+.sidebar li {
+  padding: 0.1rem 0;
+}
+
+.sidebar a, .sidebar a:visited, .sidebar a:link {
+  display: block;
+}
+
+.sidebar .h1 {
+  padding-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.sidebar .h1 > ul {
+  padding-left: 1rem;
+  font-weight: normal;
+}
+
+.sidebar .h2 {
+  font-size: 1rem;
+}
+
+.sidebar .h2 > ul, .sidebar .h3 > ul, .sidebar .h4 > ul, .sidebar .h5 > ul, .sidebar .h6 > ul {
+  padding-left: 1rem;
+}
+
+.sidebar .h3 {
+  font-size: 0.9rem;
+}
+
+.sidebar .h4 {
+  font-size: 0.8rem;
+}
+
+.sidebar .h5 {
+  font-size: 0.7rem;
+}
+
+.sidebar .h6 {
+  font-size: 0.6rem;
+}
+
+ul#quick > li.h1 {
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+ul#modules {
+  padding-top: 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* Main {{{1 */
+
+div#main {
+  position: fixed;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  line-height: 1.6;
+}
+
+#main > div {
+  padding: 0 1rem;
+}
+
+#main h1:hover::after, #main h2:hover::after, #main h3:hover::after, #main h4:hover::after, #main h5:hover::after, #main h6:hover::after {
+  content: "\25b2";
+}
+
+#main h1, #main h2, #main h3 {
+  font-weight: bold;
+}
+
+#main h1, #main h3, #main h5 {
+  color: #d98527;
+}
+
+#main h2, #main h4, #main h6 {
+  color: #30418c;
+}
+
+#main pre, #main code {
+  background-color: #f7f7f7;
+  color: #333;
+
+  border-radius: 0.1rem;
+  box-sizing: border-box;
+
+  font-size: 0.85rem;
+  font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace
+}
+
+#main pre {
+  overflow: auto;
+
+  margin-bottom: 1rem;
+  margin-top: 0;
+  padding: 1rem;
+
+  line-height: 1.15rem;
+}
+
+#main code {
+  padding: 0.1rem 0.4rem;
+  word-wrap: break-word;
+}
+

@@ -577,18 +577,6 @@ Packages["control"] = {
               "description": "Tariff entry identification object.\n\nIf specified, the heater establishes a new link to the\n`data.tariff` entry and gets controlled by it."
             }
           },
-          "undefined": {
-            "undefined": {
-              "description": "Invoked on entry state change.",
-              "params": [
-                {
-                  "name": "this",
-                  "description": "Entry",
-                  "type": "Object"
-                }
-              ]
-            }
-          },
           "method": {
             "power": {
               "name": "power",
@@ -596,21 +584,15 @@ Packages["control"] = {
               "description": "Command handler. Sets up heater power to specified value.",
               "params": [
                 {
-                  "name": "this",
-                  "description": "Context",
-                  "type": "Object",
-                  "props": [
-                    {
-                      "name": "entry",
-                      "description": "Target entry.",
-                      "type": "Object"
-                    }
-                  ]
-                },
-                {
                   "name": "req",
                   "description": "Value between 0..1",
                   "type": "Boolean | Number | String"
+                },
+                {
+                  "name": "socket",
+                  "description": "Command response socket",
+                  "type": "Object",
+                  "optional": true
                 }
               ]
             }
@@ -936,7 +918,7 @@ Packages["control"] = {
         "lib/light/pin": {
           "name": "lib/light/pin",
           "type": "class",
-          "caption": "Light chanell-to-controller pin client socket",
+          "caption": "Light channel-to-controller pin client socket",
           "readme": "Establishes a link for a channel to the `data.master`\ncontroller. The controller can be an [OSE PWM board], for example.",
           "file": "lib/light/pin.js",
           "method": {
@@ -944,6 +926,23 @@ Packages["control"] = {
               "name": "constructor",
               "type": "method",
               "description": "Socket constructor"
+            },
+            "end": {
+              "name": "end",
+              "type": "method",
+              "description": "Broken link handler",
+              "params": [
+                {
+                  "name": "err",
+                  "description": "[Error] instance",
+                  "type": "Object"
+                },
+                {
+                  "name": "resp",
+                  "description": "Response",
+                  "type": "*"
+                }
+              ]
             },
             "sync": {
               "name": "sync",

@@ -133,12 +133,24 @@ Packages["videolan"] = {
         "fullscreen": {
           "name": "fullscreen",
           "type": "method",
-          "description": "[Command handler]\n\nRaise window"
+          "description": "[Command handler]\n\nToggles fullscreen",
+          "params": [
+            {
+              "name": "req",
+              "description": "Fullscreen?",
+              "type": "Object"
+            }
+          ]
+        },
+        "raise": {
+          "name": "raise",
+          "type": "method",
+          "description": "[Command handler]\n\nRaises window"
         },
         "shuffle": {
           "name": "shuffle",
           "type": "method",
-          "description": "[Command handler]\n\nSwitch shuffle",
+          "description": "[Command handler]\n\nToggles shuffle mode",
           "params": [
             {
               "name": "req",

@@ -11,18 +11,40 @@ Packages["lirc"] = {
       "name": "lib/lirc",
       "type": "singleton",
       "caption": "LIRC kind",
-      "readme": "Entry kind for connecting to and communicating with the LIRC\ndaemon.\n\nReceives and processes LIRC commands from the LIRC Unix socket\n(/var/run/lirc/lircd). Emits the \"receive\" event, which can then\nbe, for example, handled by the [control.remote] component.",
+      "readme": "Entry kind for connecting to and communicating with the LIRC\ndaemon.\n\nReceives and processes LIRC commands from the LIRC Unix socket\n(/var/run/lirc/lircd). Emits the `\"receive\"` event, which can then\nbe, for example, handled by the [control.remote] component.",
       "file": "lib/lirc/index.js",
       "event": {
-        "": {
-          "name": "",
+        "receive": {
+          "name": "receive",
           "type": "event",
           "description": "Fired when the lirc module receives a command",
           "params": [
             {
-              "name": "UNKNOWN",
-              "description": "{\n     count: {Number} Incremented number reached during long press\n     remote: {String} Remote controller name\n     lirc: {String} Original LIRC command name\n     key: {String} Command name after pre-processing\n   }",
-              "type": "Object"
+              "name": "data",
+              "description": "",
+              "type": "Object",
+              "props": [
+                {
+                  "name": "count",
+                  "description": "Incremented number reached during long press",
+                  "type": "Number"
+                },
+                {
+                  "name": "remote",
+                  "description": "Remote controller name",
+                  "type": "String"
+                },
+                {
+                  "name": "lirc",
+                  "description": "Original LIRC command name",
+                  "type": "String"
+                },
+                {
+                  "name": "key",
+                  "description": "Command name after pre-processing",
+                  "type": "String"
+                }
+              ]
             }
           ]
         }

@@ -2,7 +2,7 @@ Packages["ose"] = {
   "name": "ose",
   "npmname": "ose",
   "caption": "Framework",
-  "readme": "Lightweight and extensible framework for development and rapid\nprototyping of modern applications based on Node.js and HTML5.\n\nThe framework is created as a base for an OSE application that\nmanages the physical and virtual environment that a user lives\nin. It brings the ability to easily monitor and control the\nenvironment, and to automate tasks.",
+  "readme": "Lightweight and extensible framework for development and rapid\nprototyping of applications based on Node.js and HTML5.\n\nThe framework was conceived as a base for an OSE application that\nmanages the physical and virtual environment that a user lives\nin. It brings the ability to easily monitor and control the\nenvironment, and to automate tasks.",
   "file": "content.js",
   "line": 11,
   "aliases": "framework oseFramework supportedBrowser supportedBrowsers",
@@ -15,13 +15,13 @@ Packages["ose"] = {
       "file": "lib/scope.js",
       "line": 11,
       "aliases": "command commands entryCommand entryCommands commandHandler commandHandlers",
-      "description": "## Commands\nIt is possible to send commands to individual [entries]. Each\ncommand is delivered to the [home] of an [entry]. Commands consist\nof a command name and optional data. A command can be a request for\ndata or to establish a new [link].\n\nCommand handlers can be registered for a [kind] with an `on()`\nmethod call. The [Kind] class is not an [Event Emitter] descendant.\nIn command handler code, the target `entry` can be accessed in\n`this.entry`.\n\nExample:\n    TODO",
+      "description": "## Commands\nIt is possible to send commands to individual [entries]. Each\ncommand is delivered to the [home] of the given [entry]. Commands\nconsist of a command name and optional data. A command can be a\nrequest for data or to establish a new [link].\n\nCommand handlers can be registered for a [kind] with an `on()`\nmethod call. The [Kind] class is not an [Event Emitter] descendant.\nIn command handler code, the target `entry` can be accessed in\n`this.entry`.\n\nExample:\n    TODO",
       "modules": {
         "lib/entry/command": {
           "name": "lib/entry/command",
           "type": "class",
           "caption": "Entry command client socket",
-          "readme": "Sends some command to the target entry. When the link disconnects,\nit tries to reopen it as soon as possible.",
+          "readme": "Sends some command to the target entry. This class ensures that\nlinks are reopenned , it tries to reopen it as soon as possible\nafter they disconnect due to network problems, restarts of peers or\nother reasons.",
           "file": "lib/entry/command.js",
           "property": {
             "entry": {
@@ -42,8 +42,8 @@ Packages["ose"] = {
               "dtype": "String",
               "description": "Command name"
             },
-            "[data]": {
-              "name": "[data]",
+            "data": {
+              "name": "data",
               "type": "property",
               "dtype": "*",
               "description": "Optional command data"
@@ -113,7 +113,7 @@ Packages["ose"] = {
           "type": "class",
           "super": "EventEmitter",
           "caption": "Entry class",
-          "readme": "An [Entry] instance is a data structure representing a physical\nobject or logical concept. Each [entry] belongs to a certain\n[shard]. Within the [shard], it has a unique `id`. Each [entry] is\nof a certain [kind] that defines its behaviour. An [entry] can\ncontain a `data` object in JSON format (analogous to a database\ntable row). At the moment, `data` are defined at the start-up of an\n[OSE instance] and are immutable. Data management and persistence\nare planned features. The `state` JSON object, unlike `data`, can\noften change and is non-persistent by design because it reflects\nchanging objective reality. Changes of `state` objects are\npropagated to [peers] tracking changes of certain [entries].",
+          "readme": "An [Entry] instance is a data structure representing a physical\nobject or logical concept. Each [entry] belongs to a certain\n[shard]. Within the [shard], it has a unique `id`. Each [entry] is\nof a certain [kind] that defines its behaviour.\n\nAn [entry] can contain a `data` object in JSON format (analogous to\na database table row). At the moment, `data` are defined at the\nstart-up of an [OSE instance] and are immutable. Data management\nand persistence are planned features.\n\nThe `state` JSON object, unlike `data`, can often change and is\nnon-persistent by design because it reflects changing objective\nreality. Changes of `state` objects are propagated to [peers]\ntracking changes of certain [entries].\n\nIn addition, the `blob` object may contain arbitrary binary\ndata. Each `blob` can be read as a stream.",
           "file": "lib/entry/index.js",
           "aliases": "entry entries data state statesOfEntries",
           "property": {
@@ -705,6 +705,21 @@ Packages["ose"] = {
             }
           }
         },
+        "lib/entry/readable": {
+          "name": "lib/entry/readable",
+          "type": "class",
+          "super": "stream/Readable",
+          "caption": "Entry readable stream client socket",
+          "readme": "",
+          "file": "lib/entry/readable.js",
+          "method": {
+            "constructor": {
+              "name": "constructor",
+              "type": "method",
+              "description": "Class constructor."
+            }
+          }
+        },
         "lib/entry/slave": {
           "name": "lib/entry/slave",
           "type": "class",
@@ -737,6 +752,51 @@ Packages["ose"] = {
                   "name": "entry",
                   "description": "Entry",
                   "type": "Object"
+                }
+              ]
+            },
+            "open": {
+              "name": "open",
+              "type": "method",
+              "description": "Open handler",
+              "params": [
+                {
+                  "name": "resp",
+                  "description": "Response object",
+                  "type": "Object",
+                  "props": []
+                },
+                {
+                  "name": "resp",
+                  "description": "Update object",
+                  "type": "Object",
+                  "props": [
+                    {
+                      "name": "",
+                      "description": "Data update",
+                      "type": "Object"
+                    },
+                    {
+                      "name": "",
+                      "description": "Data revision",
+                      "type": "Object"
+                    },
+                    {
+                      "name": "",
+                      "description": "State",
+                      "type": "Object"
+                    },
+                    {
+                      "name": "",
+                      "description": "State revision",
+                      "type": "Object"
+                    },
+                    {
+                      "name": "",
+                      "description": "Whether the chain of links to the `home` is created",
+                      "type": "Boolean"
+                    }
+                  ]
                 }
               ]
             },
@@ -940,7 +1000,7 @@ Packages["ose"] = {
             "afterHome": {
               "name": "afterHome",
               "type": "method",
-              "description": "Executes callback after the shard has been initialized, but only in\nthe [home OSE instance].",
+              "description": "Executes a callback after the shard has been initialized, but only in\nthe [home OSE instance].",
               "params": [
                 {
                   "name": "cb",
@@ -961,15 +1021,19 @@ Packages["ose"] = {
               "params": [
                 {
                   "name": "id",
-                  "description": ""
+                  "description": "Entry ID unique within shard",
+                  "type": "String|Number"
                 },
                 {
                   "name": "kind",
-                  "description": ""
+                  "description": "Entry kind",
+                  "type": "Object|String"
                 },
                 {
                   "name": "data",
-                  "description": ""
+                  "description": "Optional entry data",
+                  "type": "Object",
+                  "optional": true
                 }
               ]
             },
@@ -1167,7 +1231,7 @@ Packages["ose"] = {
             "linkMaster": {
               "name": "linkMaster",
               "type": "method",
-              "description": "Establishes a link to the master shard if it doesn't exist and\nprovides a shard/slave socket as a callback response.\nShould be called only when not at home.\n`shard.master` is removed only when it is unnecessary - the shard doesn't needs to be synced to its home.",
+              "description": "Establishes a link to the master shard if it doesn't exist and\nprovides a shard/slave socket as a callback response. Should be\ncalled only when not at home.  `shard.master` is removed only when\nit is unnecessary - the shard doesn't needs to be synced with its\nhome.",
               "params": [
                 {
                   "name": "cb",
@@ -1644,7 +1708,7 @@ Packages["ose"] = {
           "name": "lib/kind",
           "type": "class",
           "caption": "Kind class",
-          "readme": "Each [entry] is of a certain kind. Kinds define the properties and\nbehaviour of [entries].\n\nKinds should describe, as closely as possible, physical or virtual\nobjects that can be managed somehow.",
+          "readme": "Each [entry] is of a certain kind. Kinds define the properties and\nbehaviour of [entries].\n\nKinds should describe, as closely as possible, physical or virtual\nobjects.",
           "file": "lib/kind.js",
           "aliases": "kind kinds entryKind entryKinds kindsOfEntries",
           "method": {
@@ -1913,7 +1977,7 @@ Packages["ose"] = {
             "addModule": {
               "name": "addModule",
               "type": "method",
-              "description": "Adds a module among scripts in <body>.",
+              "description": "Adds a module among scripts in the `<head>`.",
               "params": [
                 {
                   "name": "filename",
@@ -1930,7 +1994,7 @@ Packages["ose"] = {
             "addJs": {
               "name": "addJs",
               "type": "method",
-              "description": "Adds a JavaScript file to scripts in <body>.",
+              "description": "Adds a JavaScript file to scripts in `<head>`.",
               "params": [
                 {
                   "name": "name",
@@ -1942,7 +2006,7 @@ Packages["ose"] = {
             "addCss": {
               "name": "addCss",
               "type": "method",
-              "description": "Adds a CSS file to scripts in <body>.",
+              "description": "Adds a CSS file to scripts in the `<head>`.",
               "params": [
                 {
                   "name": "name",
@@ -2109,17 +2173,17 @@ Packages["ose"] = {
     "peer": {
       "name": "peer",
       "caption": "Peers",
-      "readme": "The system, which is based on the OSE framework, consist of one or\nmore configured instances, called OSE instances. An OSE instance is\nidentified by a unique `name` an can run in Node.js or in a web\nbrowser.\n\nFrom the point of view of an OSE instance, a peer is another OSE\ninstance. Two peers can communicate with each other using the\nWebSocket protocol. Peers can be accessed directly, when a\nWebSocket channel exists, or indirectly, by using another peer as a\ngateway.\n\nThis component allows the following communication between OSE\ninstances:\n\n- Obtaining [entries] and views of entries.\n- Synchronization of [states of entries] in near real-time.\n- Sending of commands to entries.\n- Establishing transparent, asynchronous bidirectional [links]\n  between entries.",
-      "file": "lib/ws/worker.js",
-      "line": 8,
+      "readme": "The system, which is based on the OSE framework, consist of one or\nmore configured instances, called OSE instances. An OSE instance is\nidentified by a unique `name` an can run in Node.js or in a web\nbrowser.\n\nFrom the point of view of an OSE instance, a peer is another OSE\ninstance. Two peers can communicate with each other using the\nWebSocket protocol. Peers can be accessed directly, when a\nWebSocket channel exists, or indirectly, by using another peer as a\ngateway.\n\nThis component allows the following communication between OSE\ninstances:\n\n- Obtaining [entries] and views of entries.\n- Synchronization of [states of entries] in near real-time.\n- Sending commands to entries.\n- Streaming blobs contained by entries\n- Establishing transparent, asynchronous bidirectional [links]\n  between entries.",
+      "file": "lib/ws/writable.js",
+      "line": 11,
       "aliases": "peers homeOseInstance homeInstance oseInstance home peer-to-peer peersComponent",
-      "description": "## Peer-to-peer relationships\nRemote peers of an OSE instance can enter the following connection\nstates:\n\n- near: peer reachable directly through a WebSocket\n- far: peer not reachable directly, but through a gateway \"near\"\n  (or chain of \"nears\")\n- unreachable: a peer that can't be reached\n\nIn addition, each OSE instance creates a [here peer] object\ndescribing itself.\n\nFrom the point of view of a [shard], a `home` is a [peer] to which\nits [entries] logically belong. The `home` is where commands are\nexecuted.\n\n\n## Establishing a peer-to-peer channel\n\nWhen a communication channel between two OSE instances is\nestablished, the following steps are taken:\n\n1. The client Peer instance calls the `connect()` method.\n  - A [WebSocket wrapper] is created.\n  - A WebSocket native object is created and connects to `peer.url`.\n\n2. The server verifies incoming request\n  - When there is no Peer instance for the client OSE instance, one is created.\n\n3. Server opens a WebSocket channel\n  - [WebSocket wrapper] is created.\n\n4. Handshake between peers\n\n5. Both Peer instances assign the `rxData()` method to the `rx`\n   property of [WebSocket wrapper] instance.\n   - After this step, the client and server become equal.\n\n\n## Messages\nFor standard peer to peer communication, data blocks, sent through\nWebSockets, are called \"messages\". Each message has a type.\nDepending on the message type, the appropriate method from [peer rx\nhandlers] is called to handle the incoming message.",
+      "description": "## Peer-to-peer relationships\nRemote peers of an OSE instance can enter the following connection\nstates:\n\n- near: peer reachable directly through a WebSocket\n- far: peer not reachable directly, but through a gateway \"near\"\n  (or chain of \"nears\")\n- unreachable: a peer that can't be reached\n\nIn addition, each OSE instance creates a [here peer] object\ndescribing itself.\n\nFrom the point of view of a [shard], a `home` is a [peer] to which\nits [entries] logically belong. The `home` is where commands are\nexecuted.\n\n\n## Establishing a peer-to-peer channel\n\nWhen a communication channel between two OSE instances is\nestablished, the following steps are taken:\n\n1. The client Peer instance calls the `connect()` method.\n  - A [WebSocket wrapper] is created.\n  - A WebSocket native object is created and connects to `peer.url`.\n\n2. The server verifies the incoming request\n  - When there is no Peer instance for the client OSE instance, one is created.\n\n3. Server opens a WebSocket channel\n  - A [WebSocket wrapper] is created.\n\n4. Handshake between peers\n\n5. Both Peer instances assign the `rxData()` method to the `rx`\n   property of the [WebSocket wrapper] instance.\n   - After this step, the client and server become equal.\n\n\n## Messages\nFor standard peer to peer communication, data blocks, sent through\nWebSockets, are called \"messages\". Each message has a type.\nDepending on the message type, the appropriate method from [peer rx\nhandlers] is called to handle the incoming message.",
       "modules": {
         "lib/peer/here": {
           "name": "lib/peer/here",
           "type": "module",
           "caption": "Here peer",
-          "readme": "Object representing own OSE instance peer. Each OSE instance\nregisters this object at startup with other peers in `Ose.peers`\nunder it's own name, i.e. `Ose.name`.",
+          "readme": "Object representing own OSE instance peer. Each OSE instance\nregisters this object at startup with other peers in `Ose.peers`\nunder its own name, i.e. `Ose.name`.",
           "file": "lib/peer/here.js"
         },
         "lib/peer/list": {
@@ -2454,6 +2518,40 @@ Packages["ose"] = {
                 }
               ]
             },
+            "readStream": {
+              "name": "readStream",
+              "type": "method",
+              "description": "Read entry stream handler",
+              "params": [
+                {
+                  "name": "ws",
+                  "description": "[WebSocket wrapper]",
+                  "type": "Object"
+                },
+                {
+                  "name": "req",
+                  "description": "Request data",
+                  "type": "Object"
+                }
+              ]
+            },
+            "chunk": {
+              "name": "chunk",
+              "type": "method",
+              "description": "Stream chunk handler",
+              "params": [
+                {
+                  "name": "ws",
+                  "description": "[WebSocket wrapper]",
+                  "type": "Object"
+                },
+                {
+                  "name": "req",
+                  "description": "Request data",
+                  "type": "Object"
+                }
+              ]
+            },
             "command": {
               "name": "command",
               "type": "method",
@@ -2477,7 +2575,7 @@ Packages["ose"] = {
           "name": "lib/ws/browser",
           "type": "module",
           "caption": "Browser WebSocket wrapper",
-          "readme": "Extension of `WebSocket wrapper` for browser",
+          "readme": "Extension of `WebSocket wrapper` for browsers",
           "file": "lib/ws/browser.js"
         },
         "lib/ws": {
@@ -2619,13 +2717,34 @@ Packages["ose"] = {
           "caption": "WebSocket browser worker",
           "readme": "Worker object that isolates the [WebSocket wrapper] timer from the\n`window` object in the browser. A workaround for better (but still\nnot correct!) timer behaviour in the Android environmnent while\nsleeping.",
           "file": "lib/ws/worker.js"
+        },
+        "lib/ws/writable": {
+          "name": "lib/ws/writable",
+          "type": "class",
+          "caption": "WebSocket write stream socket",
+          "readme": "Relays readable stream to a peer.",
+          "file": "lib/ws/writable.js",
+          "method": {
+            "constructor": {
+              "name": "constructor",
+              "type": "method",
+              "description": "Class constructor.",
+              "params": [
+                {
+                  "name": "entry",
+                  "description": "Entry",
+                  "type": "Object"
+                }
+              ]
+            }
+          }
         }
       }
     },
     "link": {
       "name": "link",
       "caption": "Sockets and links",
-      "readme": "The framework makes it possible to easily create links between\n`entries` to allow communication regardless of whether it is\nrealized within one OSE instance or transparently across multiple\nOSE instances. A link is a virtual bidirectional communication\nchannel between two sockets. Link cannot exist without an active\n[peer-to-peer] connection channel between sockets. When some\nWebSocket channel is closed, an `error` handler is called on both\nends of links using such channel and links are closed.\n\nEach socket is an object with handlers. A socket is either a client\nsocket or a response socket. To establish a link, a client socket\nmust first be created. The client socket must then be delivered to\nthe master entry's handler. This handler must then create a\ncorresponding response socket and open a link.  After the link is\nestablished, the client and response sides become equal.",
+      "readme": "The framework makes it possible to easily create links between\n`entries` to allow communication regardless of whether it is\nrealized within one OSE instance or transparently across multiple\nOSE instances. A link is a virtual bidirectional communication\nchannel between two sockets. A link cannot exist without an active\n[peer-to-peer] connection channel between sockets. When some\nWebSocket channel is closed, an `error` handler is called on both\nends of links using such channel and links are closed.\n\nEach socket is an object with handlers. A socket is either a client\nsocket or a response socket. To establish a link, a client socket\nmust first be created. The client socket must then be delivered to\nthe master entry's handler. This handler must then create a\ncorresponding response socket and open a link.  After the link is\nestablished, the client and response sides become equal.",
       "file": "lib/link.js",
       "line": 145,
       "aliases": "link links socket sockets clientSocket responseSocket",
@@ -2720,7 +2839,7 @@ Packages["ose"] = {
       "file": "lib/logger.js",
       "line": 63,
       "aliases": "error logging",
-      "description": "## Usage\n\nExample module :\n\n    'use strict';\n\n    var Ose = require('ose');\n    var M = Ose.module(module);\n    ...\n    M.log.info('Processing');\n\nTo create an error, it is possible to use `Ose.error()`, which\nappends an optional `subject` and `data` to the error object. the\n`subject` and `data` make it easier to analyse problems. If an\nerror is logged, `subject.identify()`, if it is defined, is used\nto display subject identification.\n\nExample:\n\n    var err = Ose.error(subject, 'Something has gone terribly wrong.', arguments);\n    ...\n\n    // To log an error:\n    M.log.error(err);\n\n    // or to use an error in callback:\n    cb(err);\n\n    // or to throw an error:\n    throw err;\n\n    // or send an error to a link:\n    Ose.link.error(socket, err);\n\nWhen calling any callback with an error response, sending an error to a link, or throwing an exception, `Error` instance created by `Ose.error()` should be used.",
+      "description": "## Usage\n\nExample module :\n\n    'use strict';\n\n    var Ose = require('ose');\n    var M = Ose.module(module);\n    ...\n    M.log.info('Processing');\n\nTo create an error, it is possible to use `Ose.error()`, which\nappends an optional `subject` and `data` to the error object. The\n`subject` and `data` make it easier to analyse problems. If an\nerror is logged, `subject.identify()`, if defined, is used\nto display subject identification.\n\nExample:\n\n    var err = Ose.error(subject, 'Something has gone terribly wrong.', arguments);\n    ...\n\n    // To log an error:\n    M.log.error(err);\n\n    // or to use an error in callback:\n    cb(err);\n\n    // or to throw an error:\n    throw err;\n\n    // or send an error to a link:\n    Ose.link.error(socket, err);\n\nWhen calling any callback with an error response, sending an error to a link, or throwing an exception, `Error` instance created by `Ose.error()` should be used.",
       "modules": {
         "lib/logger": {
           "name": "lib/logger",
@@ -3029,9 +3148,9 @@ Packages["ose"] = {
       "caption": "Classes and singletons",
       "readme": "This component facilitates the usage of classes or singletons with\nsimple code sharing and runtime specific behaviour by the browser\nand Node.js environments. This makes it possible to use\nprototypal inheritance to create classes and singletons and to mix\nin modules into class prototypes and singletons.",
       "file": "lib/wrap.js",
-      "line": 480,
+      "line": 478,
       "aliases": "class classes singleton singletons eventEmitter super",
-      "description": "## Module wrapping\n\nThe creation of classes and singletons is based on the CommonJS\nModules spec. Each class or singleton is defined within its own\nmodule.\n\nTo create a class or singleton, you first need to wrap the module\ncontaining the class or singleton definition by calling one of the\nfollowing:\n\n- `Ose.class(module)`.\n- `Ose.singleton(module)`.\n- `Ose.package(module)`.\n- `Ose.module(module)`.\n\nExample:\n\n    // Module containing class definiton.\n    'use strict';\n\n    // Require OSE.\n    var Ose = require('ose');\n    // Create and return wrap instance\n    var M = Ose.class(module);\n    ...\n\nThe `Ose` variable gives access to global OSE functionalities.  The\n`M` variable contains the module wrapper and gives access to\nfunctionalities relative to the module.\n\n**IMPORTANT:**<br />\nEach time a module is wrapped using `Ose.class`, `Ose.singleton` or\n`Ose.package` (ie. not `Ose.module`), the wrapper adds the `M`\nproperty to `module.exports`. It is not allowed to overwrite this\nproperty. The `M` property is read-only and non-configurable. It is\nbetter not to overload this property.\n\n## Classes\n\nA class is a function used as a class constructor with a prototype.\n\nTo use a class, you need to carry out three steps:\n1. Prepare a module containing a class definition.\n2. Obtain a class constructor.\n3. Create a new object.\n\nFirst, the class needs to be prepared in the module containing the\nclass definition by calling `Ose.class(module, [constructor],\n[super])`. The `constructor` is an optional class constructor\nmethod. If it is not defined, it gets created automatically. The\n`super` parameter can be `undefined`, a class constructor or a\nclass name. It is not possible to inherit from singletons.\n\nExample module with class preparation::\n\n    // Module \"ose/lib/entry\"\n    'use strict';\n\n    // Require OSE\n    var Ose = require('ose');\n\n    // Wrap module and specifies a class with a constructor\n    // function `C` and \"EventEmitter\" as a super-class.\n    var M = Ose.class(module, C, 'EventEmitter');\n\n    // Class constructor\n    function C(...) {\n      // Call super constructor\n      M.super.call(this);\n      ...\n    }\n\n    // Add properties of the class' prototype to the `exports`\n    // object:\n\n    // Define property.\n    exports.config = function(name, data) {\n      ...\n    };\n\n    // Define another property\n    exports.identify = function() {\n      return {\n        space: this.shard.space.name,\n        shard: this.shard.sid,\n        entry: this.id\n      };\n    };\n\n\nThe second step is to obtain a class constructor with its\nprototype. This step is carried out when the class is first\naccessed by calling `M.class('ose/lib/entry')`. Multiple calls to\n`M.class('ose/lib/entry')` return the same, already created\nclass. When called for the first time, the class prototype is\ncreated from module exports and optional mixins. If the class has\nan ancestor, the constructor should usually call the super\nconstructor (see example above). If a class is defined without a\nconstructor, the constructor is created.\n\nThe last step is to create a new object based on the class.\n\nClass usage example:\n\n    // Some other module ...\n    'use strict';\n\n    // Require OSE\n    var Ose = require('ose');\n    // Wrap module\n    var M = Ose.module(module);\n\n    // Obtain class constructor (second step).\n    var Entry = M.class('ose/lib/entry');\n\n    ...\n\n    // Create new object as an Entry instance (third step).\n    entry = new Entry(shard, kind);\n\n    ...\n\nThere is a built-in class named **EventEmitter**. To use this\nclass, pass `'EventEmitter'` to the `class()` method (see the\nexamples above). In the browser environment, the\n[\"wolfy87-eventemitter\"](https://github.com/Wolfy87/EventEmitter)\npackage is used.\n\nTo access the `module.exports` object that is wrapped and prepared\nas a class, call the standard `require('ose/lib/entry')`\nmethod. This call returns the original `module.exports` object.\n\nTo extend any class, use the following example:\n\n    // Require OSE\n    var Ose = require('ose');\n    // Wrap module\n    var M = Ose.module(module);\n\n    // Obtain Entry class\n    var Entry = M.class('ose/lib/entry');\n\n    // Add new method to entry class prototype\n    Entry.prototype.newMethod = function() {...};\n\nChanging the prototype of a class alters all its instances and\ndescendants, even those already created.\n\n## Singletons\n\nEach singleton is an object. There are two types of singletons. The\nfirst initializes itself, and the second is initialized outside the\nsingleton definition.\n\n**IMPORTANT:**<br />\nEvery singleton must always exist in only one instance\nwithin a single running instance of OSE. The use of npm can result\nin mixing multiple installations of packages using singletons\nwithin a single OSE instance. This situation must be avoided.\n\nLike the creation of a class, the creation of a singleton is a\nthree-step process:\n\n1. Prepare a module containing the singleton's definition and\n   create the singleton\n2. Obtain singleton initialization method\n3. Initialize and obtain the singleton\n\nExample module with self-initializing singleton::\n\n    // Require OSE\n    var Ose = require('ose');\n    // Wrap module as a singleton\n    var M = Ose.singleton(module, I, 'EventEmitter');\n    // Initialization of the singleton\n    exports = M.init();\n\n    // Singleton initialization\n    function I() {\n      // Call super constructor\n      M.super.call(this);\n      ...\n    }\n\n    // Properties of the singleton are defined in the `exports` variable:\n\n    exports.identify = function() {\n      return {\n        id: this.id\n      };\n    };\n\n    exports.getId = function() {\n      return id;\n    };\n\n    ...\n\nExample module without singleton self-initialization:\n\n    // Require OSE\n    var Ose = require('ose');\n    // Wrap module as a singleton\n    var M = Ose.singleton(module, I, 'EventEmitter');\n    // Initialization of the singleton\n    exports = M.exports;\n    ...\n\nExample module with separate singleton initialization:\n\n    // Some other module ...\n    'use strict';\n\n    // Require OSE\n    var Ose = require('ose');\n    // Wrap module\n    var M = Ose.module(module);\n\n    ...\n\n    // Obtain singleton initialization (second step)\n    var init = M.singleton('ose/lib/peer/list');\n\n    // Initialize and obtain singleton (third step)\n    var result = init(arg);\n\n    // Or the second and third step together without the init\n    // variable:\n    var result = M.singleton('ose/lib/peer/list')(arg);\n\n    ...\n\nTo access or extend any initialized singleton, use standard `require`:\n\n    // Module changing singleton.\n    'use strict';\n\n    // Require OSE.\n    var Ose = require('ose');\n\n    // Obtain singleton.\n    var result = require('ose/lib/id');\n\n    // Add new method to the singleton.\n    result.newMethod = function() {...};\n\nThe singleton can be changed before it is initialized. If this is\ndone, it is possible that the change will be overwritten by mixing\nother modules during singleton initialization.\n\n\n## Mixins\n\nIt is possible to mix another module into a class prototype or\nsingleton. To do that, use the `append()` or `prepend()` methods of\nthe `wrap` object.\n\nExample:\n\n    // Some module\n    'use strict';\n    // Require OSE\n    var Ose = require('ose');\n\n    // Wrap module\n    var M = Ose.class(module, C, 'EventEmitter');\n\n    // Prepend a module\n    M.prepend('someModuleName')\n    // Append a module depending on the runtime.\n    M.append('runtime')\n\nThe `append()` or `prepend()` methods supports call chaining. Both\nmethods accept a module name or array of module names. Properties\nto a class prototype or singleton are mixed in the second step of\nclass or singleton creation. Conflicting properties are overwritten\nin the following order: Last prepended, prepended, module.exports,\nfirst appended, appended.\n\nIt is possible to use the following predefined values as module names:\n* 'browser' – If in the browser environment, use the `browser.js`\n   module from the same directory.\n* 'node' – If in the Node.js environment, use the `node.js`\n   module from the same directory.\n* 'runtime' – Use either the `browser.js` or `node.js` module\n   depending on the environment.\n\nIt is possible to use relative paths as module names.\n\n## Relative paths\nTODO\n\nA class or singleton is identified by its module\n(e.g. `ose/lib/entry`).",
+      "description": "## Module wrapping\n\nThe creation of classes and singletons is based on the CommonJS\nModules spec. Each class or singleton is defined within its own\nmodule.\n\nTo create a class or singleton, you first need to wrap the module\ncontaining the class or singleton definition by calling one of the\nfollowing:\n\n- `Ose.class(module)`.\n- `Ose.singleton(module)`.\n- `Ose.package(module)`.\n- `Ose.module(module)`.\n\nExample:\n\n    // Module containing class definiton.\n    'use strict';\n\n    // Require OSE.\n    var Ose = require('ose');\n    // Create and return wrap instance\n    var M = Ose.class(module);\n    ...\n\nThe `Ose` variable gives access to global OSE functionalities.  The\n`M` variable contains the module wrapper and gives access to\nfunctionalities relative to the module.\n\n**IMPORTANT:**<br />\nEach time a module is wrapped using `Ose.class`, `Ose.singleton` or\n`Ose.package` (ie. not `Ose.module`), the wrapper adds the `M`\nproperty to `module.exports`. It is not allowed to overwrite this\nproperty. The `M` property is read-only and non-configurable. It is\nbetter not to overload this property.\n\n## Classes\n\nA class is a function used as a class constructor with a prototype.\n\nTo use a class, you need to carry out three steps:\n1. Prepare a module containing a class definition.\n2. Obtain a class constructor.\n3. Create a new object.\n\nFirst, the class needs to be prepared in the module containing the\nclass definition by calling `Ose.class(module, constructor,\nsuper)`. The `constructor` is an optional class constructor\nmethod. If it is not defined, it gets created automatically. The\n`super` parameter can be `undefined`, a class constructor or a\nclass name. It is not possible to inherit from singletons.\n\nExample module with class preparation::\n\n    // Module \"ose/lib/entry\"\n    'use strict';\n\n    // Require OSE\n    var Ose = require('ose');\n\n    // Wrap module and specifies a class with a constructor\n    // function `C` and \"EventEmitter\" as a super-class.\n    var M = Ose.class(module, C, 'EventEmitter');\n\n    // Class constructor\n    function C(...) {\n      // Call super constructor\n      M.super.call(this);\n      ...\n    }\n\n    // Add properties of the class' prototype to the `exports`\n    // object:\n\n    // Define property.\n    exports.config = function(name, data) {\n      ...\n    };\n\n    // Define another property\n    exports.identify = function() {\n      return {\n        space: this.shard.space.name,\n        shard: this.shard.sid,\n        entry: this.id\n      };\n    };\n\n\nThe second step is to obtain a class constructor with its\nprototype. This step is carried out when the class is first\naccessed by calling `M.class('ose/lib/entry')`. Multiple calls to\n`M.class('ose/lib/entry')` return the same, already created\nclass. When called for the first time, the class prototype is\ncreated from module exports and optional mixins. If the class has\nan ancestor, the constructor should usually call the super\nconstructor (see example above). If a class is defined without a\nconstructor, the constructor is created.\n\nThe last step is to create a new object based on the class.\n\nClass usage example:\n\n    // Some other module ...\n    'use strict';\n\n    // Require OSE\n    var Ose = require('ose');\n    // Wrap module\n    var M = Ose.module(module);\n\n    // Obtain class constructor (second step).\n    var Entry = M.class('ose/lib/entry');\n\n    ...\n\n    // Create new object as an Entry instance (third step).\n    entry = new Entry(shard, kind);\n\n    ...\n\nThere is a built-in class named **EventEmitter**. To use this\nclass, pass `'EventEmitter'` to the `class()` method (see the\nexamples above).\n\nTo access the `module.exports` object that is wrapped and prepared\nas a class, call the standard `require('ose/lib/entry')`\nmethod. This call returns the original `module.exports` object.\n\nTo extend any class, use the following example:\n\n    // Require OSE\n    var Ose = require('ose');\n    // Wrap module\n    var M = Ose.module(module);\n\n    // Obtain Entry class\n    var Entry = M.class('ose/lib/entry');\n\n    // Add new method to entry class prototype\n    Entry.prototype.newMethod = function() {...};\n\nChanging the prototype of a class alters all its instances and\ndescendants, even those already created.\n\n## Singletons\n\nEach singleton is an object. There are two types of singletons. The\nfirst initializes itself, and the second is initialized outside the\nsingleton definition.\n\n**IMPORTANT:**<br />\nEvery singleton must always exist in only one instance\nwithin a single running instance of OSE. The use of npm can result\nin mixing multiple installations of packages using singletons\nwithin a single OSE instance. This situation must be avoided.\n\nLike the creation of a class, the creation of a singleton is a\nthree-step process:\n\n1. Prepare a module containing the singleton's definition and\n   create the singleton\n2. Obtain singleton initialization method\n3. Initialize and obtain the singleton\n\nExample module with self-initializing singleton::\n\n    // Require OSE\n    var Ose = require('ose');\n    // Wrap module as a singleton\n    var M = Ose.singleton(module, I, 'EventEmitter');\n    // Initialization of the singleton\n    exports = M.init();\n\n    // Singleton initialization\n    function I() {\n      // Call super constructor\n      M.super.call(this);\n      ...\n    }\n\n    // Properties of the singleton are defined in the `exports` variable:\n\n    exports.identify = function() {\n      return {\n        id: this.id\n      };\n    };\n\n    exports.getId = function() {\n      return id;\n    };\n\n    ...\n\nExample module without singleton self-initialization:\n\n    // Require OSE\n    var Ose = require('ose');\n    // Wrap module as a singleton\n    var M = Ose.singleton(module, I, 'EventEmitter');\n    // Initialization of the singleton\n    exports = M.exports;\n    ...\n\nExample module with separate singleton initialization:\n\n    // Some other module ...\n    'use strict';\n\n    // Require OSE\n    var Ose = require('ose');\n    // Wrap module\n    var M = Ose.module(module);\n\n    ...\n\n    // Obtain singleton initialization (second step)\n    var init = M.singleton('ose/lib/peer/list');\n\n    // Initialize and obtain singleton (third step)\n    var result = init(arg);\n\n    // Or the second and third step together without the init\n    // variable:\n    var result = M.singleton('ose/lib/peer/list')(arg);\n\n    ...\n\nTo access or extend any initialized singleton, use standard `require`:\n\n    // Module changing singleton.\n    'use strict';\n\n    // Require OSE.\n    var Ose = require('ose');\n\n    // Obtain singleton.\n    var result = require('ose/lib/id');\n\n    // Add new method to the singleton.\n    result.newMethod = function() {...};\n\nThe singleton can be changed before it is initialized. If this is\ndone, it is possible that the change will be overwritten by mixing\nother modules during singleton initialization.\n\n\n## Mixins\n\nIt is possible to mix another module into a class prototype or\nsingleton. To do that, use the `append()` or `prepend()` methods of\nthe `wrap` object.\n\nExample:\n\n    // Some module\n    'use strict';\n    // Require OSE\n    var Ose = require('ose');\n\n    // Wrap module\n    var M = Ose.class(module, C, 'EventEmitter');\n\n    // Prepend a module\n    M.prepend('someModuleName')\n    // Append a module depending on the runtime.\n    M.append('runtime')\n\nThe `append()` or `prepend()` methods supports call chaining. Both\nmethods accept a module name or array of module names. Properties\nto a class prototype or singleton are mixed in the second step of\nclass or singleton creation. Conflicting properties are overwritten\nin the following order: Last prepended, prepended, module.exports,\nfirst appended, appended.\n\nIt is possible to use the following predefined values as module names:\n* 'browser' – If in a browser environment, use the `browser.js`\n   module from the same directory.\n* 'node' – If in a Node.js environment, use the `node.js`\n   module from the same directory.\n* 'runtime' – Use either the `browser.js` or `node.js` module\n   depending on the environment.\n\nIt is possible to use relative paths as module names.\n\n## Relative paths\nTODO\n\nA class or singleton is identified by its module\n(e.g. `ose/lib/entry`).",
       "modules": {
         "wrap/common": {
           "name": "wrap/common",
@@ -3118,8 +3237,8 @@ Packages["ose"] = {
                 }
               ]
             },
-            "": {
-              "name": "",
+            "append": {
+              "name": "append",
               "type": "method",
               "params": [
                 {
@@ -3132,7 +3251,7 @@ Packages["ose"] = {
             "isSuper": {
               "name": "isSuper",
               "type": "method",
-              "description": "Tests whether `desc` is descendant of `sup`. When called with one argument, this argument is assigned to `desc` and super is `this.ctor`",
+              "description": "Tests whether `desc` is descendant of `sup`. When called with one\nargument, this argument is assigned to `desc`, and `sup` is\nassigned to `this.ctor`",
               "params": [
                 {
                   "name": "sup",
@@ -3181,7 +3300,7 @@ Packages["ose"] = {
         "window.ose": {
           "name": "window.ose",
           "type": "method",
-          "description": "CommonJS Require emulation. Register module wrapped by function `init`.",
+          "description": "`ose` is a global variable.\nProvides CommonJS Require emulation. Registers module wrapped by function `init`.",
           "params": [
             {
               "name": "id",
@@ -3203,7 +3322,7 @@ Packages["ose"] = {
         "run": {
           "name": "run",
           "type": "method",
-          "description": "Setup OSE framework and intialize plugins."
+          "description": "Setups OSE framework and intializes plugins."
         },
         "require": {
           "name": "require",
@@ -3228,11 +3347,6 @@ Packages["ose"] = {
               "type": "String"
             }
           ]
-        }
-      },
-      "undefined": {
-        "undefined": {
-          "description": "Make this module available via `require(\"ose/lib/browser\")`"
         }
       }
     },
@@ -3387,6 +3501,11 @@ Packages["ose"] = {
             }
           ]
         },
+        "quit": {
+          "name": "quit",
+          "type": "method",
+          "description": "Gracefully close everything and exit process."
+        },
         "config": {
           "name": "config",
           "type": "method",
@@ -3448,7 +3567,7 @@ Packages["ose"] = {
         "counter": {
           "name": "counter",
           "type": "method",
-          "description": "Creates a new counter. If \"cb\" is already a counter instance, it only increments it.\nCounters are used for multiple asynchronous operations with one final callback.",
+          "description": "Creates a new counter. If `cb` is already a counter instance, it only increments it.\nCounters are used for multiple asynchronous operations with one final callback.",
           "params": [
             {
               "name": "cb",
@@ -3469,10 +3588,10 @@ Packages["ose"] = {
             }
           ]
         },
-        "callProtoChain": {
-          "name": "callProtoChain",
+        "callChain": {
+          "name": "callChain",
           "type": "method",
-          "description": "Call all methods with name \"method\" in \"subject\"s prototype chain.\n\n\"method\" is called with arguments specified after argument \"method\".",
+          "description": "Call all methods with name `method` in prototype chain of `subject`.\n\n`method` is called with `args` specified after argument `method`.",
           "params": [
             {
               "name": "subject",

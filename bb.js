@@ -2,7 +2,7 @@ Packages["bb"] = {
   "name": "bb",
   "npmname": "ose-bb",
   "caption": "HTML5 frontend",
-  "readme": "OSE package providing an HTML5 user interface based on [Firefox OS\nBuilding Blocks](http://buildingfirefoxos.com/) using\n[jQuery](http://www.jquery.com).\n\nEach browser page (tab) displaying the OSE frontend is an [OSE\ninstance]. As part of the base [OSE plugin] configuration, a\n[peer], representing the backend OSE instance, is created and\nconnected to.\n\nThe connection is realized via a WebSocket in a standard OSE\n[peer-to-peer] way. All information needed for displaying requested\ncontent is exchanged through this WebSocket channel. After a\nsuccessful connection is established, content is displayed using\ndynamic injection into the `<body>`.",
+  "readme": "OSE package providing an HTML5 user interface built using [Firefox\nOS Building Blocks](http://buildingfirefoxos.com/) and\n[jQuery](http://www.jquery.com).\n\nEach browser page (tab) displaying the OSE frontend is an [OSE\ninstance]. As part of the base [OSE plugin] configuration, a\n[peer], representing the backend OSE instance, is created and\nconnected to.\n\nThe connection is realized via a WebSocket in a standard OSE\n[peer-to-peer] way. All information needed for displaying requested\ncontent is exchanged through this WebSocket channel. After a\nsuccessful connection is established, content is displayed using\ndynamic injection into the `<body>`.",
   "file": "content.js",
   "line": 11,
   "aliases": "oseUi HTML5frontend",
@@ -32,7 +32,7 @@ Packages["bb"] = {
             "display": {
               "name": "display",
               "type": "method",
-              "description": "Displays content based on stateObj",
+              "description": "Displays content based on `stateObj`",
               "params": [
                 {
                   "name": "stateObj",
@@ -49,7 +49,7 @@ Packages["bb"] = {
             "pagelet": {
               "name": "pagelet",
               "type": "method",
-              "description": "Creates pagelet based on stateObj",
+              "description": "Creates pagelet based on `stateObj`",
               "params": [
                 {
                   "name": "stateObj",
@@ -61,7 +61,7 @@ Packages["bb"] = {
             "setActive": {
               "name": "setActive",
               "type": "method",
-              "description": "Activates pagelet",
+              "description": "Activates `pagelet`",
               "params": [
                 {
                   "name": "pagelet",
@@ -202,7 +202,7 @@ Packages["bb"] = {
     "pagelet": {
       "name": "pagelet",
       "caption": "Pagelets",
-      "readme": "A pagelet is a part of a page.\n\nThere are several types of pagelets (see `lib/pagelet`\ndirectory).\nThe dashboard pagelet is a starting point for the user.\nTwo other basic pagelets are the entry pagelet (displays one\nentry) and the list pagelet (displays a list of entries).\n\nEach [entry kind] can define own UI layout and behaviour for any pagelet type displaying entry in an individual file.\n\nPagelets can create and contain various widgets (see `lib/widget`\ndirectory) and other pagelets.",
+      "readme": "A pagelet is a part of a page.\n\nThere are several types of pagelets (see `lib/pagelet`\ndirectory).\nThe dashboard pagelet is a starting point for the user.\nTwo other basic pagelets are the entry pagelet (displays one\nentry) and the list pagelet (displays a list of entries).\n\nEach [entry kind] can define own UI layout and behaviour for any\npagelet type displaying entry in an individual file.\n\nPagelets can create and contain various widgets (see `lib/widget`\ndirectory) and other pagelets.",
       "file": "lib/pagelet/listItem.js",
       "line": 12,
       "modules": {
@@ -217,7 +217,7 @@ Packages["bb"] = {
             "loadData": {
               "name": "loadData",
               "type": "method",
-              "description": "Has a new list widget created and appends it to the main pagelet\nelement. It also calls the \"Ose.ui.dashboard()\"\nmethod. \"Ose.ui.dashboard()\" governs what is diaplayed on the\ndashboard."
+              "description": "Appends a newly created list widget to the main pagelet element. It\nalso calls the \"Ose.ui.dashboard()\" method. \"Ose.ui.dashboard()\"\ngoverns what is diaplayed on the dashboard."
             },
             "verifyStateObj": {
               "name": "verifyStateObj",
@@ -352,28 +352,18 @@ Packages["bb"] = {
               "name": "hide",
               "type": "event",
               "description": "Fired when pagelet is hidden."
-            },
-            "remove": {
-              "name": "remove",
-              "type": "event",
-              "description": "Fired when pagelet is removed.."
             }
           },
           "method": {
-            "html": {
-              "name": "html",
-              "type": "method",
-              "description": "Each Pagelet descendant should define a \"html\" method. This method\nreturns the main pagelet element. It should be called by the code\ncreating the pagelet, and this code should also append the element\nto the right place in the <body>."
-            },
             "loadData": {
               "name": "loadData",
               "type": "method",
-              "description": "Each Pagelet descendant should define a \"loadData\" method. This\nmethod should be called by the code creating the pagelet and should\nensure that data displayed by the pagelet are loaded."
+              "description": "Each Pagelet descendant should define a `loadData` method. This\nmethod should be called by the code creating the pagelet and should\nensure that data displayed by the pagelet are loaded."
             },
             "onSearch": {
               "name": "onSearch",
               "type": "method",
-              "description": "Pagelets can define an \"onSearch\" method, which gets called when\nthe user performs a search.",
+              "description": "Pagelets can define an `onSearch` method, which gets called when\nthe user performs a search. The searchbox is not displayed if there\nis no `onSearch` method on the active pagelet.",
               "params": [
                 {
                   "name": "value",
@@ -393,6 +383,11 @@ Packages["bb"] = {
                   "type": "Object"
                 }
               ]
+            },
+            "html": {
+              "name": "html",
+              "type": "method",
+              "description": "Each Pagelet descendant can override the `html` method. This method\nreturns the main pagelet element. It should be called by the code\ncreating the pagelet, and this code should also append the element\nto the right place in the `<body>`."
             },
             "afterDisplay": {
               "name": "afterDisplay",
@@ -483,7 +478,6 @@ Packages["bb"] = {
       "file": "lib/widget/toolbar.js",
       "line": 10,
       "aliases": "widget",
-      "description": "TODO: Move to the widget directory",
       "modules": {
         "lib/widget/button": {
           "name": "lib/widget/button",
@@ -545,10 +539,10 @@ Packages["bb"] = {
               "type": "method",
               "description": "Removes widget and all its listeners"
             },
-            "removed": {
-              "name": "removed",
+            "isRemoved": {
+              "name": "isRemoved",
               "type": "method",
-              "description": "Test whether element has been removed from the <body>\n\nTODO: rename to isRemoved"
+              "description": "Test whether element has been removed from the <body>"
             },
             "newPagelet": {
               "name": "newPagelet",
@@ -639,7 +633,6 @@ Packages["bb"] = {
           "caption": "Search widget",
           "readme": "Search input field widget.\n\nIt has two states: One displays a search button, and the other\ndisplays a search form.\n\nIf available, it uses Google's speech API.",
           "file": "lib/widget/search.js",
-          "description": "TODO: Move to the widget directory",
           "method": {
             "init": {
               "name": "init",
@@ -722,12 +715,19 @@ Packages["bb"] = {
       "caption": "OSE Building Blocks core",
       "readme": "Core singleton of bb plugin.\n\nThis singleton is available through the `Ose.ui` property.",
       "file": "lib/index.js",
+      "event": {
+        "initialized": {
+          "name": "initialized",
+          "type": "event",
+          "description": "Fired when UI is initialized"
+        }
+      },
       "property": {
         "lastStateObj": {
           "name": "lastStateObj",
           "type": "property",
           "dtype": "Object",
-          "description": "Last displayed \"page bit\" key object."
+          "description": "Last displayed \"page bit\" key object"
         },
         "defaultContent": {
           "name": "defaultContent",
@@ -736,18 +736,11 @@ Packages["bb"] = {
           "description": "Pagelet displayed by default"
         }
       },
-      "event": {
-        "initialized": {
-          "name": "initialized",
-          "type": "event",
-          "description": "Fired when UI is initialized"
-        }
-      },
       "method": {
         "config": {
           "name": "config",
           "type": "method",
-          "description": "OSE plugin configuration method.",
+          "description": "OSE plugin configuration method",
           "params": [
             {
               "name": "name",
@@ -764,7 +757,7 @@ Packages["bb"] = {
         "run": {
           "name": "run",
           "type": "method",
-          "description": "Internal OSE UI startup method\nEmits the \"initialized\" event"
+          "description": "Internal OSE UI startup method\n\nEmits the \"initialized\" event."
         },
         "newHistory": {
           "name": "newHistory",

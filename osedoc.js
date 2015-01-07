@@ -305,12 +305,14 @@ function mdQuick(done, name, all) {  // {{{2
 
   switch (name) {
   case 'first':
-    r.push('# Read First');
+    r.push('# Read first');
     r.push(links(q.about));
     r.push('## Status');
     r.push(links(q.status));
     r.push('## Platforms');
     r.push(links(q.platforms));
+    r.push('## Getting started');
+    r.push(links(q.start));
     r.push(links(q.aboutDoc));
     r.push(links(q.contrib));
     r.push('# Licence');

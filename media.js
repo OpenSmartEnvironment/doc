@@ -203,6 +203,7 @@ Packages["media"] = {
         "lib/player/dvb": {
           "name": "lib/player/dvb",
           "type": "class",
+          "super": "ose/lib.entry.command",
           "caption": "Media player to dvb client socket",
           "readme": "Establishes [link] to a dvb entry.",
           "file": "lib/player/dvb.js",

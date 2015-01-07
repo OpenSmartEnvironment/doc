@@ -206,13 +206,20 @@ function onResize() {  // {{{2
   });
 };
 
-function onState(ev) {  // {{{2
+function onState() {  // {{{2
   var q, p, c, m;
   var chapter = '';
 
   var h = window.location.hash.split('#');
   if (h && (h[0] === '')) {
-    chapter = h[2] || '';
+    if (h[2]) {
+      chapter = h[2];
+    } else {
+      chapter = '';
+      if (h[1] in Keywords) {
+        h[1] = Keywords[h[1]];
+      }
+    }
     h = (h[1] || '').split('|');
   } else {
     h = [];

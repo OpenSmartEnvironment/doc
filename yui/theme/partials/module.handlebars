@@ -1,0 +1,13 @@
+<h1 id="{{name}}">{{caption}}</h1>
+
+{{#if is_submodule}}
+  <b>Documentation for the "{{name}}" component</b><br />
+  For more details, see "<a href="../modules/{{module}}.html"><strong>{{module}}</strong>" package</a>.
+{{else}}
+  <b>Documentation for "{{npmName}}" package</b> (<a href="https://www.github.com/opensmartenvironment/{{npmName}}">GitHub</a>)
+{{/if}}
+
+<div>{{{moduleDescription}}}</div>
+
+<br><br>
+<span class="foundat">Source file: <a href="{{foundAt}}">`{{file}}:{{line}}`</a></span>

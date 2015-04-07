@@ -307,7 +307,7 @@ function onState() {  // {{{2
 }
 
 function mdQuick(done, name, all) {  // {{{2
-  var q = Packages.bundle.quick;
+  var q = Packages.ose.quick;
   var r = [];
 
   switch (name) {

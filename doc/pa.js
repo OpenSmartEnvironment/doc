@@ -4,7 +4,7 @@ Packages["pa"] = {
   "caption": "PulseAudio",
   "readme": "This package implements volume control for the [Media player].\n\nSee [Media player example].",
   "file": "content.js",
-  "line": 12,
+  "line": 10,
   "modules": {
     "lib/dbus": {
       "name": "lib/dbus",

@@ -4,7 +4,7 @@ Packages["rpi"] = {
   "caption": "Raspberry Pi",
   "readme": "This package contains [entry kinds] for integrating hardware from\nthe Raspberry Pi Foundation into OSE.\n\nSee [Raspberry Pi example].",
   "file": "content.js",
-  "line": 12,
+  "line": 10,
   "aliases": "raspberry raspberryPi raspberryCamera",
   "modules": {
     "lib/camera": {

@@ -72,12 +72,18 @@ function addPackage(p) {  // {{{2
   keyword(p.name, p.name, p.npmname, p.caption, p.aliases && p.aliases.split(/\s/));
 
   var children = $('<ul>');
-
-  $('<li>', {class: 'h1'})
+  var li = $('<li>', {class: 'h1'})
     .append($('<a>', {href: '#' + p.name + '#'}).html(p.caption))
     .append(children)
     .appendTo('#packages');
   ;
+
+  if (p.name.indexOf('example') < 0) {
+    li.appendTo('#packages');
+  } else {
+    li.appendTo('#examples');
+  }
+
 
   for (var key in p.comps) {
     addComp(p.comps[key]);
@@ -227,7 +233,7 @@ function onState() {  // {{{2
 
   p = Packages[h[0]];
   if (! p) {
-    q = h[0] || 'first';
+    q = h[0] || 'intro';
     return done();
   }
   if (h.length === 1) return done();
@@ -311,13 +317,13 @@ function mdQuick(done, name, all) {  // {{{2
   var r = [];
 
   switch (name) {
-  case 'first':
-    r.push('# Read first');
+  case 'intro':
+    r.push('# Introduction');
     r.push(links(q.about));
     r.push('## Status');
     r.push(links(q.status));
-    r.push('## Platforms');
-    r.push(links(q.platforms));
+//    r.push('## Platforms');
+//    r.push(links(q.platforms));
     r.push('## Getting started');
     r.push(links(q.start));
     r.push(links(q.aboutDoc));
@@ -326,13 +332,13 @@ function mdQuick(done, name, all) {  // {{{2
     r.push(links(q.licence));
     done(r);
     return;
-  case 'contrib':
-  case 'install':
-    r.push(links(q[name]));
+  case 'licence':
+    r.push('# Licence');
+    r.push(links(q.licence));
     done(r);
     return;
   case 'all':
-    mdQuick(done, 'first', true);
+    mdQuick(done, 'intro', true);
     mdQuick(done, 'install', true);
     for (var kea in Packages) {
       var pkg = Packages[kea];
@@ -351,7 +357,13 @@ function mdQuick(done, name, all) {  // {{{2
     return;
   }
 
-  console.log('UHANDLED QUICK', name);
+  if (q[name]) {
+    r.push(links(q[name]));
+    done(r);
+    return;
+  }
+
+  console.log('UNHANDLED QUICK', name);
   console.trace();
   return;
 }
@@ -419,6 +431,8 @@ function mdProps(res, vals) {  // {{{2
   for (var key in vals) {
     var v = vals[key];
 
+    if (v.internal) continue;
+
     res.push('###' + v.name);
     if (v.dtype) {
       res.push('Type: `' + v.dtype + '`');
@@ -435,6 +449,8 @@ function mdMethods(res, vals) {  // {{{2
   res.push('');
   for (var key in vals) {
     var v = vals[key];
+
+    if (v.internal) continue;
 
     res.push('### ' + v.name + '(' + params2Args(v.params) + ')');
     if (v.dtype) {
@@ -455,6 +471,8 @@ function mdEvents(res, vals) {  // {{{2
   for (var key in vals) {
     var v = vals[key];
 
+    if (v.internal) continue;
+
     res.push('### ' + v.name);
     res.push(links(v.description));
 
@@ -468,6 +486,8 @@ function mdParams(res, vals) {  // {{{2
   res.push('**Parameters:**<br />');
   for (var key in vals) {
     var v = vals[key];
+
+    if (v.internal) continue;
 
     var n;
     if (v.optional) {
@@ -518,6 +538,8 @@ function mdModules(res, vals, ref, all) {  // {{{2
   res.push('');
   for (var key in vals) {
     var v = vals[key];
+
+    if (v.internal) continue;
 
     if (all) {
       res.push('- ' + v.caption);

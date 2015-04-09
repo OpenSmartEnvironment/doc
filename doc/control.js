@@ -10,7 +10,7 @@ Packages["control"] = {
     "distributor": {
       "name": "distributor",
       "caption": "Power distributors",
-      "readme": "TODO\n\nThis component defines basic power distributor entry kinds. By\nconfiguring entries of these kinds, it is possible to define the\npower distributor configuration and behaviour.",
+      "readme": "TBD\n\nThis component defines basic power distributor entry kinds. By\nconfiguring entries of these kinds, it is possible to define the\npower distributor configuration and behaviour.",
       "file": "lib/flowMeter/index.js",
       "line": 10,
       "aliases": "powerDistributor",
@@ -48,7 +48,7 @@ Packages["control"] = {
           "type": "class",
           "super": "ose/lib.kind",
           "caption": "Power distributor kind",
-          "readme": "TODO\n\n[Entry kind] defining behaviour of power distributors.",
+          "readme": "TBD\n\n[Entry kind] defining behaviour of power distributors.",
           "file": "lib/distributor/index.js"
         },
         "lib/flowMeter": {
@@ -344,7 +344,8 @@ Packages["control"] = {
                   "description": "Prepared state object",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "setup": {
               "name": "setup",
@@ -371,7 +372,8 @@ Packages["control"] = {
                   "description": "Callback to be called after pin setup",
                   "type": "Function"
                 }
-              ]
+              ],
+              "internal": true
             },
             "update": {
               "name": "update",
@@ -383,7 +385,8 @@ Packages["control"] = {
                   "description": "New value",
                   "type": "Number"
                 }
-              ]
+              ],
+              "internal": true
             },
             "close": {
               "name": "close",
@@ -513,7 +516,8 @@ Packages["control"] = {
             "cleanup": {
               "name": "cleanup",
               "type": "method",
-              "description": "Called when this object is destroyed"
+              "description": "Called when this object is destroyed",
+              "internal": true
             },
             "readAll": {
               "name": "readAll",
@@ -1417,9 +1421,9 @@ Packages["control"] = {
     "remote": {
       "name": "remote",
       "caption": "Remote control",
-      "readme": "This component makes it possible to specify what individual remote\ncontroller commands do with OSE entries. An example of using this\ncomponent is the [ose-lirc] package.\n\nThe remote controller can be easily configured to control\nmultimedia, lights, etc. It is possible to define commands and\ngroups of commands.\n\nExample:\nTODO",
+      "readme": "This component makes it possible to specify what individual remote\ncontroller commands do with OSE entries. An example of using this\ncomponent is the [ose-lirc] package.\n\nThe remote controller can be easily configured to control\nmultimedia, lights, etc. It is possible to define commands and\ngroups of commands.\n\nFor examples, see the [ose-example-lirc] package",
       "file": "lib/remote.js",
-      "line": 25,
+      "line": 24,
       "modules": {
         "lib/light/remote": {
           "name": "lib/light/remote",

@@ -94,7 +94,8 @@ Packages["gaia"] = {
                   "description": "Entry to be displayed",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "displayData": {
               "name": "displayData",
@@ -115,15 +116,18 @@ Packages["gaia"] = {
             },
             "socketError": {
               "name": "socketError",
-              "type": "method"
+              "type": "method",
+              "internal": true
             },
             "removed": {
               "name": "removed",
-              "type": "method"
+              "type": "method",
+              "internal": true
             },
             "markHome": {
               "name": "markHome",
-              "type": "method"
+              "type": "method",
+              "internal": true
             }
           }
         },
@@ -390,17 +394,20 @@ Packages["gaia"] = {
         "run": {
           "name": "run",
           "type": "method",
-          "description": "Internal OSE UI startup method"
+          "description": "Internal OSE UI startup method",
+          "internal": true
         },
         "newHistory": {
           "name": "newHistory",
           "type": "method",
-          "description": "Creates a new empty state item to the browser's history"
+          "description": "Creates a new empty state item to the browser's history",
+          "internal": true
         },
         "updateHistory": {
           "name": "updateHistory",
           "type": "method",
-          "description": "Updates the last history item with the current state object"
+          "description": "Updates the last history item with the current state object",
+          "internal": true
         },
         "display": {
           "name": "display",
@@ -434,7 +441,8 @@ Packages["gaia"] = {
         "getStateObj": {
           "name": "getStateObj",
           "type": "method",
-          "description": "Gets state object"
+          "description": "Gets state object",
+          "internal": true
         },
         "isMobile": {
           "name": "isMobile",

@@ -301,7 +301,8 @@ Packages["media"] = {
                   "description": "",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "closeBoon": {
               "name": "closeBoon",
@@ -312,7 +313,8 @@ Packages["media"] = {
                   "description": "",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             }
           }
         },

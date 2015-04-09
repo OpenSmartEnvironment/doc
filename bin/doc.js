@@ -7,24 +7,35 @@ var Y = require('yuidocjs');
 var Fs = require('fs');
 
 /** Doc {{{1
- * @caption OSE Documentation
+ * @caption OSE software documentation
  *
  * @readme
  * This package is used to build documentation for all official OSE
  * packages.
  *
  * @about
- * The main advantage of OSE is the easy creation of applications
- * consisting of multiple instances that work as a single whole. The
- * objective is to develop an all-encompassing personal mesh running
- * on various devices including HTPCs, phones, tablets, workstations,
- * servers, Raspberry Pis, home automation gadgets, wearables, drones
- * etc.
+ * <b>Open Smart Environment software is a suite for creating
+ * multi-instance applications that work as a single whole.</b><br>
+ * Imagine, for example, a personal mesh running on various devices
+ * including HTPCs, phones, tablets, workstations, servers, Raspberry
+ * Pis, home automation gadgets, wearables, drones, etc.
  *
- * <a href="http://opensmartenvironment.github.io/doc/resource/ose.svg"><img width=100% src="http://opensmartenvironment.github.io/doc/resource/ose.svg"></a>
+ * OSE software consists of several npm packages: a [framework] running
+ * on Node.js, an [HTML5 frontend], extending
+ * packages and a set of example applications.
+ *
+ * <figure>
+ *   <a href="http://opensmartenvironment.github.io/doc/resource/ose.svg"><img width=100% src="http://opensmartenvironment.github.io/doc/resource/ose.svg"></a>
+ *
+ *   <figcaption><b>Set-up of current example applications.</b> Here,
+ *   OSE provides a [Media player](#example-player) running on an HTPC
+ *   that can be controlled by an IR remote through
+ *   [LIRC](#example-lirc) and is capable of playing streams from a
+ *   [DVB streamer](#example-dvb) and control devices through GPIO
+ *   pins on a [Raspberry Pi](#example-rpi) </figcaption> </figure>
  *
  * @getting_started
- * A good way to get started with OSE is to try out one of the examples:
+ * The best way to get started with OSE is to try out the examples:
  * - [Media player](#example-player)
  * - [Raspberry Pi](#example-rpi) (or other device with GPIO)
  * - [LIRC](#example-lirc)
@@ -32,19 +43,16 @@ var Fs = require('fs');
  *
  *
  * @platforms
- * OSE is being developed in JavaScript on the following platforms.
+ * OSE has the following prerequisites:
  * - Node.js (>0.10) running on Debian Jessie and Raspbian
  * - Firefox 37 or newer with Web Components enabled
- *
- * It, however, probably also works with other Linux distributions.
- *
  *
  * @install
  * # Installation
  *
  * ## Node.js
  * The main prerequisite is a working installation of a recent
- * installation of
+ * version of
  * [Node.js](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager)
  * (>= 0.10).
  *
@@ -70,10 +78,7 @@ var Fs = require('fs');
  *
  * ## Manual installation of OSE packages
  * Instead of using npm, you can install OSE packages by cloning their
- * GitHub repositories. You can thus install only the packages that
- * you actually need.
- *
- * TODO: Expand on this.
+ * GitHub repositories.
  *
  *
  * @contrib
@@ -91,21 +96,17 @@ var Fs = require('fs');
  * @status
  * - Pre-alpha stage (insecure and buggy)
  * - Unstable API
- * - Gaps in the documentation
+ * - Patchy documentation
  * - No test suite
  *
  * This is not yet a piece of download-and-use software. It is important
  * to understand the basic principles covered by the
  * [documentation](http://opensmartenvironment.github.io/doc/).
  *
- * Use of this software is currently recommended only to users that
- * wish to participate in the development process, see
- * [contributions](http://opensmartenvironment.github.io/doc/#contrib).
- *
  *
  * @licence
  * This software is released under the terms of the [GNU General
- * Public License v3.0](http://www.gnu.org/copyleft/gpl.html) or
+ * Public Licence v3.0](http://www.gnu.org/copyleft/gpl.html) or
  * later.
  *
  *
@@ -172,18 +173,14 @@ var Fs = require('fs');
 
 // Public {{{1
 exports.build = function() {  // {{{2
-//  Y.Handlebars.registerHelper('buildOseFileTree', buildFileTree);
-
   var options = {
     quiet: true,
     outdir: 'build',
-//    themedir: 'yui/theme',
     linkNatives: 'true',
     attributesEmit: 'true',
     selleck: 'false',
     markdown: 'true',
     exclude: 'depends,node_modules,bower_components',
-//    parseOnly: 'true',
     paths: [
       './',
       '../ose',
@@ -211,19 +208,6 @@ exports.build = function() {  // {{{2
     ],
     project: {
       name: 'OSE',
-
-      /*
-      description: pkg.description,
-      version: pkg.version,
-      url: pkg.homepage,
-      */
-
-        /*
-      name: pkg.name,
-      description: pkg.description,
-      version: pkg.version,
-      url: pkg.homepage,
-      */
     },
   };
 
@@ -250,47 +234,6 @@ exports.build = function() {  // {{{2
   writeData();
 
   return;
-
-
-
-
-
-/*
-//  prepExample('bundle.media');
-
-//  var readme = [];
-  delete Json.warnings;
-
-  Contrib = Json.modules['bundle'].contributions;
-  License = Json.modules['bundle'].license;
-  Status = Json.modules['bundle'].status;
-  Starting = Json.modules['bundle'].getting_started;
-  StartingLink = Json.modules['bundle'].getting_started_link;
-
-  for (var key in Json.classitems) doModuleItem(key);
-  for (var key in Json.classes) doModule(key);
-  for (var key in Json.modules) doPackage(key);
-
-//  Fs.writeFile('../doc/keywords.json', JSON.stringify(Keywords, null, 2));
-//  Fs.writeFile('../doc/data2.json', JSON.stringify(Json, null, 2));
-//  Fs.writeFile('../doc/data.js', 'window.doc = ' + JSON.stringify(Json) + ';');
-//  grunt.file.write('README.md', readme.join('\n'));
-
-  var doc = [Json.modules['bundle'].documentation];
-  doc.push('## Getting started');
-  doc.push(StartingLink);
-  doc.push('');
-
-  Fs.writeFile('yui/theme/partials/index.handlebars', Marked(mdKeywords(doc.join('\n'))));
-
-  console.log('BUILDING ...');
-  var builder = new Y.DocBuilder(options, Json);
-
-  builder.compile(function() {
-    grunt.log.writeln('DONE');
-    cb();
-  });
-  */
 };
 
 // }}}1
@@ -391,6 +334,7 @@ function prepModuleItem(name) {  // {{{2
   d.description = i.description
   d.aliases = i.aliases;
   d.params = i.params;
+  if ('internal' in i) d.internal = i.internal || true;
 
   var p;
   if (i.submodule) {
@@ -433,7 +377,7 @@ function getReadme(pkg) {  // {{{2
   r.push('All packages can be found [on GitHub](https://github.com/opensmartenvironment/).')
   r.push('');
 
-  r.push(q.about);
+  r.push(links(q.about));
   r.push('');
   r.push('For more information about OSE see **the [documentation](http://opensmartenvironment.github.io/doc/)**.');
   r.push('');
@@ -447,7 +391,7 @@ function getReadme(pkg) {  // {{{2
   r.push('');
 
   r.push('## Package description');
-  r.push(pkg.readme);
+  r.push(links(pkg.readme));
   r.push('');
   r.push('The documentation for "' + pkg.npmname + '" package can be found **[here](http://opensmartenvironment.github.io/doc/#' + pkg.npmname + '#)**.');
   r.push('');
@@ -459,199 +403,10 @@ function getReadme(pkg) {  // {{{2
   return r.join('\n');
 };
 
-// }}}1
-
-exports.build();
-
-
-
-
-/* OBSOLETE  // {{{1
-var Keywords = {};
-var Contrib;
-var License;
-var Status;
-var Starting;
-var StartingLink;
-
-function prepExample(name) {  // {{{2
-  var e = Json.modules[name];
-
-  e.description = [
-    '## Prerequisities',
-    e.prerequisities,
-    '## Installation',
-    e.installation,
-    '## Getting it to run',
-    e.gettingtorun,
-    '## Configuration',
-    e.configuration,
-  ].join('\n');
-}
-
-function doPackage(name) {  // {{{2
-//  console.log('DO PACKAGE', name);
-
-  var comp = Json.modules[name];
-  if (comp.is_submodule) return;
-
-  var d = [comp.readme];
-  d.push('');
-
-  if (comp.features) {
-    d.push('## Features');
-    d.push(comp.features);
-    d.push('');
-  }
-
-  d.push('## Status');
-  d.push(Status);
-  d.push('');
-
-  d.push('## Getting started');
-  if (name === 'bundle') {
-    d.push(Starting);
-  } else {
-    d.push(StartingLink);
-  }
-  d.push('');
-
-  if (comp.description) {
-    d.push(comp.description);
-    d.push('');
-  }
-
-  doComps(comp, d);
-  doModules(comp, d, true);
-
-  d.push(Contrib);
-  d.push('');
-
-  d.push('## Licence');
-  d.push(License);
-  d.push('');
-
-  comp.description = crossKeywords(d.join('\n'));
-
-  Fs.writeFile('../' + comp.name + '/README.md',
-    '# ' + comp.caption + '\n\n' +
-    mdKeywords(d.join('\n'))
-  );
-
-//  grunt.file.write('../doc/' + comp.name.replace('/', '.') + '.md', comp.description);
-};
-
-function doComps(comp, d) {  // {{{2
-  if (_.isEmpty(comp.submodules)) return;
-
-  d.push('## Components');
-  d.push(comp.caption + ' consists of the following components:');
-
-  for (var key in comp.submodules) {
-    var sm = Json.modules[key];
-    d.push('- ' + sm.caption);
-  }
-
-  d.push('');
-
-  for (var key in comp.submodules) {
-    var sm = Json.modules[key];
-
-    d.push('### ' + sm.caption);
-    d.push(sm.readme);
-    d.push('');
-    d.push('Read more about [' + sm.caption + '] ...\n\n');
-
-    doComp(sm);
-  }
-
-//  grunt.file.write('../doc/' + sm.name.replace('/', '.') + '.md', sm.description);
-}
-
-function doComp(comp) {  // {{{2
-  var d = [comp.readme];
-  d.push('');
-
-  if (comp.description) {
-    d.push(comp.description);
-    d.push('');
-  }
-
-  doModules(comp, d);
-
-  comp.description = crossKeywords(d.join('\n'));
-}
-
-function doModules(comp, d, isMain) {  // {{{2
-  d.push('## Modules');
-  d.push(comp.caption + ' consists of the following modules:');
-
-  for (var key in comp.classes) {
-    var c = Json.classes[key];
-    if (isMain && c.submodule) continue;
-
-    d.push('- ' + c.caption);
-  }
-
-  d.push('');
-
-  for (var key in comp.classes) {
-    var c = Json.classes[key];
-    if (isMain && c.submodule) continue;
-
-    d.push('### ' + c.caption);
-    d.push(c.readme);
-    d.push('');
-    d.push('Module [' + c.caption + '] reference ... ');
-    d.push('');
-  }
-}
-
-function doModule(name) {  // {{{2
-//  console.log('DO MODULE', name);
-
-  var c = Json.classes[name];
-
-  c.displayName = c.caption;
-
-  var d = [c.readme];
-  d.push('');
-  d.push(c.desc);
-
-  c.description = crossKeywords(d.join('\n'));
-
-//  grunt.file.write('../doc/' + c.name.replace('/', '.') + '.md', c.description);
-};
-
-function doModuleItem(name) {  // {{{2
-//  console.log('DO MODULE ITEM', name);
-
-  var c = Json.classitems[name];
-  c.description = crossKeywords(c.description);
-
-//  grunt.file.write('../doc/' + c.name.replace('/', '.') + '.md', c.description);
-};
-
-function crossKeywords(text) {  // {{{2
-  return linkKeywords(text, crossLink);
-};
-
-function mdKeywords(text) {  // {{{2
-  return linkKeywords(text, mdLink);
-};
-
-function linkKeywords(text, link) {  // {{{2
+function links(text) {  // {{{2
   if (! text) return '';
 
-  if (typeof text !== 'string') {
-    console.log('NOT A STRING', text);
-  }
-
-  var prev;
-//  console.log('CROSSLINK', text);
-
   text = text.split(/([\[\]\(\)])/);
-//  text = text.split(/([\[\]])/);
 
   for (var i = 0; i < text.length; i++) {
     if (text[i] === ']') {
@@ -664,171 +419,24 @@ function linkKeywords(text, link) {  // {{{2
       var args;
       if (text.length > i + 3) {
         if ((text[i + 2] === '(') && (text[i + 4] === ')') && ! text[i + 1].trim()) {
+          var t = text[i + 3];
+          if (t.match(/^http/)) continue;
+
+          text[i + 3] = 'http://opensmartenvironment.github.io/doc/' + t;
           continue;
-          /*
-          if (text[i + 3].trim().toLowerCase().match(/^http/)) {
-            continue;
-          }
-
-          if (text[i + 3].charAt(0) === '.') {
-            continue;
-          }
-
-          if (text[i + 3].charAt(0) === '.') {
-            continue;
-          }
-
-          args = text[i + 4];
-          * /
         }
       }
 
       text[i - 2] = '';
-      text[i - 1] = doLink(text[i - 1]);
+      var t = text[i - 1];
+      text[i - 1] = '[' + t + '](http://opensmartenvironment.github.io/doc/#' + t.toLowerCase().replace(/\s/g, '').replace(/\./g, '/');
       text[i] = '';
-//      console.log('LINK REPLACED', text[i - 1]);
     }
   }
 
   return text.join('');
-
-  function doLink(t) {
-    if (t === 'constructor') {
-      k = 'ose.wrap';
-    } else {
-      var k = Keywords[t.toLowerCase().replace(/\s/g, '')];
-    }
-
-    if (! k) {
-      console.log('LINK NOT FOUND', t);
-      return t;
-      return '[' + t + ']';
-    }
-
-    if (k in Json.modules) {
-      return link(t, k, 'module');
-    }
-
-    if (k in Json.classes) {
-      return link(t, k, 'class');
-    }
-
-    if (k in Json.classitems) {
-      return link(t, k, 'classitem');
-    }
-
-    if (k in Json.files) {
-      return link(t, k, 'file');
-    }
-
-    console.log('LINK INVALID', t, k);
-    return t;
-    return '[' + t + ']';
-  }
 }
 
-function mdLink(text, key, type) {  // {{{2
-  switch (type) {
-  case 'module':
-    return '[' + text + '](' + GhUri + '/modules/' + key + '.html)';
-  case 'class':
-    return '[' + text + '](' + GhUri + '/classes/' + key + '.html)';
-  case 'classitem':
-    var i = Json.classitems[key];
-    return '[' + text + '](' + GhUri + '/classes/' + i.class + '.html)';
-  case 'file':
-    return '[' + text + '](' + GhUri + '/files/' + key + '.html)';
-  }
+// }}}1
 
-  throw new Error('Invalid LINK type: ' + JSON.stringify(arguments));
-}
-
-function crossLink(text, key, type) {  // {{{2
-//  console.log('CROSSLINK', text, key, type);
-
-  switch (type) {
-  case 'module':
-    return '{{#crossLinkModule "' + key + '"}}' + text + '{{/crossLinkModule}}';
-  case 'class':
-    return '{{#crossLink "' + key + '"}}' + text + '{{/crossLink}}';
-  case 'classitem':
-    var i = Json.classitems[key];
-    if (! (i && i.class && i.name)) {
-      throw new Error('MISSING CLASSITEM ' + JSON.stringify(arguments));
-    }
-    return '{{#crossLink "' + i.class + '/' + i.name + '"}}' + text + '{{/crossLink}}';
-  case 'file':
-    return '[' + text + '](../files/' + key.replace(/\//g, '_') + '.html)';
-  }
-
-  throw new Error('Invalid LINK type: ' + JSON.stringify(arguments));
-}
-
-function keyword(key, caption, list) {  // {{{2
-
-  if (! (key && (typeof key === 'string'))) {
-    console.log('INVALID KEYWORD', arguments);
-    return;
-  }
-
-  add(key);
-
-  if (caption) {
-    add(caption);
-  }
-
-  if (! list) return;
-
-  if (typeof list === 'string') list = list.split(/\s/);
-
-  for (var i = 0; i < list.length; i++) {
-    caption = list[i].trim();
-    if (caption) {
-      add(caption);
-//      Keywords[caption.toLowerCase().replace(/\s/g, '')] = key;
-    }
-  }
-
-  function add(v) {
-    var v = v.toLowerCase().replace(/\s/g, '');
-    if (v in Keywords) {
-      if (Keywords[v] !== key) {
-        console.log('DUPLICIT KEYWORD', v, key, Keywords[v]);
-      }
-    } else {
-      Keywords[v] = key;
-    }
-  }
-};
-
-function filename(name) {  // {{{2
-  var match = name.match(/^\.\.\/(.*)/);
-
-  if (match) {
-    name = match[1];
-
-    match = name.match(/^ose\//);
-    if (match) {
-      return name;
-    }
-
-    return 'ose-' + name;
-  } else {
-    return 'ose-bundle/' + name;
-  }
-};
-
-function prepFile(key) {  // {{{2
-//  console.log('PREP FILE', key);
-
-  var file = Json.files[key];
-
-//  file.name = filename(key);
-//  delete Json.files[key];
-//  Json.files[filename(key)] = file;
-
-  keyword(key, filename(key));
-}
-
-// }}}1*/
-
+exports.build();

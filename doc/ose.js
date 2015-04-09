@@ -2,7 +2,7 @@ Packages["ose"] = {
   "name": "ose",
   "npmname": "ose",
   "caption": "Framework",
-  "readme": "Lightweight and extensible framework for development and rapid\nprototyping of applications based on Node.js and HTML5.\n\nThe framework was conceived as a base for an OSE application that\nmanages the physical and virtual environment that a user lives\nin. It brings the ability to easily monitor and control the\nenvironment, and to automate tasks.",
+  "readme": "Extensible framework for development and rapid prototyping of\napplications based on Node.js and HTML5.\n\nThe framework is being developed as a base for an OSE application\nthat manages the physical and virtual environment that a user lives\nin. It brings the ability to easily monitor and control the\nenvironment, and to automate tasks.",
   "file": "content.js",
   "line": 10,
   "aliases": "framework oseFramework supportedBrowser supportedBrowsers",
@@ -153,13 +153,15 @@ Packages["ose"] = {
               "name": "queuedState",
               "type": "property",
               "dtype": "Object",
-              "description": "Queued state"
+              "description": "Queued state",
+              "internal": true
             },
             "queueStateHandle": {
               "name": "queueStateHandle",
               "type": "property",
               "dtype": "Number",
-              "description": "Timeout handle"
+              "description": "Timeout handle",
+              "internal": true
             },
             "queueStateTimeout": {
               "name": "queueStateTimeout",
@@ -171,25 +173,29 @@ Packages["ose"] = {
               "name": "slaveId",
               "type": "property",
               "dtype": "Number",
-              "description": "Last slave id"
+              "description": "Last slave id",
+              "internal": true
             },
             "slaves": {
               "name": "slaves",
               "type": "property",
               "dtype": "Object",
-              "description": "Contains all response sockets of slave entries"
+              "description": "Contains all response sockets of slave entries",
+              "internal": true
             },
             "dtc": {
               "name": "dtc",
               "type": "property",
               "dtype": "Number",
-              "description": "Count of data trackers"
+              "description": "Count of data trackers",
+              "internal": true
             },
             "stc": {
               "name": "stc",
               "type": "property",
               "dtype": "Number",
-              "description": "Count of clients state trackers"
+              "description": "Count of clients state trackers",
+              "internal": true
             }
           },
           "method": {
@@ -405,7 +411,8 @@ Packages["ose"] = {
             "cleanup": {
               "name": "cleanup",
               "type": "method",
-              "description": "Remove entry from shard's cache."
+              "description": "Remove entry from shard's cache.",
+              "internal": true
             },
             "error": {
               "name": "error",
@@ -417,7 +424,8 @@ Packages["ose"] = {
                   "description": "Error",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "setup": {
               "name": "setup",
@@ -429,7 +437,8 @@ Packages["ose"] = {
                   "description": "Kind of entry",
                   "type": "String|Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "command": {
               "name": "command",
@@ -451,31 +460,37 @@ Packages["ose"] = {
                   "description": "Client socket",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "firstSlave": {
               "name": "firstSlave",
-              "type": "method"
+              "type": "method",
+              "internal": true
             },
             "checkSlaves": {
               "name": "checkSlaves",
               "type": "method",
-              "description": "Check, whether there is a demand to track the master or not. If so, do that."
+              "description": "Check, whether there is a demand to track the master or not. If so, do that.",
+              "internal": true
             },
             "_link": {
               "name": "_link",
               "type": "method",
-              "description": "Establish link to already created entry."
+              "description": "Establish link to already created entry.",
+              "internal": true
             },
             "respond": {
               "name": "respond",
               "type": "method",
-              "description": "Creates a response with `entry.data` or `entry.state`."
+              "description": "Creates a response with `entry.data` or `entry.state`.",
+              "internal": true
             },
             "trackMaster": {
               "name": "trackMaster",
               "type": "method",
-              "description": "Update entry tracking. Master must be connected. Call `cb()` after\nsuccessful tracking was setup and entry was updated or on error."
+              "description": "Update entry tracking. Master must be connected. Call `cb()` after\nsuccessful tracking was setup and entry was updated or on error.",
+              "internal": true
             },
             "tracked": {
               "name": "tracked",
@@ -497,7 +512,8 @@ Packages["ose"] = {
                   "description": "Function to be called after setup tracking",
                   "type": "Function"
                 }
-              ]
+              ],
+              "internal": true
             },
             "linkMaster": {
               "name": "linkMaster",
@@ -510,26 +526,31 @@ Packages["ose"] = {
                   "type": "Function",
                   "optional": true
                 }
-              ]
+              ],
+              "internal": true
             },
             "patchData": {
               "name": "patchData",
-              "type": "method"
+              "type": "method",
+              "internal": true
             },
             "updateData": {
               "name": "updateData",
               "type": "method",
-              "description": "Update this entry data."
+              "description": "Update this entry data.",
+              "internal": true
             },
             "patchState": {
               "name": "patchState",
               "type": "method",
-              "description": "Patch entry state. Update `entry.state` and `entry.srev`."
+              "description": "Patch entry state. Update `entry.state` and `entry.srev`.",
+              "internal": true
             },
             "updateState": {
               "name": "updateState",
               "type": "method",
-              "description": "Update this entry state."
+              "description": "Update this entry state.",
+              "internal": true
             }
           }
         },
@@ -1002,12 +1023,14 @@ Packages["ose"] = {
             "error": {
               "name": "error",
               "type": "method",
-              "description": "Remove shard from space cache with error."
+              "description": "Remove shard from space cache with error.",
+              "internal": true
             },
             "cleanup": {
               "name": "cleanup",
               "type": "method",
-              "description": "Remove shard from space cache."
+              "description": "Remove shard from space cache.",
+              "internal": true
             },
             "config": {
               "name": "config",
@@ -1029,7 +1052,8 @@ Packages["ose"] = {
                   "description": "Dependencies object",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "send": {
               "name": "send",
@@ -1058,7 +1082,8 @@ Packages["ose"] = {
                   "type": "Object",
                   "optional": true
                 }
-              ]
+              ],
+              "internal": true
             },
             "linkMaster": {
               "name": "linkMaster",
@@ -1070,7 +1095,8 @@ Packages["ose"] = {
                   "description": "",
                   "type": "Function(err)"
                 }
-              ]
+              ],
+              "internal": true
             }
           },
           "undefined": {
@@ -1351,7 +1377,8 @@ Packages["ose"] = {
               "name": "shards",
               "type": "property",
               "dtype": "Object",
-              "description": "Object containing shards indexed by `sid`"
+              "description": "Object containing shards indexed by `sid`",
+              "internal": true
             }
           },
           "event": {
@@ -1389,7 +1416,8 @@ Packages["ose"] = {
             "constructor": {
               "name": "constructor",
               "type": "method",
-              "description": "Class constructor"
+              "description": "Class constructor",
+              "internal": true
             },
             "identify": {
               "name": "identify",
@@ -1411,7 +1439,8 @@ Packages["ose"] = {
                   "description": "",
                   "type": "String"
                 }
-              ]
+              ],
+              "internal": true
             },
             "link": {
               "name": "link",
@@ -1552,7 +1581,8 @@ Packages["ose"] = {
             "error": {
               "name": "error",
               "type": "method",
-              "description": "Remove shard from space cache with error."
+              "description": "Remove shard from space cache with error.",
+              "internal": true
             },
             "setup": {
               "name": "setup",
@@ -1564,7 +1594,8 @@ Packages["ose"] = {
                   "description": "Space name",
                   "type": "String"
                 }
-              ]
+              ],
+              "internal": true
             },
             "config": {
               "name": "config",
@@ -1586,12 +1617,14 @@ Packages["ose"] = {
                   "description": "Dependencies object",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "disconnectPeers": {
               "name": "disconnectPeers",
               "type": "method",
-              "description": "Disconnect all peers."
+              "description": "Disconnect all peers.",
+              "internal": true
             },
             "connectPeers": {
               "name": "connectPeers",
@@ -1604,7 +1637,8 @@ Packages["ose"] = {
                   "type": "Object",
                   "optional": true
                 }
-              ]
+              ],
+              "internal": true
             },
             "browserConfig": {
               "name": "browserConfig",
@@ -1616,7 +1650,8 @@ Packages["ose"] = {
                   "description": "Plugin configuration",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "linkMaster": {
               "name": "linkMaster",
@@ -1628,7 +1663,8 @@ Packages["ose"] = {
                   "description": "",
                   "type": "Function(err)"
                 }
-              ]
+              ],
+              "internal": true
             },
             "notifyHome": {
               "name": "notifyHome",
@@ -1640,7 +1676,8 @@ Packages["ose"] = {
                   "description": "",
                   "type": "Function(err)"
                 }
-              ]
+              ],
+              "internal": true
             }
           }
         },
@@ -1797,7 +1834,8 @@ Packages["ose"] = {
             },
             "doHomeInit": {
               "name": "doHomeInit",
-              "type": "method"
+              "type": "method",
+              "internal": true
             }
           },
           "property": {
@@ -1930,7 +1968,8 @@ Packages["ose"] = {
             "remove": {
               "name": "remove",
               "type": "method",
-              "description": "Mark subject as removed and call `cleanup()`."
+              "description": "Mark subject as removed and call `cleanup()`.",
+              "internal": true
             },
             "setLhs": {
               "name": "setLhs",
@@ -1942,44 +1981,53 @@ Packages["ose"] = {
                   "description": "New \"link to home\" state value",
                   "type": "Number"
                 }
-              ]
+              ],
+              "internal": true
             },
             "lhsLink": {
               "name": "lhsLink",
               "type": "method",
-              "description": "Link to the master, if no link to master is established. Call `cb(null, lhs)` with current `lhs` when link is or was established, or `cb(err)` on error."
+              "description": "Link to the master, if no link to master is established. Call `cb(null, lhs)` with current `lhs` when link is or was established, or `cb(err)` on error.",
+              "internal": true
             },
             "lhsLink2": {
               "name": "lhsLink2",
               "type": "method",
-              "description": "Close socket or call `cb(lhs)`.\nWhen subject is in some stable state, call `cb(this.lhs)`\nWhen subject is waiting for some operation to be completed, wait too.\nIf socket was closed during wait, do nothing. If `always`, call cb with error"
+              "description": "Close socket or call `cb(lhs)`.\nWhen subject is in some stable state, call `cb(this.lhs)`\nWhen subject is waiting for some operation to be completed, wait too.\nIf socket was closed during wait, do nothing. If `always`, call cb with error",
+              "internal": true
             },
             "lhsInited": {
               "name": "lhsInited",
-              "type": "method"
+              "type": "method",
+              "internal": true
             },
             "lhsHome": {
               "name": "lhsHome",
-              "type": "method"
+              "type": "method",
+              "internal": true
             },
             "isAtHome": {
               "name": "isAtHome",
-              "type": "method"
+              "type": "method",
+              "internal": true
             },
             "canReachHome": {
               "name": "canReachHome",
               "type": "method",
-              "description": "Check whether the entry is at home or linked to home."
+              "description": "Check whether the entry is at home or linked to home.",
+              "internal": true
             },
             "isRemoved": {
               "name": "isRemoved",
               "type": "method",
-              "description": "Check whether subject has been removed"
+              "description": "Check whether subject has been removed",
+              "internal": true
             },
             "spreadHome": {
               "name": "spreadHome",
               "type": "method",
-              "description": "Inform slaves about the ability to reach subject's home"
+              "description": "Inform slaves about the ability to reach subject's home",
+              "internal": true
             },
             "waitForHome": {
               "name": "waitForHome",
@@ -2342,7 +2390,8 @@ Packages["ose"] = {
               "name": "ws",
               "type": "property",
               "dtype": "Object",
-              "description": "Current [WebSocket wrapper] instance connected to an OSE instance\nrepresented by this peer."
+              "description": "Current [WebSocket wrapper] instance connected to an OSE instance\nrepresented by this peer.",
+              "internal": true
             }
           },
           "method": {
@@ -2361,7 +2410,8 @@ Packages["ose"] = {
                   "description": "Peer name",
                   "type": "String"
                 }
-              ]
+              ],
+              "internal": true
             },
             "identify": {
               "name": "identify",
@@ -2371,12 +2421,14 @@ Packages["ose"] = {
             "remove": {
               "name": "remove",
               "type": "method",
-              "description": "Removes peer"
+              "description": "Removes peer",
+              "internal": true
             },
             "urlFromWindowLocation": {
               "name": "urlFromWindowLocation",
               "type": "method",
-              "description": "Determines peer url from current `window.location`"
+              "description": "Determines peer url from current `window.location`",
+              "internal": true
             },
             "connect": {
               "name": "connect",
@@ -2417,7 +2469,8 @@ Packages["ose"] = {
                   "description": "Whether the underlying WebSocket was closed",
                   "type": "Boolean"
                 }
-              ]
+              ],
+              "internal": true
             },
             "verify": {
               "name": "verify",
@@ -2429,7 +2482,8 @@ Packages["ose"] = {
                   "description": "WebSocket",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "getGw": {
               "name": "getGw",
@@ -2465,7 +2519,8 @@ Packages["ose"] = {
                   "description": "[Shard] instance that acts as the core shard.",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             }
           },
           "undefined": {
@@ -2686,11 +2741,13 @@ Packages["ose"] = {
             },
             "closeExt": {
               "name": "closeExt",
-              "type": "method"
+              "type": "method",
+              "internal": true
             },
             "bindWsHandlers": {
               "name": "bindWsHandlers",
-              "type": "method"
+              "type": "method",
+              "internal": true
             }
           }
         },
@@ -2722,17 +2779,20 @@ Packages["ose"] = {
                   "description": "WebSocket object",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "wsOpen": {
               "name": "wsOpen",
               "type": "method",
-              "description": "WebSocket object open handler, called after a WebSocket is opened."
+              "description": "WebSocket object open handler, called after a WebSocket is opened.",
+              "internal": true
             },
             "wsClose": {
               "name": "wsClose",
               "type": "method",
-              "description": "WebSocket object close handler, called after a WebSocket is closed."
+              "description": "WebSocket object close handler, called after a WebSocket is closed.",
+              "internal": true
             },
             "wsError": {
               "name": "wsError",
@@ -2744,7 +2804,8 @@ Packages["ose"] = {
                   "description": "Error instance",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "addLink": {
               "name": "addLink",
@@ -2768,7 +2829,8 @@ Packages["ose"] = {
                   "description": "`Socket` instance - one end of the `link`.",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "delLid": {
               "name": "delLid",
@@ -2892,7 +2954,8 @@ Packages["ose"] = {
               "name": "forbiddenNames",
               "type": "property",
               "dtype": "Array",
-              "description": "Array of handler names that can't be used."
+              "description": "Array of handler names that can't be used.",
+              "internal": true
             }
           },
           "method": {
@@ -2906,7 +2969,8 @@ Packages["ose"] = {
                   "description": "Mock socket to be checked",
                   "type": "Object"
                 }
-              ]
+              ],
+              "internal": true
             },
             "canOpen": {
               "name": "canOpen",
@@ -3098,17 +3162,20 @@ Packages["ose"] = {
             },
             "bindResp": {
               "name": "bindResp",
-              "type": "method"
+              "type": "method",
+              "internal": true
             },
             "relay": {
               "name": "relay",
               "type": "method",
-              "description": "TODO:\n\nCall to relay `req` to response side socket `ws`. If `mock` is defined, semi-open a link by registering `mock` to `ws` to receive `open`, `close`, or `error` message. `mock._ws` is the socket on the client side. `mock` is now registered by both sockets. Sending anything from client side should respond in closing the link.\n\nCall to relay `req` received by `mock._ws` to `ws`. Couple of SS.RELAY sockets is created and replaces `mock`."
+              "description": "TODO:\n\nCall to relay `req` to response side socket `ws`. If `mock` is defined, semi-open a link by registering `mock` to `ws` to receive `open`, `close`, or `error` message. `mock._ws` is the socket on the client side. `mock` is now registered by both sockets. Sending anything from client side should respond in closing the link.\n\nCall to relay `req` received by `mock._ws` to `ws`. Couple of SS.RELAY sockets is created and replaces `mock`.",
+              "internal": true
             },
             "mock": {
               "name": "mock",
               "type": "method",
-              "description": "Call when new `req` is received by `ws` to create new mock socket."
+              "description": "Call when new `req` is received by `ws` to create new mock socket.",
+              "internal": true
             },
             "isForbidden": {
               "name": "isForbidden",
@@ -3120,7 +3187,8 @@ Packages["ose"] = {
                   "description": "Command name",
                   "type": "String"
                 }
-              ]
+              ],
+              "internal": true
             }
           },
           "undefined": {
@@ -3457,18 +3525,18 @@ Packages["ose"] = {
     },
     "wrap": {
       "name": "wrap",
-      "caption": "Classes and singletons",
-      "readme": "This component facilitates the use of classes or singletons with\nsimple code sharing and runtime specific behaviour by the browser\nand Node.js environments. This makes it possible to use\nprototypal inheritance to create classes and singletons and to mix\nin modules into class prototypes and singletons.",
+      "caption": "Module wrapper",
+      "readme": "This component is the core of the framework based on the\nCommonJS Modules spec. \n\nBefore you can start using the framework's methods and properties,\nit is necessary to wrap the current module:<br>\n`var O = require(\"ose\").module(module);`\n\nThe `O` variable then gives access to both general and\nmodule-related properties and methods of the framework, see [Module\nwrapper class]. \n\nIt is possible to extend the framework using\n`O.extend(\"property_name\", property_value)`. Calling this method\nadds the supplied property to the prototype of wrapped modules (`O`\nvariable).",
       "file": "lib/wrap.js",
-      "line": 290,
-      "aliases": "class classes singleton singletons eventEmitter super moduleWrapping",
-      "description": "## Module wrapping\n\nThe creation of classes and singletons is based on the CommonJS\nModules spec. Each class or singleton is defined within its own\nmodule.\n\nTo create a class or singleton, you first need to wrap the module\ncontaining the class or singleton definition by calling one of the\nfollowing:\n\nExample:\n\n    // Module containing class definition.\n    'use strict';\n\n    // Require OSE.and wrap the current module to be used as a class definition.\n    var O = require('ose').class(module)\n\nThe `O` variable gives access to the OSE framework.\n\n**IMPORTANT:**<br />\nEach time a module is wrapped, excluding\n`require('ose').module(module)`, the wrapper adds the `O` property\nto `module.exports`. It is not allowed to overwrite this\nproperty. The `O` property is read-only and non-configurable. It is\nbetter not to overload this property.\n\n## Classes\n\nA class is a function used as a class constructor with a prototype.\n\nTo use a class, you need to carry out three steps:\n1. Prepare a module containing a class definition.\n2. Obtain a class constructor.\n3. Create a new object.\n\nFirst, the class needs to be prepared in the module containing the\nclass definition by calling, for example, `var O =\nrequire('ose').class(module, constructor, super)`. The\n`constructor` is an optional class constructor method. If it is not\ndefined, it gets created automatically. The `super` parameter\ndefines a superclass. The `super` parameter can be `undefined`, a\nclass constructor or a class name. It is not possible to inherit\nfrom singletons.\n\nExample module with class preparation::\n\n    // Module \"ose/lib/entry\"\n    'use strict';\n\n    // Wrap a module to be used as a class inheriting `EventEmitter` with a constructor `C`\n    var O = require('ose').class(module, C, 'EventEmitter');\n\n    // Class constructor\n    function C(...) {\n      // Call super constructor\n      O.super.call(this);\n      ...\n    }\n\n    // Add properties of the class' prototype to the `exports`\n    // object:\n\n    // Define property.\n    exports.config = function(name, data) {\n      ...\n    };\n\n    // Define another property\n    exports.identify = function() {\n      return {\n        id: this.id\n        sid: this.shard.sid,\n        space: this.shard.space.name,\n      };\n    };\n\n\nThe second step is to obtain a class constructor with its\nprototype. This step is carried out when the class is first\naccessed by calling `O.class('ose/lib/entry')`. Multiple calls to\n`O.class('ose/lib/entry')` return the same, already created\nclass. When called for the first time, the class prototype is\ncreated from module exports and optional mixins. If the class has\nan ancestor, the constructor should usually call the super\nconstructor (see example above). If a class is defined without a\nconstructor, the constructor is created.\n\nThe last step is to create a new object based on the class.\n\nClass usage example:\n\n    // Some other module ...\n    'use strict';\n\n    // Require OSE\n    var O = require('ose').module(module);\n\n    // Obtain class constructor (second step).\n    var Entry = O.class('ose/lib/entry');\n\n    ...\n\n    // Create a new Entry instance object (third step).\n    entry = new Entry(shard, id);\n\n    ...\n\nTODO: Document O.classes\n\nThe **EventEmitter** class is built in. To use this\nclass, pass `'EventEmitter'` to the `class()` method (see the\nexamples above).\n\n\nTo access the `module.exports` object that is wrapped and prepared\nas a class, call the standard `require('ose/lib/entry')`\nmethod. This call returns the original `module.exports` object.\n\nTo extend any class, use the following example:\n\n    // Require OSE\n    var O = require('ose').module(module);\n\n    // Obtain Entry class\n    var Entry = O.class('ose/lib/entry');\n\n    // Add new method to entry class prototype\n    Entry.prototype.newMethod = function() {...};\n\nChanging the prototype of a class alters all its instances and\ndescendants, even those already created.\n\n## Objects (singletons)\n\nThere are two types of singletons. The first initializes itself,\nand the second is initialized outside the singleton definition.\n\n**IMPORTANT:**<br />\nEvery singleton must always exist in only one instance\nwithin a single running instance of OSE. The use of npm can result\nin mixing multiple installations of packages using singletons\nwithin a single OSE instance. This situation must be avoided.\n\nLike the creation of a class, the creation of a singleton is a\nthree-step process:\n\n1. Prepare a module containing the singleton's definition and\n   create the singleton\n2. Obtain singleton initialization method\n3. Initialize and obtain the singleton\n\nExample module with self-initializing singleton::\n\n    // Wrap module to be used as a singleton\n    var O = require('ose').object(module, I, 'EventEmitter');\n\n    // Initialize of the singleton\n    exports = O.init();\n\n    // Singleton initialization function\n    function I() {\n      // Call super constructor\n      O.super.call(this);\n      ...\n    }\n\n    // Properties of the singleton are defined in the `exports` variable:\n\n    exports.identify = function() {\n      return {\n        id: this.id\n      };\n    };\n\n    exports.getId = function() {\n      return id;\n    };\n\n    ...\n\nExample module without singleton self-initialization:\n\n    // Wrap module to be used as a singleton\n    var O = require('ose').object(module, I, 'EventEmitter');\n\n    // Obtain singleton object\n    exports = O.exports;\n    ...\n\nExample module with separate singleton initialization:\n\n    // Some other module ...\n    'use strict';\n\n    // Wrap module as module\n    var O = require('ose').module(module);\n\n    ...\n\n    // Obtain singleton initialization function (second step)\n    var init = O.object('ose/lib/peer/list');\n\n    // Initialize and obtain singleton (third step)\n    var result = init(arg);\n\n    // Or the second and third step together without the init\n    // variable:\n    var result = O.object('ose/lib/peer/list')(arg);\n\n    ...\n\nTo access or extend any initialized singleton, use standard `require`:\n\n    // Module changing singleton.\n    'use strict';\n\n    // Require OSE.\n    var O = require('ose');\n\n    // Obtain singleton.\n    var result = require('ose/lib/id');\n\n    // Add new method to the singleton.\n    result.newMethod = function() {...};\n\nThe singleton can be changed before it is initialized. If this is\ndone, it is possible that the change will be overwritten by mixing\nother modules during singleton initialization.\n\n\n## Mixins\n\nIt is possible to mix another module into a class prototype or\nsingleton. To do that, use the `append()` or `prepend()` methods of\nthe `wrap` object.\n\nExample:\n\n    // Some module\n    'use strict';\n    // Wrap module\n    var O = require('ose').class(module, C, 'EventEmitter');\n\n    // Prepend a module\n    O.prepend('someModuleName')\n    // Append a module depending on the runtime.\n    O.append('runtime')\n\nThe `append()` or `prepend()` methods supports call chaining. Both\nmethods accept a module name or array of module names. Properties\nto a class prototype or singleton are mixed in the second step of\nclass or singleton creation. Conflicting properties are overwritten\nin the following order: Last prepended, prepended, module.exports,\nfirst appended, appended.\n\nIt is possible to use the following predefined values as module names:\n* 'browser' – If in a browser environment, use the `browser.js`\n   module from the same directory.\n* 'node' – If in a Node.js environment, use the `node.js`\n   module from the same directory.\n* 'runtime' – Use either the `browser.js` or `node.js` module\n   depending on the environment.\n\nIt is possible to use relative paths as module names.",
+      "line": 333,
+      "aliases": "class classes singleton singletons eventEmitter super moduleWrapping wrappingModule wrappingModules",
+      "description": "## Description\n\nThere are several types of module wrapping:\n- simple module:<br>\n  `var O = require(\"ose\").module(module);`\n- class definition:<br>\n  `var O = require(\"ose\").class(module, constructor, \"super_module_path\");`\n- singleton definition:<br>\n  `var O = require(\"ose\").object(module, init_method, \"super_module_path\");`\n- application definition:<br>\n  `var O = require(\"ose\").app(module, \"application_name\");`\n\n\n**IMPORTANT:**<br />\nEach time a module is wrapped, excluding simple module definition\n`require(\"ose\").module(module)`, the wrapper adds the `O` property\nto `module.exports`. The `O` property is read-only and\nnon-configurable. It is not safe to overwrite this property.\n\nSimple modules do nothing with `module` or `module.exports`. They\nonly provide the framework's methods and properties to the current\nmodule. \n\nWrapping a module as an application defines the main application\nmodule.\n\n\n## Classes\n\nA class is a function used as a class constructor with a prototype. It\nis good practice to define each class within its own module.\n\nOf course, it is still possible to use `util.inherits(...);`\n\nUsing the OSE module wrapping for class definition brings syntactic\nsugar for:\n- creating classes:<br>\n  `var O = require(\"ose\").class(module, constructor_method, \"super_module_path\");`\n- chainable mixing modules into class prototypes:<br>\n  `var O = require(\"ose\").class(module).prepend(\"module_path\").append(\"another_module_path\");`\n- runtime-specific behaviour with simple code sharing between\n    Node.js and the browser:<br>\n  `O.prepend(\"browser\")`, `O.append(\"runtime\");`\n- definition class prototype properties using `exports` variable:<br>\n  `exports.config = function(...) { ... };`\n- calling methods of superclass:<br>\n  `O.inherited(this, \"method_name\", arg1, ..., argn);`\n- calling methods of all ancestors in prototype chain without\n    explicitly calling \"inherited\" methods in method definition:<br>\n  `O.callChain(this, \"method_name\", arg1, ..., argn);`\n- creating class instances:<br>\n  `O.new(\"module_path\")(arg1, ..., argn);`\n- ...\n\nTo use a class, you need to carry out three steps:\n\n1. Prepare a module containing the class definition.\n2. Obtain a class constructor.\n3. Create a new object.\n\nFirst, the class needs to be prepared in the module containing the\nclass definition by calling, for example, `var O =\nrequire(\"ose\").class(module, constructor, super)`. The\n`constructor` is an optional class constructor method. If it is not\ndefined, it gets created automatically. The `super` parameter\ndefines a superclass. The `super` parameter can be `undefined`, a\nclass constructor or a path to the module containing class definition.\n\nExample module with class preparation::\n\n    // Module \"ose/lib/entry\"\n    \"use strict\";\n\n    // Wrap a module to be used as a class inheriting `EventEmitter` with a constructor `C`\n    var O = require(\"ose\").class(module, C, \"EventEmitter\");\n\n    // Class constructor\n    function C(...) {\n      // Call super constructor\n      O.super.call(this);\n      ...\n    }\n\n    // Add properties of the class prototype to the `exports` object:\n    exports.config = function(name, data) {\n      ...\n    };\n\n    // Define another property\n    exports.identify = function() {\n      return {\n        id: this.id\n        sid: this.shard.sid,\n        space: this.shard.space.name,\n      };\n    };\n\nThe second step is to obtain a class constructor with its\nprototype. This step is carried out when the class is first\naccessed by calling `O.class(\"ose/lib/entry\")`. Multiple calls to\n`O.class(\"ose/lib/entry\")` return the same, already created\nclass. When called for the first time, the class prototype is\ncreated from module exports and optional mixins. If the class has\nan ancestor, the constructor should usually call the super\nconstructor (see example above). If a class is defined without a\nconstructor, the constructor is created.\n\nThe last step is to create a new object based on the class.\n\nClass usage example:\n\n    // Some other module ...\n    \"use strict\";\n    var O = require(\"ose\").module(module);\n\n    // Obtain class constructor (second step).\n    var Entry = O.class(\"ose/lib/entry\");\n\n    ...\n\n      // Create a new Entry instance object (third step).\n      entry = new Entry(shard, id);\n\n    ...\n\nOr another way:\n\n    // Some other module ...\n    \"use strict\";\n    var O = require(\"ose\").module(module);\n\n    ...\n\n      // Create a new Entry instance object (second and third step together).\n      entry = O.new(\"ose/lib/entry\")(shard, id);\n\n\nThe **EventEmitter** class is built in. To use this\nclass, pass `\"EventEmitter\"` to the `class()` method (see the\nexamples above).\n\nTo access the `module.exports` object that is wrapped and prepared\nas a class, call the standard `require(\"ose/lib/entry\")`\nmethod. This call returns the original `module.exports` object.\n\nTo extend any class, use the following example:\n\n    // Require OSE\n    var O = require(\"ose\").module(module);\n\n    // Obtain Entry class\n    var Entry = O.class(\"ose/lib/entry\");\n\n    // Add new method to entry class prototype\n    Entry.prototype.someMethod = function() {...};\n\nChanging the prototype of a class alters all its instances and\ndescendants, even those already created.\n\n\n## Mixins\n\nIt is possible to mix another module into a class prototype. To do\nthat, use the `prepend()` or `append()` methods of the `O` wrap\nobject.\n\nExample:\n\n    // Some module\n    \"use strict\";\n\n    // Wrap module as a class definition\n    var O = require(\"ose\").class(module, C, \"EventEmitter\");\n\n    // Prepend a module\n    O.prepend(\"some_module_name\");\n\n    // Append a module depending on the runtime.\n    O.append(\"runtime\");\n\nThe `prepend()` or `append()` methods supports call chaining. Both\nmethods accept a module name or array of module names. Properties\nto a class prototype are mixed in the second step of\nclass creation. Conflicting properties are overwritten\nin the following order: Last prepended, prepended, module.exports,\nfirst appended, appended.\n\nIt is possible to use the following predefined values as module names:\n* \"browser\" – If in a browser environment, use the `browser.js`\n   module from the same directory.\n* \"node\" – If in a Node.js environment, use the `node.js`\n   module from the same directory.\n* \"runtime\" – Use either the `browser.js` or `node.js` module\n   depending on the environment.\n\nIt is possible to use relative paths as module names.\n\n\n## Singletons\n\nA singleton is a JavaScript object assigned to `module.exports`. It can be\ncreated as any class instance and can use the same `append()` and\n`prepend()` mixin methods as classes. There are two types of\nsingletons. The first initializes itself in its own module and the\nsecond is initialized outside the singleton module.\n\n**IMPORTANT:**<br />\nEvery singleton must always exist in only one instance\nwithin a single running instance of OSE. The use of npm can result\nin mixing multiple installations of packages using singletons\nwithin a single OSE instance. This situation must be avoided.\n\nLike the creation of a class, the creation of a singleton is a\nthree-step process:\n\n1. Prepare a module containing the singleton's definition and\n   create the singleton\n2. Obtain singleton initialization method\n3. Initialize and obtain the singleton\n\nExample module with self-initializing singleton::\n\n    // Wrap module to be used as a singleton\n    var O = require(\"ose\").object(module, I, \"EventEmitter\");\n\n    // Initialize of the singleton\n    exports = O.init();\n\n    // Singleton initialization function\n    function I() {\n      // Call super constructor\n      O.super.call(this);\n      ...\n    }\n\n    // Properties of the singleton are defined in the `exports` variable:\n\n    exports.identify = function() {\n      return {\n        id: this.id\n      };\n    };\n\n    exports.getId = function() {\n      return id;\n    };\n\n    ...\n\nExample module without singleton self-initialization:\n\n    // Wrap module to be used as a singleton\n    var O = require(\"ose\").object(module, I, \"EventEmitter\");\n\n    // Obtain singleton object\n    exports = O.exports;\n    ...\n\nExample module with separate singleton initialization:\n\n    // Some other module ...\n    \"use strict\";\n\n    // Wrap module as module\n    var O = require(\"ose\").module(module);\n\n    ...\n\n    // Obtain singleton initialization function (second step)\n    var init = O.object(\"ose/lib/peer/list\");\n\n    // Initialize and obtain singleton (third step)\n    var result = init(arg);\n\n    // Or the second and third step together without the init\n    // variable:\n    var result = O.object(\"ose/lib/peer/list\")(arg);\n\n    ...\n\nTo access or extend any initialized singleton, standard `require` can be used:\n\n    // Module changing singleton.\n    \"use strict\";\n\n    // Require OSE.\n    var O = require(\"ose\");\n\n    // Obtain singleton.\n    var result = require(\"ose/lib/id\");\n\n    // Add new method to the singleton.\n    result.newMethod = function() {...};\n\nBe careful when altering singletons before their initialization\nbecause your changes may get overwritten by mixing of other modules\nduring singleton initialization.",
       "modules": {
         "lib/wrap": {
           "name": "lib/wrap",
           "type": "class",
           "caption": "Module wrapper class",
-          "readme": "TODO",
+          "readme": "Class providing the framework's methods and properties",
           "file": "lib/wrap.js",
           "method": {
             "constructor": {
@@ -3498,7 +3566,8 @@ Packages["ose"] = {
                   "description": "Browser or Node.js runtime",
                   "type": "String"
                 }
-              ]
+              ],
+              "internal": true
             },
             "dia": {
               "name": "dia",
@@ -3743,7 +3812,8 @@ Packages["ose"] = {
             },
             "defineO": {
               "name": "defineO",
-              "type": "method"
+              "type": "method",
+              "internal": true
             },
             "quit": {
               "name": "quit",
@@ -3862,7 +3932,8 @@ Packages["ose"] = {
               "name": "pdType",
               "type": "property",
               "dtype": "Object",
-              "description": "[Property descriptor]\n(https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty)\ntypes enumeration."
+              "description": "[Property descriptor]\n(https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty)\ntypes enumeration.",
+              "internal": true
             },
             "consts": {
               "name": "consts",
@@ -3910,7 +3981,7 @@ Packages["ose"] = {
               "name": "lastTime",
               "type": "property",
               "dtype": "Number",
-              "description": "Todo"
+              "internal": true
             },
             "_": {
               "name": "_",
@@ -3934,13 +4005,15 @@ Packages["ose"] = {
               "name": "scopes",
               "type": "property",
               "dtype": "Object",
-              "description": "List of all scopes"
+              "description": "List of all scopes",
+              "internal": true
             },
             "classes": {
               "name": "classes",
               "type": "property",
               "dtype": "Object",
-              "description": "Predefined class names and constructors"
+              "description": "Predefined class names and constructors",
+              "internal": true
             }
           },
           "undefined": {
@@ -3955,9 +4028,9 @@ Packages["ose"] = {
   "modules": {
     "core": {
       "name": "core",
-      "type": "singleton",
+      "type": "module",
       "caption": "OSE core",
-      "readme": "The core object of the \"ose\" package. It provides methods for\nwrapping modules complying to the Common.js spec. Wrapped modules\ngives access the functionality of the OSE framework, see [Module\nwrapping].",
+      "readme": "The core object of the \"ose\" package. It provides methods for\n[wrapping modules] complying to the CommonJS modules spec. Wrapped modules\ngives access the functionality of the OSE framework, see [Module\nwrapping].",
       "file": "lib/plugins.js",
       "property": {
         "spaces": {
@@ -4305,16 +4378,19 @@ Packages["ose"] = {
         },
         "setupO": {
           "name": "setupO",
-          "type": "method"
+          "type": "method",
+          "internal": true
         },
         "setup": {
           "name": "setup",
-          "type": "method"
+          "type": "method",
+          "internal": true
         },
         "config": {
           "name": "config",
           "type": "method",
-          "description": "OSE plugin configuration method."
+          "description": "OSE plugin configuration method.",
+          "internal": true
         },
         "browserConfig": {
           "name": "browserConfig",
@@ -4326,7 +4402,8 @@ Packages["ose"] = {
               "description": "Configuration object",
               "type": "Object"
             }
-          ]
+          ],
+          "internal": true
         },
         "readConfig": {
           "name": "readConfig",
@@ -4658,13 +4735,13 @@ Packages["ose"] = {
     }
   },
   "quick": {
-    "about": "The main advantage of OSE is the easy creation of applications\nconsisting of multiple instances that work as a single whole. The\nobjective is to develop an all-encompassing personal mesh running\non various devices including HTPCs, phones, tablets, workstations,\nservers, Raspberry Pis, home automation gadgets, wearables, drones\netc.\n\n<a href=\"http://opensmartenvironment.github.io/doc/resource/ose.svg\"><img width=100% src=\"http://opensmartenvironment.github.io/doc/resource/ose.svg\"></a>",
-    "status": "- Pre-alpha stage (insecure and buggy)\n- Unstable API\n- Gaps in the documentation\n- No test suite\n\nThis is not yet a piece of download-and-use software. It is important\nto understand the basic principles covered by the\n[documentation](http://opensmartenvironment.github.io/doc/).\n\nUse of this software is currently recommended only to users that\nwish to participate in the development process, see\n[contributions](http://opensmartenvironment.github.io/doc/#contrib).",
-    "install": "# Installation\n\n## Node.js\nThe main prerequisite is a working installation of a recent\ninstallation of\n[Node.js](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager)\n(>= 0.10).\n\nOn Debian Jessie, you can install the default package:\n\n    sudo apt-get install nodejs\n\nOn Raspbian, you can install Node.js, for example, by doing:\n\n    wget http://node-arm.herokuapp.com/node_latest_armhf.deb\n    sudo dpkg -i node_latest_armhf.deb\n\n\nYou also need the following prerequisites\n\n- libdbus-1-dev package or its equivalent for your distribution\n- pkg-config package or its equivalent in your distribution\n\nIf you run Debian Jessie, just run:\n\n    sudo apt-get install libdbus-1-dev pkg-config\n\n\n## Manual installation of OSE packages\nInstead of using npm, you can install OSE packages by cloning their\nGitHub repositories. You can thus install only the packages that\nyou actually need.\n\nTODO: Expand on this.",
-    "licence": "This software is released under the terms of the [GNU General\nPublic License v3.0](http://www.gnu.org/copyleft/gpl.html) or\nlater.",
+    "about": "<b>Open Smart Environment software is a suite for creating\nmulti-instance applications that work as a single whole.</b><br>\nImagine, for example, a personal mesh running on various devices\nincluding HTPCs, phones, tablets, workstations, servers, Raspberry\nPis, home automation gadgets, wearables, drones, etc.\n\nOSE software consists of several npm packages: a [framework] running\non Node.js, an [HTML5 frontend], extending\npackages and a set of example applications.\n\n<figure>\n  <a href=\"http://opensmartenvironment.github.io/doc/resource/ose.svg\"><img width=100% src=\"http://opensmartenvironment.github.io/doc/resource/ose.svg\"></a>\n\n  <figcaption><b>Set-up of current example applications.</b> Here,\n  OSE provides a [Media player](#example-player) running on an HTPC\n  that can be controlled by an IR remote through\n  [LIRC](#example-lirc) and is capable of playing streams from a\n  [DVB streamer](#example-dvb) and control devices through GPIO\n  pins on a [Raspberry Pi](#example-rpi) </figcaption> </figure>",
+    "status": "- Pre-alpha stage (insecure and buggy)\n- Unstable API\n- Patchy documentation\n- No test suite\n\nThis is not yet a piece of download-and-use software. It is important\nto understand the basic principles covered by the\n[documentation](http://opensmartenvironment.github.io/doc/).",
+    "install": "# Installation\n\n## Node.js\nThe main prerequisite is a working installation of a recent\nversion of\n[Node.js](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager)\n(>= 0.10).\n\nOn Debian Jessie, you can install the default package:\n\n    sudo apt-get install nodejs\n\nOn Raspbian, you can install Node.js, for example, by doing:\n\n    wget http://node-arm.herokuapp.com/node_latest_armhf.deb\n    sudo dpkg -i node_latest_armhf.deb\n\n\nYou also need the following prerequisites\n\n- libdbus-1-dev package or its equivalent for your distribution\n- pkg-config package or its equivalent in your distribution\n\nIf you run Debian Jessie, just run:\n\n    sudo apt-get install libdbus-1-dev pkg-config\n\n\n## Manual installation of OSE packages\nInstead of using npm, you can install OSE packages by cloning their\nGitHub repositories.",
+    "licence": "This software is released under the terms of the [GNU General\nPublic Licence v3.0](http://www.gnu.org/copyleft/gpl.html) or\nlater.",
     "contrib": "# Contributions\nTo get started with contributing or coding, it is good to read about the\ntwo main npm packages [ose] and [ose-gaia].\n\nThis software is in the pre-alpha stage. At the moment, it is\npremature to file bugs. Input is, however, much welcome in the form\nof ideas, comments and general suggestions.  Feel free to contact\nus via\n[github.com/opensmartenvironment](https://github.com/opensmartenvironment).",
     "aboutDoc": "# About the documentation\n\n## State of documentation\nThis documentation is currently under construction and is being\ncontinuously improved. Links may be broken and information\nincomplete or erroneous.\n\n\n## Packages and components\nOSE documentation is compiled from source files of all official OSE\nnpm packages.\n\nEach package consists of components. Each component is a logical\nconcept consisting of modules.\n\nThe documentation of each package contains basic information about\nthe package, its components and modules not assigned to any\ncomponent.\n\nThe documentation of each component contains basic information\nabout the component and its modules.\n\n\n## Modules\nModules are mostly source files conforming to the CommonJS Modules\nspec.\n\nThe module view is a reference of methods, properties and events\nprovided by the given module.\n\nA module can be one of the following:\n- simple module with exported methods and properties\n- class definition\n- singleton\n- package core module",
-    "platforms": "OSE is being developed in JavaScript on the following platforms.\n- Node.js (>0.10) running on Debian Jessie and Raspbian\n- Firefox 37 or newer with Web Components enabled\n\nIt, however, probably also works with other Linux distributions.",
-    "start": "A good way to get started with OSE is to try out one of the examples:\n- [Media player](#example-player)\n- [Raspberry Pi](#example-rpi) (or other device with GPIO)\n- [LIRC](#example-lirc)\n- [DVB streamer](#example-dvb)"
+    "platforms": "OSE has the following prerequisites:\n- Node.js (>0.10) running on Debian Jessie and Raspbian\n- Firefox 37 or newer with Web Components enabled",
+    "start": "The best way to get started with OSE is to try out the examples:\n- [Media player](#example-player)\n- [Raspberry Pi](#example-rpi) (or other device with GPIO)\n- [LIRC](#example-lirc)\n- [DVB streamer](#example-dvb)"
   }
 };

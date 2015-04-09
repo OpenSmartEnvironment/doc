@@ -1,7 +1,7 @@
 Packages["doc"] = {
   "name": "doc",
   "npmname": "ose-doc",
-  "caption": "OSE Documentation",
+  "caption": "OSE software documentation",
   "readme": "This package is used to build documentation for all official OSE\npackages.",
   "file": "lib/entry/index.js",
   "line": 16,

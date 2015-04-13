@@ -1,0 +1,34 @@
+{
+  "name": "doc",
+  "preferGlobal": false,
+  "version": "0.1.6",
+  "author": "Jan Snasel <snaselj@gmail.com>",
+  "description": "Open Smart Environment documentation",
+  "contributors": [
+    {
+      "name": "Jan Snasel",
+      "email": "snaselj@gmail.com"
+    },
+    {
+      "name": "Fred Rooks",
+      "email": "fred@fredrooks.com"
+    }
+  ],
+  "main": "./lib/index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/opensmartenvironment/doc.git"
+  },
+  "keywords": [
+    "open smart environment",
+    "documentation"
+  ],
+  "license": "GPL-3.0+",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "dependencies": {
+    "marked": "^0.3.3",
+    "yuidocjs": "^0.6.0"
+  }
+}

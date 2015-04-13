@@ -24,15 +24,14 @@ var Fs = require('fs');
  * on Node.js, an [HTML5 frontend], extending
  * packages and a set of example applications.
  *
- * <figure>
- *   <a href="http://opensmartenvironment.github.io/doc/resource/ose.svg"><img width=100% src="http://opensmartenvironment.github.io/doc/resource/ose.svg"></a>
+ * <a href="http://opensmartenvironment.github.io/doc/resource/ose.svg"><img width=100% src="http://opensmartenvironment.github.io/doc/resource/ose.svg"></a>
  *
- *   <figcaption><b>Set-up of current example applications.</b> Here,
- *   OSE provides a [Media player](#example-player) running on an HTPC
- *   that can be controlled by an IR remote through
- *   [LIRC](#example-lirc) and is capable of playing streams from a
- *   [DVB streamer](#example-dvb) and control devices through GPIO
- *   pins on a [Raspberry Pi](#example-rpi) </figcaption> </figure>
+ * **Set-up of current example applications.** Here,
+ * OSE provides a [Media player](#example-player) running on an HTPC
+ * that can be controlled by an IR remote through
+ * [LIRC](#example-lirc) and is capable of playing streams from a
+ * [DVB streamer](#example-dvb) and control devices through GPIO
+ * pins on a [Raspberry Pi](#example-rpi)
  *
  * @getting_started
  * The best way to get started with OSE is to try out the examples:
@@ -379,7 +378,7 @@ function getReadme(pkg) {  // {{{2
 
   r.push(links(q.about));
   r.push('');
-  r.push('For more information about OSE see **the [documentation](http://opensmartenvironment.github.io/doc/)**.');
+  r.push('For more information about OSE see **[the documentation](http://opensmartenvironment.github.io/doc/)**.');
   r.push('');
 
   r.push('## Status');
@@ -429,7 +428,7 @@ function links(text) {  // {{{2
 
       text[i - 2] = '';
       var t = text[i - 1];
-      text[i - 1] = '[' + t + '](http://opensmartenvironment.github.io/doc/#' + t.toLowerCase().replace(/\s/g, '').replace(/\./g, '/');
+      text[i - 1] = '[' + t + '](http://opensmartenvironment.github.io/doc/#' + t.toLowerCase().replace(/\s/g, '').replace(/\./g, '/') + ')';
       text[i] = '';
     }
   }

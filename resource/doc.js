@@ -84,7 +84,6 @@ function addPackage(p) {  // {{{2
     li.appendTo('#examples');
   }
 
-
   for (var key in p.comps) {
     addComp(p.comps[key]);
   };
@@ -375,6 +374,10 @@ function mdPackage(done, pkg, all) {  // {{{2
   r.push(links(pkg.readme));
   mdFeatures(r, '## Features', pkg.features);
   r.push(links(pkg.description));
+  if (pkg.usage) {
+    r.push('');
+    r.push(links(pkg.usage));
+  }
 
   mdComps(r, pkg.comps, pkg.name, all);
   mdModules(r, pkg.modules, pkg.name, all);

@@ -3,7 +3,6 @@ Packages["gaia"] = {
   "npmname": "ose-gaia",
   "caption": "OSE HTML5 frontend",
   "readme": "OSE package providing an mobile-first HTML5 user interface built\nusing [Gaia\ncomponents](https://developer.mozilla.org/en-US/Apps/Design/Firefox_OS_building_blocks).\n\nAs the current implementation of Gaia components is based on Web\nComponents technology, so the UI is currently fully functional only\nin recent versions of Firefox.\n\nEach browser page (tab) displaying the OSE frontend is an [OSE\ninstance]. As part of the base [OSE plugin] configuration, a\n[peer], representing the backend OSE instance, is created and\nconnected to.\n\nThe connection is realized via a WebSocket in a standard OSE\n[peer-to-peer] way. All information needed for displaying requested\ncontent is exchanged through this WebSocket channel. After a\nsuccessful connection is established, content is displayed using\ndynamic injection.",
-  "file": "content.js",
   "line": 10,
   "aliases": "oseUi HTML5frontend",
   "description": "## Initialization\n\nWhen the browser sends an HTML request to a backend (Node.js) OSE\ninstance, this instance responds by generating and providing\nindex.html. The `<head>` of the index.html contains `<script>` and\n`<style>` tags. Most of these scripts are shared between Node.js\nand the browser environments. The `<body>` contains a single\n`<script>` that loads the application.",
@@ -373,7 +372,7 @@ Packages["gaia"] = {
       "name": "lib",
       "type": "singleton",
       "super": "EventEmitter",
-      "caption": "OSE Building Blocks core",
+      "caption": "OSE frontend core",
       "readme": "Core singleton of gaia plugin.\n\nThis singleton is available through the `O.ui` property.",
       "file": "lib/index.js",
       "property": {

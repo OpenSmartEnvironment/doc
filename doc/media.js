@@ -3,7 +3,6 @@ Packages["media"] = {
   "npmname": "ose-media",
   "caption": "Media",
   "readme": "The Media package implements a general media player into your\nenvironment. Together with other OSE packages (e.g. [ose-pa],\n[ose-videolan] and [ose-dvb]), it can be used to create a\nmulti-instance media application.\n\nSee [Media player example].",
-  "file": "content.js",
   "line": 10,
   "aliases": "oseMediaPlayer",
   "features": "- Media sources extended by other npm packages\n- Predefined media streams, files and playback history\n- Media playback using a configurable set of applications\n  (currently DVBlast as DVB stramer, PulseAudio as audio backend\n  and VLC as media player)",

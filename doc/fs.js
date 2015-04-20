@@ -3,8 +3,7 @@ Packages["fs"] = {
   "npmname": "ose-fs",
   "caption": "Filesystem",
   "readme": "This package contains definitions of [entry kinds] that represent\nfiles and directories and gives OSE access to the filesystem and\nregisters fs as a source to the [Media player].\n\nSee [Media player example].\n\nIt also defines a JSON file-based database backend for shards.",
-  "file": "lib/pagelet/gesture.js",
-  "line": 11,
+  "line": 10,
   "modules": {
     "lib/dir": {
       "name": "lib/dir",

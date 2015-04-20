@@ -3,7 +3,6 @@ Packages["videolan"] = {
   "npmname": "ose-videolan",
   "caption": "VideoLAN",
   "readme": "This package contains [entry kinds] integrating VideoLAN software\ninto OSE.\n\nIt allows the [Media player] to use VLC as its playback\napplication and DVBlast as its DVB streamer.\n\nSee [Media player example].",
-  "file": "content.js",
   "line": 10,
   "modules": {
     "lib/dvblast/boon": {
@@ -248,7 +247,7 @@ Packages["videolan"] = {
         "playUri": {
           "name": "playUri",
           "type": "method",
-          "description": "[Command handler]\n\nPlay media from URI.",
+          "description": "Play media from URI.",
           "params": [
             {
               "name": "req",
@@ -260,22 +259,22 @@ Packages["videolan"] = {
         "play": {
           "name": "play",
           "type": "method",
-          "description": "[Command handler]\n\nPlay"
+          "description": "Play"
         },
         "pause": {
           "name": "pause",
           "type": "method",
-          "description": "[Command handler]\n\nPause playback"
+          "description": "Pause playback"
         },
         "stop": {
           "name": "stop",
           "type": "method",
-          "description": "[Command handler]\n\nStop playback"
+          "description": "Stop playback"
         },
         "turnOff": {
           "name": "turnOff",
           "type": "method",
-          "description": "[Command handler]\n\nTurns the player off.",
+          "description": "Turns the player off.",
           "params": [
             {
               "name": "req",
@@ -286,7 +285,7 @@ Packages["videolan"] = {
         "fullscreen": {
           "name": "fullscreen",
           "type": "method",
-          "description": "[Command handler]\n\nToggles fullscreen",
+          "description": "Toggles fullscreen",
           "params": [
             {
               "name": "req",
@@ -298,12 +297,12 @@ Packages["videolan"] = {
         "raise": {
           "name": "raise",
           "type": "method",
-          "description": "[Command handler]\n\nRaises window"
+          "description": "Raises window"
         },
         "shuffle": {
           "name": "shuffle",
           "type": "method",
-          "description": "[Command handler]\n\nToggles shuffle mode",
+          "description": "Toggles shuffle mode",
           "params": [
             {
               "name": "req",
@@ -315,7 +314,7 @@ Packages["videolan"] = {
         "seek": {
           "name": "seek",
           "type": "method",
-          "description": "[Command handler]\n\nSeek media",
+          "description": "Seek media",
           "params": [
             {
               "name": "req",
@@ -327,7 +326,7 @@ Packages["videolan"] = {
         "next": {
           "name": "next",
           "type": "method",
-          "description": "[Command handler]\n\nSkip to next media",
+          "description": "Skip to next media",
           "params": [
             {
               "name": "req",
@@ -339,7 +338,7 @@ Packages["videolan"] = {
         "previous": {
           "name": "previous",
           "type": "method",
-          "description": "[Command handler]\n\nSkip to previous media",
+          "description": "Skip to previous media",
           "params": [
             {
               "name": "req",

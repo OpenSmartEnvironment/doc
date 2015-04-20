@@ -3,7 +3,6 @@ Packages["dvb"] = {
   "npmname": "ose-dvb",
   "caption": "DVB",
   "readme": "This package contains the general definition of DVB-related logic.\nIt is able to parse `channels.conf` files (output of\n[`w_scan`](http://www.linuxtv.org/wiki/index.php/W_scan)) and\nregister them as sources used by the [Media player].\n\nSee [DVB streamer example]",
-  "file": "content.js",
   "line": 10,
   "modules": {
     "lib/channel/boon": {

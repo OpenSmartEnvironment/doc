@@ -112,7 +112,7 @@ var Fs = require('fs');
  * @about_doc
  * # About the documentation
  *
- * ## State of documentation
+ * ## State of the documentation
  * This documentation is currently under construction and is being
  * continuously improved. Links may be broken and information
  * incomplete or erroneous.
@@ -154,9 +154,9 @@ var Fs = require('fs');
  * @caption Documentation build script
  *
  * @readme
- * To build complete documentation, go to the "ose-doc" package directory and run:
+ * To build complete documentation, go to the "ose-doc" package parent directory and run:
  *
- *     node bin/doc.js
+ *     ose-doc/bin/doc.js
  *
  * @class doc.bin.doc
  * @type module
@@ -180,39 +180,37 @@ exports.build = function() {  // {{{2
     selleck: 'false',
     markdown: 'true',
     exclude: 'depends,node_modules,bower_components',
-    paths: [
-      './',
-      '../ose',
-      '../example-dvb',
-      '../example-lirc',
-      '../example-player',
-      '../example-rpi',
-      '../control',
-      '../dvb',
-      '../fs',
-      '../gaia',
-      '../media',
-      '../lirc',
-      '../pa',
-      '../rpi',
-      '../videolan',
-
-    /*
-
-      '../icecast',
-      '../xorg',
-      '../yoctopuce',
-      '../youtube',
-      */
-    ],
     project: {
       name: 'OSE',
     },
+    paths: [
+      './doc',
+      './ose',
+      './gaia',
+      './example-dvb',
+      './example-lirc',
+      './example-player',
+      './example-rpi',
+      './control',
+      './dvb',
+      './media',
+      './rpi',
+      './fs',
+      './lirc',
+      './pa',
+      './videolan',
+
+      /*
+      './icecast',
+      './xorg',
+      './yoctopuce',
+      './youtube',
+      */
+    ],
   };
 
   Json = (new Y.YUIDoc(options)).run();
 
-//  for (var key in Json.files) prepFile(key);
   for (var key in Json.modules) prepPackage(key);
   for (var key in Json.modules) prepComp(key);
   for (var key in Json.classes) prepModule(key);
@@ -239,7 +237,6 @@ exports.build = function() {  // {{{2
 // Private {{{1
 var Json;
 var Packages = {};
-var GhUri = 'http://opensmartenvironment.github.io/doc';
 
 function prepPackage(name) {  // {{{2
   var comp = Json.modules[name];
@@ -252,11 +249,13 @@ function prepPackage(name) {  // {{{2
   d.npmname = d.name === 'ose' ? 'ose' : 'ose-' + d.name;
   d.caption = comp.caption;
   d.readme = comp.readme;
-  d.file = packageFile(comp.file);
   d.line = comp.line;
   d.aliases = comp.aliases;
   d.description = comp.description;
   d.features = comp.features;
+  if (comp.usage) {
+    d.usage = comp.usage;
+  }
 
   Packages[d.name] = d;
 }
@@ -354,28 +353,41 @@ function prepModuleItem(name) {  // {{{2
 function writeData() {  // {{{2
   for (var key in Packages) {
     var p = Packages[key];
-    Fs.writeFileSync('./doc/' + key + '.js', 'Packages["' + key + '"] = ' + JSON.stringify(p, null, 2) + ';');
-    Fs.writeFileSync('../' + key + '/README.md', getReadme(p));
+    Fs.writeFileSync('./doc/doc/' + key + '.js', 'Packages["' + key + '"] = ' + JSON.stringify(p, null, 2) + ';');
+    Fs.writeFileSync('./' + key + '/README.md', getReadme(p));
   }
 }
 
 function packageFile(name) {  // {{{2
   name = name.split('/');
-  if (name[0] === '..') {
-    return _.rest(name, 2).join('/');
-  }
 
-  return name.join('/');
+  return _.rest(name, 1).join('/');
 }
 
 function getReadme(pkg) {  // {{{2
   var q = Packages.ose.quick;
 
   var r = ['# Open Smart Environment - ' + pkg.caption];
-  r.push('This package is a part of the OSE suite.');
-  r.push('All packages can be found [on GitHub](https://github.com/opensmartenvironment/).')
+  r.push(links(pkg.readme));
   r.push('');
 
+  if (pkg.features) {
+    r.push('## Features');
+    r.push(links(pkg.features));
+    r.push('');
+  }
+
+  r.push('## Important links');
+  r.push('This package is a part of the OSE suite. For more information, see the following links:');
+  if (pkg.install) {
+    r.push('- [' + pkg.caption + ' usage](http://opensmartenvironment.github.io/doc/#' + pkg.name + '|usage)');
+  }
+  r.push('- [' + pkg.caption + ' documentation](http://opensmartenvironment.github.io/doc/#' + pkg.name + ')');
+  r.push('- [OSE suite documentation](http://opensmartenvironment.github.io/doc/)');
+  r.push('- [All packages](https://github.com/opensmartenvironment/)');
+  r.push('');
+
+  r.push('## About OSE');
   r.push(links(q.about));
   r.push('');
   r.push('For more information about OSE see **[the documentation](http://opensmartenvironment.github.io/doc/)**.');
@@ -389,11 +401,10 @@ function getReadme(pkg) {  // {{{2
   r.push(q.platforms);
   r.push('');
 
-  r.push('## Package description');
-  r.push(links(pkg.readme));
-  r.push('');
-  r.push('The documentation for "' + pkg.npmname + '" package can be found **[here](http://opensmartenvironment.github.io/doc/#' + pkg.npmname + '#)**.');
-  r.push('');
+  if (pkg.usage) {
+    r.push(links(pkg.usage));
+    r.push('');
+  }
 
   r.push('## Licence');
   r.push(q.licence);

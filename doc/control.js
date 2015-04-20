@@ -3,7 +3,6 @@ Packages["control"] = {
   "npmname": "ose-control",
   "caption": "Control",
   "readme": "This package contains definitions of general [kinds of entries]\nthat represent real objects found in most environments (lights,\nswitches, heaters, sensors etc.). Entries are configured by\ndefining `entry.data` values. Communication between or among\nentries is realized via [links].",
-  "file": "content.js",
   "line": 10,
   "features": "",
   "comps": {
@@ -101,7 +100,7 @@ Packages["control"] = {
             "registerPin": {
               "name": "registerPin",
               "type": "method",
-              "description": "[Command handler]",
+              "description": "Register pin",
               "params": [
                 {
                   "name": "req",
@@ -686,7 +685,7 @@ Packages["control"] = {
             "power": {
               "name": "power",
               "type": "method",
-              "description": "Command handler. Sets up heater power to specified value.",
+              "description": "Sets up heater power to specified value.",
               "params": [
                 {
                   "name": "req",
@@ -1080,7 +1079,7 @@ Packages["control"] = {
           },
           "undefined": {
             "undefined": {
-              "description": "[Command handler] changes room activity.",
+              "description": "Change room activity.",
               "params": [
                 {
                   "name": "req",

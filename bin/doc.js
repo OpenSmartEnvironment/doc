@@ -201,6 +201,7 @@ exports.build = function() {  // {{{2
       './videolan',
 
       /*
+      './boards',
       './icecast',
       './xorg',
       './yoctopuce',

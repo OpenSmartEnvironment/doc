@@ -243,10 +243,10 @@ Packages["videolan"] = {
       "readme": "[Entry kind] allowing to control VLC\n\nSee [Media player example]",
       "file": "lib/vlc/index.js",
       "description": "Implementation of media player playback using VLC over D-Bus",
-      "method": {
+      "handler": {
         "playUri": {
           "name": "playUri",
-          "type": "method",
+          "type": "handler",
           "description": "Play media from URI.",
           "params": [
             {
@@ -258,22 +258,22 @@ Packages["videolan"] = {
         },
         "play": {
           "name": "play",
-          "type": "method",
+          "type": "handler",
           "description": "Play"
         },
         "pause": {
           "name": "pause",
-          "type": "method",
+          "type": "handler",
           "description": "Pause playback"
         },
         "stop": {
           "name": "stop",
-          "type": "method",
+          "type": "handler",
           "description": "Stop playback"
         },
         "turnOff": {
           "name": "turnOff",
-          "type": "method",
+          "type": "handler",
           "description": "Turns the player off.",
           "params": [
             {
@@ -284,7 +284,7 @@ Packages["videolan"] = {
         },
         "fullscreen": {
           "name": "fullscreen",
-          "type": "method",
+          "type": "handler",
           "description": "Toggles fullscreen",
           "params": [
             {
@@ -296,12 +296,12 @@ Packages["videolan"] = {
         },
         "raise": {
           "name": "raise",
-          "type": "method",
+          "type": "handler",
           "description": "Raises window"
         },
         "shuffle": {
           "name": "shuffle",
-          "type": "method",
+          "type": "handler",
           "description": "Toggles shuffle mode",
           "params": [
             {
@@ -313,7 +313,7 @@ Packages["videolan"] = {
         },
         "seek": {
           "name": "seek",
-          "type": "method",
+          "type": "handler",
           "description": "Seek media",
           "params": [
             {
@@ -325,7 +325,7 @@ Packages["videolan"] = {
         },
         "next": {
           "name": "next",
-          "type": "method",
+          "type": "handler",
           "description": "Skip to next media",
           "params": [
             {
@@ -337,7 +337,7 @@ Packages["videolan"] = {
         },
         "previous": {
           "name": "previous",
-          "type": "method",
+          "type": "handler",
           "description": "Skip to previous media",
           "params": [
             {

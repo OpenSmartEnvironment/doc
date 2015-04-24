@@ -1,7 +1,7 @@
 Packages["gaia"] = {
   "name": "gaia",
   "npmname": "ose-gaia",
-  "caption": "OSE HTML5 frontend",
+  "caption": "HTML5 frontend",
   "readme": "OSE package providing an mobile-first HTML5 user interface built\nusing [Gaia\ncomponents](https://developer.mozilla.org/en-US/Apps/Design/Firefox_OS_building_blocks).\n\nAs the current implementation of Gaia components is based on Web\nComponents technology, so the UI is currently fully functional only\nin recent versions of Firefox.\n\nEach browser page (tab) displaying the OSE frontend is an [OSE\ninstance]. As part of the base [OSE plugin] configuration, a\n[peer], representing the backend OSE instance, is created and\nconnected to.\n\nThe connection is realized via a WebSocket in a standard OSE\n[peer-to-peer] way. All information needed for displaying requested\ncontent is exchanged through this WebSocket channel. After a\nsuccessful connection is established, content is displayed using\ndynamic injection.",
   "line": 10,
   "aliases": "oseUi HTML5frontend",

@@ -38,10 +38,10 @@ Packages["media"] = {
           "caption": "Media player kind",
           "readme": "On each entry initialization, [links] to volume control, playback\nand optional DVB streamer entries are established. Every entry of\nthis kind handles commands to control media playback.",
           "file": "lib/player/index.js",
-          "method": {
+          "handler": {
             "mute": {
               "name": "mute",
-              "type": "method",
+              "type": "handler",
               "description": "Toggle mute",
               "params": [
                 {
@@ -59,7 +59,7 @@ Packages["media"] = {
             },
             "volume": {
               "name": "volume",
-              "type": "method",
+              "type": "handler",
               "description": "Change volume",
               "params": [
                 {
@@ -77,7 +77,7 @@ Packages["media"] = {
             },
             "playItem": {
               "name": "playItem",
-              "type": "method",
+              "type": "handler",
               "description": "Play media item.",
               "params": [
                 {
@@ -95,7 +95,7 @@ Packages["media"] = {
             },
             "stop": {
               "name": "stop",
-              "type": "method",
+              "type": "handler",
               "description": "Stop playback",
               "params": [
                 {
@@ -113,7 +113,7 @@ Packages["media"] = {
             },
             "pause": {
               "name": "pause",
-              "type": "method",
+              "type": "handler",
               "description": "Pause playback",
               "params": [
                 {
@@ -131,7 +131,7 @@ Packages["media"] = {
             },
             "playPause": {
               "name": "playPause",
-              "type": "method",
+              "type": "handler",
               "description": "Play or pause current media",
               "params": [
                 {
@@ -149,7 +149,7 @@ Packages["media"] = {
             },
             "play": {
               "name": "play",
-              "type": "method",
+              "type": "handler",
               "description": "Play",
               "params": [
                 {
@@ -167,7 +167,7 @@ Packages["media"] = {
             },
             "fullscreen": {
               "name": "fullscreen",
-              "type": "method",
+              "type": "handler",
               "description": "Toggle fullscreen",
               "params": [
                 {
@@ -185,7 +185,7 @@ Packages["media"] = {
             },
             "playLast": {
               "name": "playLast",
-              "type": "method",
+              "type": "handler",
               "description": "Play last media item",
               "params": [
                 {
@@ -203,7 +203,7 @@ Packages["media"] = {
             },
             "next": {
               "name": "next",
-              "type": "method",
+              "type": "handler",
               "description": "Skip to next media",
               "params": [
                 {
@@ -221,7 +221,7 @@ Packages["media"] = {
             },
             "previous": {
               "name": "previous",
-              "type": "method",
+              "type": "handler",
               "description": "Skip to previous media",
               "params": [
                 {
@@ -239,7 +239,7 @@ Packages["media"] = {
             },
             "shuffle": {
               "name": "shuffle",
-              "type": "method",
+              "type": "handler",
               "description": "Toggle shuffle",
               "params": [
                 {
@@ -257,7 +257,7 @@ Packages["media"] = {
             },
             "setPos": {
               "name": "setPos",
-              "type": "method",
+              "type": "handler",
               "description": "Change current pos",
               "params": [
                 {
@@ -275,7 +275,7 @@ Packages["media"] = {
             },
             "seek": {
               "name": "seek",
-              "type": "method",
+              "type": "handler",
               "description": "Seek media",
               "params": [
                 {
@@ -290,7 +290,9 @@ Packages["media"] = {
                   "optional": true
                 }
               ]
-            },
+            }
+          },
+          "method": {
             "setBoon": {
               "name": "setBoon",
               "type": "method",
@@ -340,10 +342,12 @@ Packages["media"] = {
                   "type": "Object"
                 }
               ]
-            },
+            }
+          },
+          "handler": {
             "open": {
               "name": "open",
-              "type": "method",
+              "type": "handler",
               "description": "Open handler",
               "params": [
                 {
@@ -355,7 +359,7 @@ Packages["media"] = {
             },
             "close": {
               "name": "close",
-              "type": "method",
+              "type": "handler",
               "description": "Close handler",
               "params": [
                 {
@@ -367,11 +371,11 @@ Packages["media"] = {
             },
             "home": {
               "name": "home",
-              "type": "method"
+              "type": "handler"
             },
             "patch": {
               "name": "patch",
-              "type": "method"
+              "type": "handler"
             }
           }
         },
@@ -397,14 +401,16 @@ Packages["media"] = {
             "open": {
               "name": "open",
               "type": "method"
-            },
+            }
+          },
+          "handler": {
             "home": {
               "name": "home",
-              "type": "method"
+              "type": "handler"
             },
             "patch": {
               "name": "patch",
-              "type": "method"
+              "type": "handler"
             }
           }
         },
@@ -430,14 +436,16 @@ Packages["media"] = {
             "open": {
               "name": "open",
               "type": "method"
-            },
+            }
+          },
+          "handler": {
             "home": {
               "name": "home",
-              "type": "method"
+              "type": "handler"
             },
             "patch": {
               "name": "patch",
-              "type": "method"
+              "type": "handler"
             }
           }
         },

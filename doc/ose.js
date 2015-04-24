@@ -654,10 +654,12 @@ Packages["ose"] = {
                   ]
                 }
               ]
-            },
+            }
+          },
+          "handler": {
             "home": {
               "name": "home",
-              "type": "method",
+              "type": "handler",
               "description": "Can reach home handler",
               "params": [
                 {

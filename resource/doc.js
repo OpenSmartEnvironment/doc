@@ -8,6 +8,7 @@ var Keywords = {};
 var Current = {};
 var Files = {};
 var DontScrollToc = false;
+var Scopes = {};
 
 var Search = $('#search');
 Search.val('');
@@ -67,6 +68,8 @@ function filter() {  // {{{2
 };
 
 function addPackage(p) {  // {{{2
+  var scope = p.scope;
+
   if (! p.features) p.features = '';
 
   keyword(p.name, p.name, p.npmname, p.caption, p.aliases && p.aliases.split(/\s/));
@@ -97,6 +100,8 @@ function addPackage(p) {  // {{{2
   }
 
   function addComp(c) {  // {{{3
+    scope = c.scope || p.scope;
+
     if (c.features) {
       p.features += c.features;
     }
@@ -128,6 +133,8 @@ function addPackage(p) {  // {{{2
       .appendTo('#modules')
     ;
 
+    if (m.kind) addKind(ref, m);
+
     /* TODO add keywords for individual items, take care of methods (parameters are part of the link) and "all" display
      * item links should be "#<package ref>|<module ref><here>##" in the hash
      * OR refactor keywords so that they will point to object instead of string
@@ -139,6 +146,26 @@ function addPackage(p) {  // {{{2
       keyword(ref + '#' + itemType(i.type) + '|' + i.name, i.aliases);
     }
     */
+  }
+
+  function addKind(ref, m) {  // {{{3
+    var s = Scopes[m.scope || scope];
+
+    if (! s) {
+      s = {name: m.scope || scope};
+      Scopes[s.name] = s;
+
+      s.ul = $('<ul>').appendTo(
+        $('<li>', {class: 'h1'})
+          .append($('<a>'/*, {href: '#' + s.name + '#'}*/).html(s.name))
+          .appendTo('#scopes')
+      );
+    }
+
+    $('<li>', {class: 'h2'})
+      .append($('<a>', {href: '#' + ref + '#'}).html(m.kind))
+      .appendTo(s.ul)
+    ;
   }
 
   // }}}3
@@ -387,7 +414,7 @@ function mdPackage(done, pkg, all) {  // {{{2
 
 function mdComp(done, pkg, comp, all) {  // {{{2
   var r = ['# ' + comp.caption];
-  r.push('**Documentation for "' + pkg.npmname + '/' + comp.name + '" component.**<br />');
+  r.push('**Documentation for "' + pkg.npmname + '/' + comp.name + '" component.**<br>');
   r.push('For more details, see **"[' + pkg.caption + '](#' + pkg.name + '#)**" package.');
   r.push('');
   r.push(links(comp.readme));
@@ -401,7 +428,7 @@ function mdComp(done, pkg, comp, all) {  // {{{2
 function mdModule(done, pkg, comp, mod, all) {  // {{{2
   var r = ['# ' + mod.caption];
   r.push('**Reference of "' + pkg.npmname + '/' + mod.name.replace(/\./g, '/') +
-    '" module.** [GitHub](https://github.com/OpenSmartEnvironment/' + pkg.npmname + '/blob/master/' + mod.file + ')<br />'
+    '" module.** [GitHub](https://github.com/OpenSmartEnvironment/' + pkg.npmname + '/blob/master/' + mod.file + ')<br>'
   );
   if (comp) {
     r.push('For more details, see "[' + comp.caption + '](#' + pkg.name + '|' + comp.name + '#)" component.');
@@ -410,9 +437,11 @@ function mdModule(done, pkg, comp, mod, all) {  // {{{2
   }
   r.push('');
 
-  r.push('Type: `' + mod.type + '`');
+  r.push('Scope: **' + (mod.scope || comp && comp.scope || pkg.scope) + '**');
+
+  r.push('<br>Type: **' + mod.type + '**');
   if (mod.super) {
-    r.push('<br />Superclass: ' + links('[' + mod.super.replace('.', '/', 'g') + ']', true));
+    r.push('<br>Superclass: ' + links('[' + mod.super.replace('.', '/', 'g') + ']', true));
   }
   r.push('');
 
@@ -422,7 +451,8 @@ function mdModule(done, pkg, comp, mod, all) {  // {{{2
   mdProps(r, mod.property);
   mdMethods(r, mod.method);
   mdEvents(r, mod.event);
-  
+  mdHandlers(r, mod.handler);
+
   done(r);
 }
 
@@ -442,6 +472,27 @@ function mdProps(res, vals) {  // {{{2
       res.push('');
     }
     res.push(links(v.description));
+  }
+}
+
+function mdHandlers(res, vals) {  // {{{2
+  if (! vals) return;
+
+  res.push('## Command handlers');
+  res.push('');
+  for (var key in vals) {
+    var v = vals[key];
+
+    if (v.internal) continue;
+
+    res.push('### ' + v.name);
+    if (v.dtype) {
+      res.push('Type: `' + v.dtype + '`');
+      res.push('');
+    }
+    res.push(links(v.description));
+
+    mdParams(res, v.params);
   }
 }
 
@@ -486,7 +537,7 @@ function mdEvents(res, vals) {  // {{{2
 function mdParams(res, vals) {  // {{{2
   if (! vals) return;
 
-  res.push('**Parameters:**<br />');
+  res.push('**Parameters:**<br>');
   for (var key in vals) {
     var v = vals[key];
 

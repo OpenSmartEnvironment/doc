@@ -16,10 +16,12 @@ Packages["dvb"] = {
           "name": "constructor",
           "type": "method",
           "description": "Socket constructor"
-        },
+        }
+      },
+      "handler": {
         "open": {
           "name": "open",
-          "type": "method",
+          "type": "handler",
           "description": "Boon socket open handler",
           "params": [
             {

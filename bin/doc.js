@@ -179,7 +179,7 @@ exports.build = function() {  // {{{2
     attributesEmit: 'true',
     selleck: 'false',
     markdown: 'true',
-    exclude: 'depends,node_modules,bower_components',
+    exclude: 'depends,node_modules,bower_components,resource',
     project: {
       name: 'OSE',
     },
@@ -254,9 +254,8 @@ function prepPackage(name) {  // {{{2
   d.aliases = comp.aliases;
   d.description = comp.description;
   d.features = comp.features;
-  if (comp.usage) {
-    d.usage = comp.usage;
-  }
+  d.scope = comp.scope;
+  d.usage = comp.usage;
 
   Packages[d.name] = d;
 }
@@ -279,6 +278,7 @@ function prepComp(name) {  // {{{2
   d.aliases = comp.aliases;
   d.description = comp.description;
   d.features = comp.features;
+  d.scope = comp.scope;
 
   var p = Packages[comp.module];
   if (! ('comps' in p)) {
@@ -300,6 +300,11 @@ function prepModule(name) {  // {{{2
   d.caption = m.caption;
   d.readme = m.readme;
   d.file = packageFile(m.file);
+  d.scope = m.scope;
+  if (m.kind) {
+    d.kind = m.kind;
+    d.type = 'kind';
+  }
   d.aliases = m.aliases;
   d.description = m.description
 
@@ -334,6 +339,7 @@ function prepModuleItem(name) {  // {{{2
   d.aliases = i.aliases;
   d.params = i.params;
   if ('internal' in i) d.internal = i.internal || true;
+  if ('handler' in i) d.type = 'handler';
 
   var p;
   if (i.submodule) {

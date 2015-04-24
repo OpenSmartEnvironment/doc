@@ -5,6 +5,7 @@ Packages["control"] = {
   "readme": "This package contains definitions of general [kinds of entries]\nthat represent real objects found in most environments (lights,\nswitches, heaters, sensors etc.). Entries are configured by\ndefining `entry.data` values. Communication between or among\nentries is realized via [links].",
   "line": 10,
   "features": "",
+  "scope": "control",
   "comps": {
     "distributor": {
       "name": "distributor",
@@ -16,11 +17,12 @@ Packages["control"] = {
       "modules": {
         "lib/din": {
           "name": "lib/din",
-          "type": "singleton",
+          "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Digital input pin kind",
           "readme": "Kind defining digital input entries\n\nThe `din` entry connects to the controller by creating a [link] to\nthe master controller pin.  The state of the `din` entry then\nchanges with the state of the physical pin on the controller side.",
           "file": "lib/din/index.js",
+          "kind": "din",
           "property": {
             "data": {
               "name": "data",
@@ -44,19 +46,21 @@ Packages["control"] = {
         },
         "lib/distributor": {
           "name": "lib/distributor",
-          "type": "class",
+          "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Power distributor kind",
           "readme": "TBD\n\n[Entry kind] defining behaviour of power distributors.",
-          "file": "lib/distributor/index.js"
+          "file": "lib/distributor/index.js",
+          "kind": "distributor"
         },
         "lib/flowMeter": {
           "name": "lib/flowMeter",
-          "type": "class",
+          "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Flow meter kind",
           "readme": "Kind defining flow meters of liquids or gasses.\n\nEach entry of this kind established a new [link] to the master by\nsending a `registerPin()` command with `type: \"din\"`, `flavour:\n\"counter\"` and a client socket. The `state.value` of the entry then\nincrements with each master pin change. State changes are debounced\nusing the `state.debounce` value.",
-          "file": "lib/flowMeter/index.js"
+          "file": "lib/flowMeter/index.js",
+          "kind": "flowMeter"
         }
       }
     },
@@ -75,10 +79,10 @@ Packages["control"] = {
           "caption": "Digital input-to-controller pin client socket",
           "readme": "Client socket connecting to a controller pin. Updates digital input\nentry state.",
           "file": "lib/din/pin.js",
-          "method": {
+          "handler": {
             "update": {
               "name": "update",
-              "type": "method",
+              "type": "handler",
               "description": "Update handler called when the state of a pin changes on\nthe controller",
               "params": [
                 {
@@ -96,10 +100,10 @@ Packages["control"] = {
           "caption": "Pin list commands",
           "readme": "Commands that are registered on [entry kinds] creating a list of\npins for their [entries].",
           "file": "lib/pin/commands.js",
-          "method": {
+          "handler": {
             "registerPin": {
               "name": "registerPin",
-              "type": "method",
+              "type": "handler",
               "description": "Register pin",
               "params": [
                 {
@@ -152,7 +156,7 @@ Packages["control"] = {
             },
             "emulatePin": {
               "name": "emulatePin",
-              "type": "method",
+              "type": "handler",
               "description": "Emulates change of pin state on the controller",
               "params": [
                 {
@@ -180,7 +184,7 @@ Packages["control"] = {
             },
             "writePin": {
               "name": "writePin",
-              "type": "method",
+              "type": "handler",
               "description": "Changes physical pin state",
               "params": [
                 {
@@ -222,10 +226,10 @@ Packages["control"] = {
           "caption": "Digital output pin response socket",
           "readme": "Setup of digital output pin.",
           "file": "lib/pin/dout.js",
-          "method": {
+          "handler": {
             "write": {
               "name": "write",
-              "type": "method",
+              "type": "handler",
               "description": "Change pin state",
               "params": [
                 {
@@ -547,15 +551,16 @@ Packages["control"] = {
       "readme": "This component defines basic room entry kinds. By configuring\nentries of these kinds, it is possible to define an indoor\nenvironment and its behaviour.\n\nFor a simple example of how to control a light using a switch, see\nthe [Raspberry Pi example].",
       "file": "lib/activity.js",
       "line": 11,
-      "description": "## Description\nEach light channel can be controlled either through a digital\noutput pin or a pin supporting PWO. Smooth changes of light\nintensity can be controlled through the `speed` value, which\ndefines the time in milliseconds it takes change the light\nintensity from 0 to 100% or vice versa.\n\nEach light supports auto-off timeout since last change with\nconfigurable dim speed.\n\nEvery light can be controlled by a [switch entry] with the\nfollowing behaviour:\n- One tap when shining: Switch the light off.\n- One tap when off: Switch to the default configurable value.\n- Two taps: Switch the light fully on.\n- Hold: Switch the light off.",
+      "description": "## Description\nEach light channel can be controlled either through a digital\noutput pin or a pin supporting PWM. Smooth changes of light\nintensity can be controlled through the `speed` value, which\ndefines the time in milliseconds it takes change the light\nintensity from 0 to 100% or vice versa.\n\nEach light supports auto-off timeout since last change with\nconfigurable dim speed.\n\nEvery light can be controlled by a [switch entry] with the\nfollowing behaviour:\n- One tap when shining: Switch the light off.\n- One tap when off: Switch to the default configurable value.\n- Two taps: Switch the light fully on.\n- Hold: Switch the light off.",
       "modules": {
         "lib/door": {
           "name": "lib/door",
-          "type": "singleton",
+          "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Door kind",
           "readme": "Each [entry] of this kind establishes a [link] to the `data.master`\ncontroller entry with `type: \"din\"`. Entry state is changed\ndepending on the incoming data, and the `open` or `close` events\nare fired. These events can be listened for, and appropriate\nactions can be taken.",
           "file": "lib/door/index.js",
+          "kind": "door",
           "aliases": "door doors doorEntry",
           "property": {
             "data.master": {
@@ -655,11 +660,12 @@ Packages["control"] = {
         },
         "lib/heater": {
           "name": "lib/heater",
-          "type": "class",
+          "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Heater kind",
           "readme": "[Entry kind] defining behaviour of heaters. Each heater establishes\na [link] to the `data.master` entry and to an optional\n`data.tariff` entry to watch low and high tariff switching.",
           "file": "lib/heater/index.js",
+          "kind": "heater",
           "aliases": "heater heaters heaterEntry heaterEntryKind",
           "property": {
             "data.master": {
@@ -681,10 +687,10 @@ Packages["control"] = {
               "description": "Tariff entry identification\n\nIf specified, the heater establishes a new link to the\n`data.tariff` entry and gets controlled by it."
             }
           },
-          "method": {
+          "handler": {
             "power": {
               "name": "power",
-              "type": "method",
+              "type": "handler",
               "description": "Sets up heater power to specified value.",
               "params": [
                 {
@@ -823,13 +829,14 @@ Packages["control"] = {
         },
         "lib/light": {
           "name": "lib/light",
-          "type": "class",
+          "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Light kind",
           "readme": "[Entry kind] defining behaviour of lights. Each light consists of\nchannels. Each channel is controlled by some `master`\ncontroller. It is possible to use dimming when the controller\nsupports it. This component allows to easily create lights composed\nof LED strips that can smoothly change the colour and intensity,\nand do any other effects.",
           "file": "lib/light/index.js",
+          "kind": "light",
           "aliases": "light lights lightEntry lightEntryKind",
-          "description": "## Description\nEach light channel can be controlled either through a digital\noutput pin or a pin supporting PWO. Smooth changes of light\nintensity can be controlled through the `speed` value, which\ndefines the time in milliseconds it takes change the light\nintensity from 0 to 100% or vice versa.\n\nEach light supports auto-off timeout since last change with\nconfigurable dim speed.\n\nEvery light can be controlled by a [switch entry] with the\nfollowing behaviour:\n- One tap when shining: Switch the light off.\n- One tap when off: Switch to the default configurable value.\n- Two taps: Switch the light fully on.\n- Hold: Switch the light off.",
+          "description": "## Description\nEach light channel can be controlled either through a digital\noutput pin or a pin supporting PWM. Smooth changes of light\nintensity can be controlled through the `speed` value, which\ndefines the time in milliseconds it takes change the light\nintensity from 0 to 100% or vice versa.\n\nEach light supports auto-off timeout since last change with\nconfigurable dim speed.\n\nEvery light can be controlled by a [switch entry] with the\nfollowing behaviour:\n- One tap when shining: Switch the light off.\n- One tap when off: Switch to the default configurable value.\n- Two taps: Switch the light fully on.\n- Hold: Switch the light off.",
           "property": {
             "data.channels": {
               "name": "data.channels",
@@ -862,10 +869,10 @@ Packages["control"] = {
               "description": "Auto off value\n\nDefines how long the light will wait before it starts dimming and\nthe speed of the dimming. The auto off timer is enabled each time\nany light channel is changed.\n\nThe value can be one of the following:\n- `true`: Enable auto off with default values\n- `false`: Disable auto off\n- Number: Wait timeout in seconds\n- Object: `{wait: <seconds>, speed: <milliseconds>}`\n\nDefault values:\n- `data.autoOff.wait: O.consts.lightAutoOffWait`\n- `data.autoOff.speed: O.consts.lightAutoOffSpeed`"
             }
           },
-          "method": {
+          "handler": {
             "profile": {
               "name": "profile",
-              "type": "method",
+              "type": "handler",
               "description": "Sets light profile.",
               "params": [
                 {
@@ -890,7 +897,7 @@ Packages["control"] = {
             },
             "set": {
               "name": "set",
-              "type": "method",
+              "type": "handler",
               "description": "Keep all channels at their current value.",
               "params": [
                 {
@@ -908,7 +915,7 @@ Packages["control"] = {
             },
             "delta": {
               "name": "delta",
-              "type": "method",
+              "type": "handler",
               "description": "Update requested channels.",
               "params": [
                 {
@@ -925,7 +932,7 @@ Packages["control"] = {
             },
             "update": {
               "name": "update",
-              "type": "method",
+              "type": "handler",
               "description": "Update requested channels.",
               "params": [
                 {
@@ -942,7 +949,7 @@ Packages["control"] = {
             },
             "lock": {
               "name": "lock",
-              "type": "method",
+              "type": "handler",
               "description": "Lock or unlock a light. Locked light cannot be changed via its command handlers.",
               "params": [
                 {
@@ -960,7 +967,7 @@ Packages["control"] = {
             },
             "autoOff": {
               "name": "autoOff",
-              "type": "method",
+              "type": "handler",
               "description": "Change auto off behaviour.",
               "params": [
                 {
@@ -988,10 +995,12 @@ Packages["control"] = {
               "name": "constructor",
               "type": "method",
               "description": "Socket constructor"
-            },
+            }
+          },
+          "handler": {
             "update": {
               "name": "update",
-              "type": "method",
+              "type": "handler",
               "description": "Invoked on controller pin change",
               "params": [
                 {
@@ -1014,20 +1023,22 @@ Packages["control"] = {
               "name": "constructor",
               "type": "method",
               "description": "Socket constructor"
-            },
+            }
+          },
+          "handler": {
             "press": {
               "name": "press",
-              "type": "method",
+              "type": "handler",
               "description": "Press handler"
             },
             "release": {
               "name": "release",
-              "type": "method",
+              "type": "handler",
               "description": "Release handler"
             },
             "tap": {
               "name": "tap",
-              "type": "method",
+              "type": "handler",
               "description": "Tap handler",
               "params": [
                 {
@@ -1039,18 +1050,19 @@ Packages["control"] = {
             },
             "hold": {
               "name": "hold",
-              "type": "method",
+              "type": "handler",
               "description": "Hold handler"
             }
           }
         },
         "lib/room": {
           "name": "lib/room",
-          "type": "class",
+          "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Room kind",
           "readme": "[Entry kind] defining behaviour of rooms.\n\nVarious activities can be defined for each room. Activities govern\nthe behaviour of rooms. When an activity is selected, it sends\ncommands to entries and trigger scheduled actions.\n\nEach activity is identified by its name and can be selected by a\ncommand sent to the room entry. Each activity should be a\ndescendant of the [activity class].\n\nExample:\n\nThe living room may have the following activities defined:\n\n- watching TV (lights dimmed, TV on, blinds down if dark outside,\n    etc.)\n- tidying (lights fully on, radio on)\n- reading (lights half on, multimedia off)\n\nAnother example:\n\nThe house may have the following activities:\n- at home (full comfort)\n- empty house (detection of intruders, heating down, etc.)\n- vacation (random actions simulating the presence of inhabitants)",
           "file": "lib/room/index.js",
+          "kind": "room",
           "property": {
             "state.activity": {
               "name": "state.activity",
@@ -1105,11 +1117,12 @@ Packages["control"] = {
         },
         "lib/switch": {
           "name": "lib/switch",
-          "type": "class",
+          "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Switch kind",
           "readme": "Each switch is a digital input that has two logical values: `0` or `1`.\n\nEach [entry] of this kind establishes a [link] to the `data.master`\ncontroller entry with `flavour: \"switch\"`.\n\n`press`, `release`, `tap` and `hold` events are fired on the entry,\nand the state of the entry is updated depending on controller pin\nchanges. These events can be listened for, and appropriate actions\ncan be taken.\n\nIt is also possible to establish a new [link] to a switch as a\nclient socket with the \"relay\" command. The events listed above are\nthen relayed to the client socket.\n\nFor example, a [light entry] connects to a switch (if defined in\n`light.data.switch`) as a client socket and is turned on or off\ndepending on pressing the switch.\n\nCurrently, only momentary switches (push-to-make) are\nsupported. Support for all other kinds of switches is planned.",
           "file": "lib/switch/index.js",
+          "kind": "switch",
           "aliases": "switch switchEntry",
           "property": {
             "data.master": {
@@ -1677,15 +1690,16 @@ Packages["control"] = {
   "modules": {
     "lib/ippool": {
       "name": "lib/ippool",
-      "type": "singleton",
+      "type": "kind",
       "super": "ose/lib.kind",
       "caption": "IP pool kind",
       "readme": "IP address pool. Respond to \"getIp\" commands by providing a new IP\naddress from a pool defined by the `data.start` .. `data.end`\ninterval. Used by the [ose-dvb] package to assign multicast group\naddresses to DVB channels.",
       "file": "lib/ippool/index.js",
-      "method": {
+      "kind": "ippool",
+      "handler": {
         "getIp": {
           "name": "getIp",
-          "type": "method",
+          "type": "handler",
           "description": "Handler for getIp commands",
           "params": [
             {

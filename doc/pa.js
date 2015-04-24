@@ -21,10 +21,10 @@ Packages["pa"] = {
           "description": "Command handlers"
         }
       },
-      "method": {
+      "handler": {
         "mute": {
           "name": "mute",
-          "type": "method",
+          "type": "handler",
           "description": "Mute command handler",
           "params": [
             {
@@ -41,7 +41,7 @@ Packages["pa"] = {
         },
         "volume": {
           "name": "volume",
-          "type": "method",
+          "type": "handler",
           "description": "Set volume to specified level.",
           "params": [
             {

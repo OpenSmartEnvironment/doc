@@ -4,14 +4,16 @@ Packages["pa"] = {
   "caption": "PulseAudio",
   "readme": "This package implements volume control for the [Media player].\n\nSee [Media player example].",
   "line": 10,
+  "scope": "control",
   "modules": {
     "lib/dbus": {
       "name": "lib/dbus",
-      "type": "singleton",
+      "type": "kind",
       "super": "ose/lib.kind",
       "caption": "PulseAudio control kind",
       "readme": "[Entry kind] for PulseAudio instances\n\nEach entry communicates with PulseAudio via its D-Bus\ninterface.",
       "file": "lib/dbus/node.js",
+      "kind": "paDbus",
       "description": "PulseAudio control over D-Bus",
       "property": {
         "commands": {

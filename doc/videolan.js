@@ -4,6 +4,7 @@ Packages["videolan"] = {
   "caption": "VideoLAN",
   "readme": "This package contains [entry kinds] integrating VideoLAN software\ninto OSE.\n\nIt allows the [Media player] to use VLC as its playback\napplication and DVBlast as its DVB streamer.\n\nSee [Media player example].",
   "line": 10,
+  "scope": "control",
   "modules": {
     "lib/dvblast/boon": {
       "name": "lib/dvblast/boon",
@@ -89,11 +90,12 @@ Packages["videolan"] = {
     },
     "lib/dvblast": {
       "name": "lib/dvblast",
-      "type": "singleton",
+      "type": "kind",
       "super": "ose/lib.kind",
       "caption": "DVBlast kind",
       "readme": "[Entry kind] allowing to control DVBlast software\n\nSee [DVB streamer example]",
       "file": "lib/dvblast/node.js",
+      "kind": "dvblast",
       "property": {
         "current": {
           "name": "current",
@@ -237,11 +239,12 @@ Packages["videolan"] = {
     },
     "lib/vlc": {
       "name": "lib/vlc",
-      "type": "singleton",
+      "type": "kind",
       "super": "ose/lib.kind",
       "caption": "VLC kind",
       "readme": "[Entry kind] allowing to control VLC\n\nSee [Media player example]",
       "file": "lib/vlc/index.js",
+      "kind": "vlc",
       "description": "Implementation of media player playback using VLC over D-Bus",
       "handler": {
         "playUri": {

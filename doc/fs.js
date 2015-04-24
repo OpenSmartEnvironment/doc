@@ -4,22 +4,25 @@ Packages["fs"] = {
   "caption": "Filesystem",
   "readme": "This package contains definitions of [entry kinds] that represent\nfiles and directories and gives OSE access to the filesystem and\nregisters fs as a source to the [Media player].\n\nSee [Media player example].\n\nIt also defines a JSON file-based database backend for shards.",
   "line": 10,
+  "scope": "fs",
   "modules": {
     "lib/dir": {
       "name": "lib/dir",
-      "type": "singleton",
+      "type": "kind",
       "super": "ose/lib.kind",
       "caption": "Dir kind",
       "readme": "[Entry kind] describing directories.",
-      "file": "lib/dir/index.js"
+      "file": "lib/dir/index.js",
+      "kind": "dir"
     },
     "lib/file": {
       "name": "lib/file",
-      "type": "singleton",
+      "type": "kind",
       "super": "ose/lib.kind",
       "caption": "File kind",
       "readme": "[Entry kind] describing files.",
-      "file": "lib/file/index.js"
+      "file": "lib/file/index.js",
+      "kind": "file"
     },
     "lib/db": {
       "name": "lib/db",

@@ -6,6 +6,7 @@ Packages["media"] = {
   "line": 10,
   "aliases": "oseMediaPlayer",
   "features": "- Media sources extended by other npm packages\n- Predefined media streams, files and playback history\n- Media playback using a configurable set of applications\n  (currently DVBlast as DVB stramer, PulseAudio as audio backend\n  and VLC as media player)",
+  "scope": "media",
   "comps": {
     "history": {
       "name": "history",
@@ -16,11 +17,12 @@ Packages["media"] = {
       "modules": {
         "lib/item": {
           "name": "lib/item",
-          "type": "singleton",
+          "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Media item kind",
           "readme": "The media item entry represents a single media item that can be\nplayed back. It contains a reference to another entry and\nadditional data depending on the source.",
-          "file": "lib/item/index.js"
+          "file": "lib/item/index.js",
+          "kind": "item"
         }
       }
     },
@@ -33,11 +35,12 @@ Packages["media"] = {
       "modules": {
         "lib/player": {
           "name": "lib/player",
-          "type": "singleton",
+          "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Media player kind",
           "readme": "On each entry initialization, [links] to volume control, playback\nand optional DVB streamer entries are established. Every entry of\nthis kind handles commands to control media playback.",
           "file": "lib/player/index.js",
+          "kind": "player",
           "handler": {
             "mute": {
               "name": "mute",
@@ -495,11 +498,12 @@ Packages["media"] = {
       "modules": {
         "lib/stream": {
           "name": "lib/stream",
-          "type": "singleton",
+          "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Media stream kind",
           "readme": "Media stream entry represents a single media stream that can be\nplayed back.",
           "file": "lib/stream/index.js",
+          "kind": "stream",
           "method": {
             "getMediaKeys": {
               "name": "getMediaKeys",

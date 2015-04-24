@@ -4,6 +4,7 @@ Packages["dvb"] = {
   "caption": "DVB",
   "readme": "This package contains the general definition of DVB-related logic.\nIt is able to parse `channels.conf` files (output of\n[`w_scan`](http://www.linuxtv.org/wiki/index.php/W_scan)) and\nregister them as sources used by the [Media player].\n\nSee [DVB streamer example]",
   "line": 10,
+  "scope": "media",
   "modules": {
     "lib/channel/boon": {
       "name": "lib/channel/boon",
@@ -48,19 +49,21 @@ Packages["dvb"] = {
     },
     "lib/channel": {
       "name": "lib/channel",
-      "type": "singleton",
+      "type": "kind",
       "super": "ose/lib.kind",
       "caption": "DVB channel kind",
       "readme": "[Entry kind] describing DVB channels.",
-      "file": "lib/channel/index.js"
+      "file": "lib/channel/index.js",
+      "kind": "dvbChannel"
     },
     "lib/mplex": {
       "name": "lib/mplex",
-      "type": "singleton",
+      "type": "kind",
       "super": "ose/lib.kind",
       "caption": "DVB multiplex kind",
       "readme": "[Entry kind] describing DVB multiplex.",
-      "file": "lib/mplex/index.js"
+      "file": "lib/mplex/index.js",
+      "kind": "dvbMplex"
     },
     "lib": {
       "name": "lib",

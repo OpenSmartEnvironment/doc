@@ -1320,7 +1320,7 @@ Packages["ose"] = {
           },
           "undefined": {
             "undefined": {
-              "description": "Handler called a slave shard requests a view",
+              "description": "Handler called when a slave shard requests a view",
               "params": [
                 {
                   "name": "req",
@@ -3415,24 +3415,12 @@ Packages["ose"] = {
             "error": {
               "name": "error",
               "type": "method",
-              "description": "Log error object with the ability to suppress recurrent errors.",
+              "description": "Log error object.",
               "params": [
                 {
                   "name": "err",
                   "description": "Error object",
                   "type": "Object"
-                },
-                {
-                  "name": "message",
-                  "description": "Error message",
-                  "type": "String",
-                  "optional": true
-                },
-                {
-                  "name": "count",
-                  "description": "Maximum number of recurrent errors for the same subject and error code",
-                  "type": "Number",
-                  "optional": true
                 }
               ]
             },
@@ -3474,6 +3462,33 @@ Packages["ose"] = {
                   "description": "Optional data to be logged",
                   "type": "*",
                   "optional": true
+                }
+              ]
+            },
+            "suppressError": {
+              "name": "suppressError",
+              "type": "method",
+              "description": "Log error with the ability to suppress recurrent errors.",
+              "params": [
+                {
+                  "name": "err",
+                  "description": "Error object",
+                  "type": "Object"
+                },
+                {
+                  "name": "subject",
+                  "description": "Subject for count",
+                  "type": "Object"
+                },
+                {
+                  "name": "message",
+                  "description": "Error message",
+                  "type": "String"
+                },
+                {
+                  "name": "count",
+                  "description": "Maximum number of recurrent errors for the same subject and error code",
+                  "type": "Number"
                 }
               ]
             },

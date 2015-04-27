@@ -1670,14 +1670,7 @@ Packages["ose"] = {
             "notifyHome": {
               "name": "notifyHome",
               "type": "method",
-              "description": "Send list of local shards to space home\n\nTODO",
-              "params": [
-                {
-                  "name": "cb",
-                  "description": "",
-                  "type": "Function(err)"
-                }
-              ],
+              "description": "Send list of local shards to space home",
               "internal": true
             }
           }

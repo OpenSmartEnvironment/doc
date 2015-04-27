@@ -26,7 +26,7 @@ Packages["gaia"] = {
             "addStateObj": {
               "name": "addStateObj",
               "type": "method",
-              "description": "Adds an item to the dashboard.",
+              "description": "Adds an item defined by `stateObj` to the dashboard.",
               "params": [
                 {
                   "name": "caption",
@@ -35,7 +35,7 @@ Packages["gaia"] = {
                 },
                 {
                   "name": "stateObj",
-                  "description": "State object that should be displayed when the user taps on this item.",
+                  "description": "State object that should be displayed when the user taps on this item",
                   "type": "Object"
                 }
               ]
@@ -55,7 +55,7 @@ Packages["gaia"] = {
             "additem": {
               "name": "additem",
               "type": "method",
-              "description": "Adds an item to the dashboard.",
+              "description": "Add an item to the dashboard.",
               "params": [
                 {
                   "name": "caption",
@@ -64,7 +64,7 @@ Packages["gaia"] = {
                 },
                 {
                   "name": "onTap",
-                  "description": "Function to be called when the user taps on this item.",
+                  "description": "Function to be called when the user taps on this item",
                   "type": "Function"
                 }
               ]
@@ -547,9 +547,6 @@ Packages["gaia"] = {
           "type": "method",
           "description": "Create pagelet header"
         }
-      },
-      "undefined": {
-        "undefined": {}
       }
     },
     "lib/content": {
@@ -1022,6 +1019,11 @@ Packages["gaia"] = {
               "type": "String"
             }
           ]
+        },
+        "left": {
+          "name": "left",
+          "type": "method",
+          "description": "Get element left"
         },
         "width": {
           "name": "width",

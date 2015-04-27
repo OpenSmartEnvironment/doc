@@ -199,13 +199,13 @@ exports.build = function() {  // {{{2
       './lirc',
       './pa',
       './videolan',
+      './xorg',
+      './yoctopuce',
+      './icecast',
+      './youtube',
 
       /*
       './boards',
-      './icecast',
-      './xorg',
-      './yoctopuce',
-      './youtube',
       */
     ],
   };

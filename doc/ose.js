@@ -6,6 +6,7 @@ Packages["ose"] = {
   "line": 11,
   "aliases": "framework oseFramework supportedBrowser supportedBrowsers",
   "features": "- Robust multi-instance architecture\n- Transparent network communication via WebSockets\n- Near real-time synchronization\n- Code sharing between Node.js and web browsers\n- Partitioned data model\n- Extensible via npm packages",
+  "scope": "ose",
   "comps": {
     "data": {
       "name": "data",
@@ -90,7 +91,7 @@ Packages["ose"] = {
           "type": "class",
           "super": "EventEmitter",
           "caption": "Entry class",
-          "readme": "An [Entry] instance is a data structure representing a physical\nobject or logical concept. Each [entry] belongs to a certain\n[shard]. Within the [shard], it has a unique `id`. Each [entry] is\nof a certain [kind] that defines its behaviour.\n\nAn [entry] can contain a `data` object in JSON format (analogous to\na database table row). At the moment, `data` are defined at the\nstart-up of an [OSE instance] and are immutable. Data management\nand persistence are planned features.\n\nThe `state` JSON object, unlike `data`, can often change and is\nnon-persistent by design because it reflects changing objective\nreality. Changes of `state` objects are propagated to [peers]\ntracking changes of certain [entries].\n\nIn addition, the `blob` object may contain arbitrary binary\ndata. Each `blob` can be read as a stream.",
+          "readme": "An [Entry] instance is a data structure representing a physical\nobject or logical concept. Each [entry] belongs to a certain\n[shard]. Within the [shard], it has a unique `id`. Each [entry] is\nof a certain [kind] that defines its behaviour.\n\nAn [entry] can contain a `data` object in JSON format (analogous to\na database table row). At the moment, `data` are defined at the\nstart-up of an [OSE instance] and are immutable. Data management\nand persistence are planned features.\n\nThe `state` JSON object, unlike `data`, can\noften change and is non-persistent by design because it reflects\nchanging objective reality. Changes of `state` objects are\npropagated to [peers] tracking changes of certain [entries].\n\nThe `data` and `state` objects can contain any valid JSON excluding\n`null`, which is used for deleting keys during patching.\n\nIn addition, the `blob` object may contain arbitrary binary\ndata. Each `blob` can be read as a stream.",
           "file": "lib/entry/index.js",
           "aliases": "entry entries data state statesOfEntries",
           "property": {
@@ -1955,9 +1956,10 @@ Packages["ose"] = {
         },
         "lib/subject": {
           "name": "lib/subject",
-          "type": "class",
+          "type": "module",
+          "caption": "Subject",
+          "readme": "Set of methods used in entries, shards and spaces",
           "file": "lib/subject.js",
-          "description": "Set of methods used in entries, shards and spaces",
           "method": {
             "remove": {
               "name": "remove",
@@ -2042,9 +2044,9 @@ Packages["ose"] = {
     "http": {
       "name": "http",
       "caption": "HTTP server",
-      "readme": "This component provides an HTTP server for OSE. It responds to HTTP\nrequests and provides data needed to run OSE instances in the\nbrowser. Each OSE package that needs to run in the browser creates\none `ose/lib/http/content` class instance and defines which files\nwill be provided to the browser.\n\nIt also handles incoming WebSocket requests from other OSE\ninstances and relays them to the [peers component].",
+      "readme": "This component provides an HTTP server for OSE. It responds to HTTP\nrequests and provides data needed to run OSE instances in the\nbrowser. Each OSE package that needs to run in the browser creates\none `ose/lib/http/content` class instance and defines which files\nwill be provided to the browser.\n\nThe HTTP server handles incoming WebSocket requests from other OSE\ninstances and relays them to the [peers component].\n\nThe OSE framework provides files to the frontend to emulate a\nlimited Node.js environment in the browser. It is thus possible to,\nfor example, do `require('utils');` in modules shared between\nNode.js and the browser side.",
       "file": "lib/http/index.js",
-      "line": 29,
+      "line": 34,
       "modules": {
         "lib/http/content": {
           "name": "lib/http/content",

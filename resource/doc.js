@@ -72,7 +72,7 @@ function addPackage(p) {  // {{{2
 
   if (! p.features) p.features = '';
 
-  keyword(p.name, p.name, p.npmname, p.caption, p.aliases && p.aliases.split(/\s/));
+  keyword(p.name, p.name, p.npmname, p.caption, p.name + 'Package', p.npmname + 'Package', p.aliases && p.aliases.split(/\s/));
 
   var children = $('<ul>');
   var li = $('<li>', {class: 'h1'})
@@ -204,7 +204,7 @@ function keyword(key) {  // {{{2
 
     switch (typeof v) {
     case 'string':
-      var v = v.toLowerCase().replace(/\s/g, '');
+      var v = s2kw(v);
       if (v in Keywords) {
         if (Keywords[v] !== key) {
           console.log('DUPLICIT KEYWORD', v, key, Keywords[v]);
@@ -676,7 +676,7 @@ function links(text, noNl) {  // {{{2
       return '[' + t + '](https://github.com/OpenSmartEnvironment/' + f.shift() + '/blob/master/' + f.join('/') + ')';
     }
 
-    var k = Keywords[t.toLowerCase().replace(/\s/g, '').replace(/\./g, '/')];
+    var k = Keywords[s2kw(t)];
     if (! k) {
       console.log('LINK NOT FOUND', t);
       return t;
@@ -813,6 +813,10 @@ function scrollTo(chapter, toc) {  // {{{2
   return;
 }
 
+
+function s2kw(val) {  // {{{2
+  return val.toLowerCase().replace(/\s/g, '').replace(/\./g, '/');
+}
 
 // }}}2
 

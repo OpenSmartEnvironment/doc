@@ -3,8 +3,9 @@ Packages["example-player"] = {
   "npmname": "ose-example-player",
   "caption": "Media player example",
   "readme": "This example is an Node.js media player application based on the\nOSE framework showcasing some of its principles and capabilities.",
-  "line": 62,
-  "features": "- Playback of predefined streams, local files, items in history\n- Near-realtime synchronization among all front- and backend\n  instances\n- Playback through VLC\n- Volume control using PulseAudio\n- Integration with other example applications: ([DVB\n  streamer](#example-dvb), [LIRC](#example-lirc), [Raspberry\n  Pi](#example-rpi))",
+  "line": 63,
+  "features": "- Playback of predefined streams, local files, items in history\n- Near-realtime synchronization among all front- and backend\n  instances\n- Playback through [VLC]\n- Volume control using [PulseAudio]\n- Remote control of keyboard and pointer through xdotool ([xorg])\n- Integration with other example applications: ([DVB\n  streamer](#example-dvb), [LIRC](#example-lirc), [Raspberry\n  Pi](#example-rpi))",
+  "scope": "media",
   "usage": "## Usage\n\nFor the Media player application to work, you need the following prerequisites:\n- Node.js > 0.10, npm, git\n- bower<br>\n  `sudo npm install -g bower`\n- PulseAudio configured with the D-Bus control interface<br>\n  `pactl load-module module-dbus-protocol`\n- VLC 2.2 or newer<br>\n  `sudo apt-get install vlc`\n\nTo install the example application, do the following:\n\n    git clone https://github.com/OpenSmartEnvironment/ose-example-player\n    cd ose-example-player\n    npm install\n\nTo start the Media player example application, execute the startup script from an X.Org session.\n\n    ./bin/run.js\n\nTo access the [HTML5 frontend], open the following URL in Firefox\n**37 or newer** (Iceweasel in Debian Jessie is too old).<br>\n**Before opening the link, enable the `dom.webcomponents.enabled` option in `about:config`.**\n\n    http://localhost:4431",
   "modules": {
     "data/streams": {

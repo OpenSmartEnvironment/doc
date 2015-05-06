@@ -245,6 +245,7 @@ Packages["videolan"] = {
       "readme": "[Entry kind] allowing to control VLC\n\nSee [Media player example]",
       "file": "lib/vlc/index.js",
       "kind": "vlc",
+      "aliases": "vlc",
       "description": "Implementation of media player playback using VLC over D-Bus",
       "handler": {
         "playUri": {

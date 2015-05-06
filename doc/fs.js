@@ -27,13 +27,14 @@ Packages["fs"] = {
     "lib/db": {
       "name": "lib/db",
       "type": "class",
+      "caption": "Filesystem database backend",
+      "readme": "Makes it possible to use filesystems as a database backend for\n[shards].",
       "file": "lib/db.js",
-      "description": "Makes it possible to use filesystems as a database backend for\n[shards].",
       "method": {
-        "constructor": {
-          "name": "constructor",
+        "config": {
+          "name": "config",
           "type": "method",
-          "description": "Constructor of database backend used by shards",
+          "description": "Configure db backend",
           "params": [
             {
               "name": "config",
@@ -61,29 +62,9 @@ Packages["fs"] = {
     "lib/jsonDb": {
       "name": "lib/jsonDb",
       "type": "class",
-      "file": "lib/jsonDb.js",
-      "description": "Makes it possible to save entries to JSON files",
-      "method": {
-        "constructor": {
-          "name": "constructor",
-          "type": "method",
-          "description": "Constructor of database backend used by shards",
-          "params": [
-            {
-              "name": "config",
-              "description": "Configuration",
-              "type": "Object",
-              "props": [
-                {
-                  "name": "root",
-                  "description": "Path to root of database",
-                  "type": "String"
-                }
-              ]
-            }
-          ]
-        }
-      }
+      "caption": "JSON files database backned",
+      "readme": "Makes it possible to save entries to JSON files",
+      "file": "lib/jsonDb.js"
     },
     "content": {
       "name": "content",

@@ -1125,36 +1125,6 @@ Packages["control"] = {
           "kind": "switch",
           "aliases": "switch switchEntry",
           "property": {
-            "data.master": {
-              "name": "data.master",
-              "type": "property",
-              "dtype": "String | Object",
-              "description": "Controller entry identification object.\n\nThe switch entry establishes a new link to this controller."
-            },
-            "data.pin": {
-              "name": "data.pin",
-              "type": "property",
-              "dtype": "String",
-              "description": "Master pin index\n\nIndex of digital input pin on the master controller"
-            },
-            "data.debounce": {
-              "name": "data.debounce",
-              "type": "property",
-              "dtype": "Number",
-              "description": "Debounce timeout\n\nDefines debounce timeout of the digital input in milliseconds.\n\nDefault value is `O.consts.switchDebounce`."
-            },
-            "data.hold": {
-              "name": "data.hold",
-              "type": "property",
-              "dtype": "Number",
-              "description": "Hold timeout\n\nDefines hold timeout of the switch in milliseconds.\n\nDefault value is `O.consts.switchHold`."
-            },
-            "data.tap": {
-              "name": "data.tap",
-              "type": "property",
-              "dtype": "Number",
-              "description": "Tap timeout\n\nDefines tap timeout of the switch in milliseconds.\n\nDefault value is `O.consts.switchTap`."
-            },
             "state.value": {
               "name": "state.value",
               "type": "property",
@@ -1184,6 +1154,36 @@ Packages["control"] = {
               "type": "property",
               "dtype": "Number",
               "description": "Tap timeout\n\nDefines the tap timeout of the switch in milliseconds. The value is\ntaken from `data.tap`."
+            },
+            "data.master": {
+              "name": "data.master",
+              "type": "property",
+              "dtype": "String | Object",
+              "description": "Controller entry identification object.\n\nThe switch entry establishes a new link to this controller."
+            },
+            "data.pin": {
+              "name": "data.pin",
+              "type": "property",
+              "dtype": "String",
+              "description": "Master pin index\n\nIndex of digital input pin on the master controller"
+            },
+            "data.debounce": {
+              "name": "data.debounce",
+              "type": "property",
+              "dtype": "Number",
+              "description": "Debounce timeout\n\nDefines debounce timeout of the digital input in milliseconds.\n\nDefault value is `O.consts.switchDebounce`."
+            },
+            "data.tap": {
+              "name": "data.tap",
+              "type": "property",
+              "dtype": "Number",
+              "description": "Tap timeout\n\nDefines tap timeout of the switch in milliseconds.\n\nDefault value is `O.consts.switchTap`."
+            },
+            "data.hold": {
+              "name": "data.hold",
+              "type": "property",
+              "dtype": "Number",
+              "description": "Hold timeout\n\nDefines hold timeout of the switch in milliseconds.\n\nDefault value is `O.consts.switchHold`."
             }
           },
           "event": {
@@ -1212,6 +1212,13 @@ Packages["control"] = {
               "name": "hold",
               "type": "event",
               "description": "Hold event\n\nFired when a switch hold is detected."
+            }
+          },
+          "handler": {
+            "relay": {
+              "name": "relay",
+              "type": "handler",
+              "description": "Create a response socket relaying switch events to the client."
             }
           }
         },
@@ -1279,11 +1286,6 @@ Packages["control"] = {
                 {
                   "name": "entry",
                   "description": "Switch entry",
-                  "type": "Object"
-                },
-                {
-                  "name": "socket",
-                  "description": "Client socket",
                   "type": "Object"
                 }
               ]

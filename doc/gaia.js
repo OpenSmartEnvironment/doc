@@ -97,19 +97,19 @@ Packages["gaia"] = {
               ],
               "internal": true
             },
-            "displayData": {
-              "name": "displayData",
+            "display": {
+              "name": "display",
               "type": "method",
-              "description": "Display entry data based on `this.profile`. This method gets\ncalled once after entry data are loaded. It can be overridden in\nthe layout file for custom data display."
+              "description": "Display entry based on layout profiles. This method gets\ncalled once after entry data are loaded. It can be overridden in\nthe layout file for full custom data display."
             },
             "updateData": {
               "name": "updateData",
               "type": "method",
-              "description": "Update the information displayed with updated entry data.",
+              "description": "Update the information displayed with data patch",
               "params": [
                 {
-                  "name": "data",
-                  "description": "Updated entry data",
+                  "name": "patch",
+                  "description": "Data patch",
                   "type": "Object"
                 }
               ]
@@ -695,7 +695,8 @@ Packages["gaia"] = {
             {
               "name": "val",
               "description": "Value to be set",
-              "type": "*"
+              "type": "*",
+              "optional": true
             }
           ]
         },

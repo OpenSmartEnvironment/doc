@@ -715,10 +715,12 @@ Packages["ose"] = {
                   "type": "Object"
                 }
               ]
-            },
+            }
+          },
+          "handler": {
             "command": {
               "name": "command",
-              "type": "method",
+              "type": "handler",
               "description": "Handle entry command sent from a slave",
               "params": [
                 {
@@ -749,7 +751,7 @@ Packages["ose"] = {
             },
             "track": {
               "name": "track",
-              "type": "method",
+              "type": "handler",
               "description": "Track request handler",
               "params": [
                 {
@@ -766,6 +768,40 @@ Packages["ose"] = {
                       "name": "srev",
                       "description": "Whether to track state changes",
                       "type": "Boolean|Number"
+                    }
+                  ]
+                },
+                {
+                  "name": "socket",
+                  "description": "Client socket",
+                  "type": "Object"
+                }
+              ]
+            },
+            "put": {
+              "name": "put",
+              "type": "handler",
+              "description": "Save data patch handler",
+              "params": [
+                {
+                  "name": "req",
+                  "description": "Request object",
+                  "type": "Object",
+                  "props": [
+                    {
+                      "name": "rev",
+                      "description": "Original data revision",
+                      "type": "Number"
+                    },
+                    {
+                      "name": "patch",
+                      "description": "Patch data",
+                      "type": "Object"
+                    },
+                    {
+                      "name": "source",
+                      "description": "Source of the patch",
+                      "type": "String"
                     }
                   ]
                 },
@@ -1021,6 +1057,10 @@ Packages["ose"] = {
                   "type": "Object"
                 }
               ]
+            },
+            "nextTime": {
+              "name": "nextTime",
+              "type": "method"
             },
             "error": {
               "name": "error",

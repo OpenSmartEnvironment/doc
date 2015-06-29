@@ -9,20 +9,20 @@ Packages["gaia"] = {
   "features": "- HTML5 user interface optimized for phones and tablets based on\n [Gaia components]\n (https://developer.mozilla.org/en-US/Apps/Design/Firefox_OS_building_blocks)",
   "scope": "ose",
   "comps": {
-    "pagelet": {
-      "name": "pagelet",
-      "caption": "Pagelets",
-      "readme": "A pagelet is a part of a page.\n\nEach pagelet is a descendant of the [Element wrapper class]. There\nare several types of pagelets (see `lib/pagelet` directory). TODO:\nInsert link\n\nThe dashboard pagelet defines the dashboard of the application.\nThe two other basic pagelets are the detail pagelet (displays the\ndetail of one entry) and the list pagelet (displays a list of\nentries).\n\nEach [entry kind] can define own UI layout and behaviour for any\npagelet type displaying entry in an individual file.\n\nPagelets can contain other pagelets.",
-      "file": "lib/pagelet/listItem.js",
+    "view": {
+      "name": "view",
+      "caption": "Views",
+      "readme": "A view is a part of a page.\n\nEach view is a descendant of the [Element wrapper class]. There\nare several types of views (see `lib/view` directory). TODO:\nInsert link\n\nThe dashboard view defines the dashboard of the application.\nThe two other basic views are the detail view (displays the\ndetail of one entry) and the list view (displays a list of\nentries).\n\nEach [entry kind] can define own UI layout and behaviour for any\nview type displaying entry in an individual file.\n\nViews can contain other views.",
+      "file": "lib/view/listItem.js",
       "line": 11,
       "modules": {
-        "lib/pagelet/dashboard": {
-          "name": "lib/pagelet/dashboard",
+        "lib/view/dashboard": {
+          "name": "lib/view/dashboard",
           "type": "class",
-          "super": "gaia/lib.pagelet",
-          "caption": "Dashboard pagelet",
-          "readme": "Pagelet for creating dashboard content.",
-          "file": "lib/pagelet/dashboard.js",
+          "super": "gaia/lib.view",
+          "caption": "Dashboard view",
+          "readme": "View for creating dashboard content.",
+          "file": "lib/view/dashboard.js",
           "method": {
             "addStateObj": {
               "name": "addStateObj",
@@ -47,7 +47,7 @@ Packages["gaia"] = {
               "description": "Add multiple [State objects] to the dashboard.",
               "params": [
                 {
-                  "name": "data",
+                  "name": "val",
                   "description": "Array of items",
                   "type": "Array"
                 }
@@ -72,35 +72,23 @@ Packages["gaia"] = {
             }
           }
         },
-        "lib/pagelet/detail": {
-          "name": "lib/pagelet/detail",
+        "lib/view/detail": {
+          "name": "lib/view/detail",
           "type": "class",
-          "super": "gaia/lib.pagelet",
-          "caption": "Detail pagelet",
-          "readme": "Pagelet for displaying entry detail",
-          "file": "lib/pagelet/detail.js",
+          "super": "gaia/lib.view",
+          "caption": "Detail view",
+          "readme": "View for displaying entry detail",
+          "file": "lib/view/detail.js",
           "method": {
             "post": {
               "name": "post",
               "type": "method",
               "description": "Post command to displayed entry's home"
             },
-            "setEntry": {
-              "name": "setEntry",
-              "type": "method",
-              "params": [
-                {
-                  "name": "entry",
-                  "description": "Entry to be displayed",
-                  "type": "Object"
-                }
-              ],
-              "internal": true
-            },
             "display": {
               "name": "display",
               "type": "method",
-              "description": "Display entry based on layout profiles. This method gets\ncalled once after entry data are loaded. It can be overridden in\nthe layout file for full custom data display."
+              "description": "Display entry based on layout profiles. This method gets\ncalled once after entry dval are loaded. It can be overridden in\nthe layout file for full custom data display."
             },
             "updateData": {
               "name": "updateData",
@@ -114,9 +102,16 @@ Packages["gaia"] = {
                 }
               ]
             },
-            "socketError": {
-              "name": "socketError",
+            "setEntry": {
+              "name": "setEntry",
               "type": "method",
+              "params": [
+                {
+                  "name": "entry",
+                  "description": "Entry to be displayed",
+                  "type": "Object"
+                }
+              ],
               "internal": true
             },
             "removed": {
@@ -128,15 +123,20 @@ Packages["gaia"] = {
               "name": "markHome",
               "type": "method",
               "internal": true
+            },
+            "socketError": {
+              "name": "socketError",
+              "type": "method",
+              "internal": true
             }
           }
         },
-        "lib/pagelet/entry": {
-          "name": "lib/pagelet/entry",
+        "lib/view/entry": {
+          "name": "lib/view/entry",
           "type": "class",
-          "caption": "Entry pagelet client socket",
-          "readme": "Extension for entry pagelet classes.",
-          "file": "lib/pagelet/entry.js",
+          "caption": "Entry view client socket",
+          "readme": "Extension for entry view classes.",
+          "file": "lib/view/entry.js",
           "method": {
             "constructor": {
               "name": "constructor",
@@ -144,8 +144,8 @@ Packages["gaia"] = {
               "description": "Socket constructor",
               "params": [
                 {
-                  "name": "pagelet",
-                  "description": "Pagelet",
+                  "name": "view",
+                  "description": "View",
                   "type": "Object"
                 },
                 {
@@ -167,13 +167,13 @@ Packages["gaia"] = {
             }
           }
         },
-        "lib/pagelet/gesture": {
-          "name": "lib/pagelet/gesture",
+        "lib/view/gesture": {
+          "name": "lib/view/gesture",
           "type": "class",
-          "super": "gaia/lib.pagelet",
-          "caption": "Gesture pagelet",
-          "readme": "Pagelet for displaying an entry with the gesture interface.\n\nThis pagelet creates a canvas on which, for example, gesture traces\ncan be drawn. A transparent `<div>` placed over this canvas is a\nHammer.js element registering touch gestures.",
-          "file": "lib/pagelet/gesture.js",
+          "super": "gaia/lib.view",
+          "caption": "Gesture view",
+          "readme": "View for displaying an entry with the gesture interface.\n\nThis view creates a canvas on which, for example, gesture traces\ncan be drawn. A transparent `<div>` placed over this canvas is a\nHammer.js element registering touch gestures.",
+          "file": "lib/view/gesture.js",
           "method": {
             "clearCanvas": {
               "name": "clearCanvas",
@@ -191,7 +191,7 @@ Packages["gaia"] = {
                   "type": "String"
                 },
                 {
-                  "name": "data",
+                  "name": "val",
                   "description": "",
                   "type": "Object"
                 }
@@ -199,22 +199,22 @@ Packages["gaia"] = {
             }
           }
         },
-        "lib/pagelet": {
-          "name": "lib/pagelet",
+        "lib/view": {
+          "name": "lib/view",
           "type": "class",
           "super": "gaia/lib.wrap",
-          "caption": "Pagelet class",
-          "readme": "Not every pagelet is necessarily a descendant of this class. Some\nare direct descendants of the [Element wrapper class].",
-          "file": "lib/pagelet/index.js",
+          "caption": "View class",
+          "readme": "Not every view is necessarily a descendant of this class. Some\nare direct descendants of the [Element wrapper class].",
+          "file": "lib/view/index.js",
           "method": {
             "loadData": {
               "name": "loadData",
               "type": "method",
-              "description": "Each Pagelet descendant should define a `loadData` method. This\nmethod should be called by the code creating the pagelet and should\nensure that data displayed by the pagelet are loaded.",
+              "description": "Each View descendant should define a `loadData` method. This\nmethod should be called by the code creating the view and should\nensure that data displayed by the view are loaded.",
               "params": [
                 {
                   "name": "cb",
-                  "description": "Callback to be called after pagelet is displayed",
+                  "description": "Callback to be called after view is displayed",
                   "type": "Function",
                   "optional": true
                 }
@@ -223,7 +223,7 @@ Packages["gaia"] = {
             "verifyStateObj": {
               "name": "verifyStateObj",
               "type": "method",
-              "description": "Each Pagelet descendant should define a \"verifyStateObj\"\nmethod. This method compares the supplied state object with the\ncurrently displayed one.",
+              "description": "Each View descendant should define a \"verifyStateObj\"\nmethod. This method compares the supplied state object with the\ncurrently displayed one.",
               "params": [
                 {
                   "name": "data",
@@ -235,12 +235,12 @@ Packages["gaia"] = {
             "constructor": {
               "name": "constructor",
               "type": "method",
-              "description": "Pagelet constructor"
+              "description": "View constructor"
             },
             "afterDisplay": {
               "name": "afterDisplay",
               "type": "method",
-              "description": "Is called after a pagelet is displayed.\n\nThe function creating a pagelet receives a callback as one of its\nparameters. This callback is assigned to\n\"this.doAfterDisplay\". This method ensures that\n\"this.doAfterDisplay\" is called only once.",
+              "description": "Is called after a view is displayed.\n\nThe function creating a view receives a callback as one of its\nparameters. This callback is assigned to\n\"this.doAfterDisplay\". This method ensures that\n\"this.doAfterDisplay\" is called only once.",
               "params": [
                 {
                   "name": "err",
@@ -267,17 +267,17 @@ Packages["gaia"] = {
               "name": "layout",
               "type": "property",
               "dtype": "String",
-              "description": "Defines the layout which extends this pagelet. Layouts are defined\nin modules located in the \"gaia\" subdirectory of the entry kind\ndirectory. ."
+              "description": "Defines the layout which extends this view. Layouts are defined\nin modules located in the \"gaia\" subdirectory of the entry kind\ndirectory. ."
             }
           }
         },
-        "lib/pagelet/list": {
-          "name": "lib/pagelet/list",
+        "lib/view/list": {
+          "name": "lib/view/list",
           "type": "class",
-          "super": "gaia/lib.pagelet",
-          "caption": "List of entries pagelet",
-          "readme": "Pagelet for displaying lists of entries",
-          "file": "lib/pagelet/list.js",
+          "super": "gaia/lib.view",
+          "caption": "List of entries view",
+          "readme": "View for displaying lists of entries",
+          "file": "lib/view/list.js",
           "method": {
             "update": {
               "name": "update",
@@ -337,18 +337,18 @@ Packages["gaia"] = {
             }
           }
         },
-        "lib/pagelet/listItem": {
-          "name": "lib/pagelet/listItem",
+        "lib/view/listItem": {
+          "name": "lib/view/listItem",
           "type": "class",
-          "super": "gaia/lib.pagelet",
-          "caption": "Entry list item pagelet",
-          "readme": "Pagelet for displaying a list item",
-          "file": "lib/pagelet/listItem.js",
+          "super": "gaia/lib.view",
+          "caption": "Entry list item view",
+          "readme": "View for displaying a list item",
+          "file": "lib/view/listItem.js",
           "method": {
             "constructor": {
               "name": "constructor",
               "type": "method",
-              "description": "Pagelet constructor"
+              "description": "View constructor"
             },
             "tapItem": {
               "name": "tapItem",
@@ -363,7 +363,7 @@ Packages["gaia"] = {
     "stateObj": {
       "name": "stateObj",
       "caption": "State objects",
-      "readme": "The state object defines what is displayed by the application. It\ncan be saved in the browser's history. Boxes and pagelets receive\nthe state object in as a parameter of their `display()` methods.",
+      "readme": "The state object defines what is displayed by the application. It\ncan be saved in the browser's history. Boxes and views receive\nthe state object in as a parameter of their `display()` methods.",
       "file": "lib/stateObj.js",
       "line": 1
     }
@@ -387,7 +387,7 @@ Packages["gaia"] = {
           "name": "defaultContent",
           "type": "property",
           "dtype": "Object",
-          "description": "Pagelet displayed by default"
+          "description": "View displayed by default"
         }
       },
       "method": {
@@ -530,6 +530,45 @@ Packages["gaia"] = {
         }
       }
     },
+    "lib/field": {
+      "name": "lib/field",
+      "type": "class",
+      "super": "gaia/lib.wrap",
+      "caption": "Field view",
+      "readme": "This [element wrapper] works together with the [ose.orm]\ncomponent to display and edit fields.",
+      "file": "lib/field.js",
+      "method": {
+        "constructor": {
+          "name": "constructor",
+          "type": "method",
+          "description": "Field view constructor",
+          "params": [
+            {
+              "name": "wrap",
+              "description": "[Field wrapper]",
+              "type": "Object"
+            },
+            {
+              "name": "el",
+              "description": "Optional HTML element",
+              "type": "Object",
+              "optional": true
+            },
+            {
+              "name": "attrs",
+              "description": "Optional attributes of HTML element",
+              "type": "Object",
+              "optional": true
+            }
+          ]
+        },
+        "getAsside": {
+          "name": "getAsside",
+          "type": "method",
+          "description": "Create content of <aside> of <li> based on field description"
+        }
+      }
+    },
     "lib/header": {
       "name": "lib/header",
       "type": "class",
@@ -546,7 +585,7 @@ Packages["gaia"] = {
         "newHeader": {
           "name": "newHeader",
           "type": "method",
-          "description": "Create pagelet header"
+          "description": "Create view header"
         }
       }
     },
@@ -580,26 +619,14 @@ Packages["gaia"] = {
             }
           ]
         },
-        "pagelet": {
-          "name": "pagelet",
-          "type": "method",
-          "description": "Create pagelet based on `stateObj`",
-          "params": [
-            {
-              "name": "stateObj",
-              "description": "Object defining what is to be displayed",
-              "type": "Object"
-            }
-          ]
-        },
         "setActive": {
           "name": "setActive",
           "type": "method",
-          "description": "Activate `pagelet`",
+          "description": "Activate `view`",
           "params": [
             {
-              "name": "pagelet",
-              "description": "Pagelet instance",
+              "name": "view",
+              "description": "View instance",
               "type": "Object"
             }
           ]
@@ -987,10 +1014,10 @@ Packages["gaia"] = {
             }
           ]
         },
-        "pagelet": {
-          "name": "pagelet",
+        "view": {
+          "name": "view",
           "type": "method",
-          "description": "Create new pagelet",
+          "description": "Create new view",
           "params": [
             {
               "name": "el",
@@ -1009,18 +1036,6 @@ Packages["gaia"] = {
           "name": "select",
           "type": "method",
           "description": "Select text in first child node"
-        },
-        "dialog": {
-          "name": "dialog",
-          "type": "method",
-          "description": "Create new pagelet",
-          "params": [
-            {
-              "name": "type",
-              "description": "dialog type",
-              "type": "String"
-            }
-          ]
         },
         "left": {
           "name": "left",

@@ -91,9 +91,9 @@ Packages["ose"] = {
           "type": "class",
           "super": "EventEmitter",
           "caption": "Entry class",
-          "readme": "An [Entry] instance is a data structure representing a physical\nobject or logical concept. Each [entry] belongs to a certain\n[shard]. Within the [shard], it has a unique `id`. Each [entry] is\nof a certain [kind] that defines its behaviour.\n\nAn [entry] can contain a `data` object in JSON format (analogous to\na database table row). At the moment, `data` are defined at the\nstart-up of an [OSE instance] and are immutable. Data management\nand persistence are planned features.\n\nThe `state` JSON object, unlike `data`, can\noften change and is non-persistent by design because it reflects\nchanging objective reality. Changes of `state` objects are\npropagated to [peers] tracking changes of certain [entries].\n\nThe `data` and `state` objects can contain any valid JSON excluding\n`null`, which is used for deleting keys during patching.\n\nIn addition, the `blob` object may contain arbitrary binary\ndata. Each `blob` can be read as a stream.",
+          "readme": "An [Entry] instance is a data structure representing a physical\nobject or logical concept. Each [entry] belongs to a certain\n[shard]. Within the [shard], it has a unique `id`. Each [entry] is\nof a certain [kind] that defines its behaviour.\n\nAn [entry] can contain a data value `dval` object in JSON format (analogous to\na database table row). At the moment, `dval` is defined at the\nstart-up of an [OSE instance] and are immutable. Data management\nand persistence are planned features.\n\nThe `sval` JSON object, unlike `dval`, can\noften change and is non-persistent by design because it reflects\nchanging objective reality. Changes of `sval` objects are\npropagated to [peers] tracking changes of certain [entries].\n\nThe `dval` and `sval` objects can contain any valid JSON excluding\n`null`, which is used for deleting keys during patching.\n\nIn addition, the `blob` object may contain arbitrary binary\ndata. Each `blob` can be read as a stream.",
           "file": "lib/entry/index.js",
-          "aliases": "entry entries data state statesOfEntries",
+          "aliases": "entry entries dval data sval state statesOfEntries",
           "property": {
             "id": {
               "name": "id",
@@ -113,23 +113,23 @@ Packages["ose"] = {
               "dtype": "Object",
               "description": "Reference to [entry kind]"
             },
+            "drev": {
+              "name": "drev",
+              "type": "property",
+              "dtype": "Number",
+              "description": "Timestamp in microseconds of last dval update"
+            },
+            "dval": {
+              "name": "dval",
+              "type": "property",
+              "dtype": "Object",
+              "description": "Persistent data value"
+            },
             "lhs": {
               "name": "lhs",
               "type": "property",
               "dtype": "Object",
               "description": "State of entry"
-            },
-            "drev": {
-              "name": "drev",
-              "type": "property",
-              "dtype": "Number",
-              "description": "Timestamp in microseconds of last data update"
-            },
-            "data": {
-              "name": "data",
-              "type": "property",
-              "dtype": "Object",
-              "description": "Persistent data"
             },
             "master": {
               "name": "master",
@@ -141,10 +141,10 @@ Packages["ose"] = {
               "name": "srev",
               "type": "property",
               "dtype": "Number",
-              "description": "Timestamp in microseconds of last state update"
+              "description": "Timestamp in microseconds of last sval update"
             },
-            "state": {
-              "name": "state",
+            "sval": {
+              "name": "sval",
               "type": "property",
               "dtype": "Object",
               "description": "Non-persistent data"
@@ -187,14 +187,14 @@ Packages["ose"] = {
               "name": "dtc",
               "type": "property",
               "dtype": "Number",
-              "description": "Count of data trackers",
+              "description": "Count of dval trackers",
               "internal": true
             },
             "stc": {
               "name": "stc",
               "type": "property",
               "dtype": "Number",
-              "description": "Count of clients state trackers",
+              "description": "Count of sval clients trackers",
               "internal": true
             }
           },
@@ -202,7 +202,7 @@ Packages["ose"] = {
             "constructor": {
               "name": "constructor",
               "type": "method",
-              "description": "Entry constructor",
+              "description": "Entry constructor\n\nTODO: Before creating new entry, id duplicity should be checked",
               "params": [
                 {
                   "name": "shard",
@@ -294,7 +294,7 @@ Packages["ose"] = {
             "onStates": {
               "name": "onStates",
               "type": "method",
-              "description": "Register state handlers",
+              "description": "Register sval change handlers",
               "params": [
                 {
                   "name": "handlers",
@@ -306,11 +306,11 @@ Packages["ose"] = {
             "setState": {
               "name": "setState",
               "type": "method",
-              "description": "Change entry \"state\". Can be called only in the home. `patch` is\naltered (unchanged keys are removed).",
+              "description": "Change entry `sval`. Can be called only in the home. `patch` is\naltered (unchanged keys are removed).",
               "params": [
                 {
                   "name": "patch",
-                  "description": "Data object",
+                  "description": "State patch",
                   "type": "Object"
                 },
                 {
@@ -321,10 +321,10 @@ Packages["ose"] = {
                 }
               ]
             },
-            "inView": {
-              "name": "inView",
+            "inMap": {
+              "name": "inMap",
               "type": "method",
-              "description": "Tests whether entry belongs to view.\n\nTODO: Consider renaming method to isInView.",
+              "description": "Tests whether entry belongs to map.\n\nTODO: Consider renaming method to isInMap.",
               "params": [
                 {
                   "name": "params",
@@ -362,13 +362,13 @@ Packages["ose"] = {
               "params": [
                 {
                   "name": "drev",
-                  "description": "Known data revision. Whether to track the entry data changes.",
+                  "description": "Known dval revision. Whether to track the entry dval changes.",
                   "type": "Number",
                   "optional": true
                 },
                 {
                   "name": "srev",
-                  "description": "Known state revision. Whether to track the entry state changes.",
+                  "description": "Known sval revision. Whether to track the entry.sval changes.",
                   "type": "Number",
                   "optional": true
                 },
@@ -391,13 +391,13 @@ Packages["ose"] = {
                 },
                 {
                   "name": "drev",
-                  "description": "Known data revision. Whether to track the entry data changes.",
+                  "description": "Known dval revision. Whether to track the entry dval changes.",
                   "type": "Number",
                   "optional": true
                 },
                 {
                   "name": "srev",
-                  "description": "Known state revision. Whether to track the entry state changes.",
+                  "description": "Known sval revision. Whether to track the entry.sval changes.",
                   "type": "Number",
                   "optional": true
                 },
@@ -483,7 +483,7 @@ Packages["ose"] = {
             "respond": {
               "name": "respond",
               "type": "method",
-              "description": "Creates a response with `entry.data` or `entry.state`.",
+              "description": "Creates a response with `entry.dval` or `entry.sval`.",
               "internal": true
             },
             "trackMaster": {
@@ -498,13 +498,13 @@ Packages["ose"] = {
               "description": "Method called when data or state changes should be tracked.",
               "params": [
                 {
-                  "name": "data",
-                  "description": "Delta of data tracking count",
+                  "name": "dd",
+                  "description": "Delta of dval tracking count",
                   "type": "Number"
                 },
                 {
-                  "name": "state",
-                  "description": "Delta of state tracking count",
+                  "name": "sd",
+                  "description": "Delta of sval tracking count",
                   "type": "Number"
                 },
                 {
@@ -543,13 +543,13 @@ Packages["ose"] = {
             "patchState": {
               "name": "patchState",
               "type": "method",
-              "description": "Patch entry state. Update `entry.state` and `entry.srev`.",
+              "description": "Patch entry.sval. Update `entry.sval` and `entry.srev`.",
               "internal": true
             },
             "updateState": {
               "name": "updateState",
               "type": "method",
-              "description": "Update this entry state.",
+              "description": "Update this entry.sval.",
               "internal": true
             }
           }
@@ -591,8 +591,8 @@ Packages["ose"] = {
                       "optional": true
                     },
                     {
-                      "name": "data",
-                      "description": "Data update",
+                      "name": "dval",
+                      "description": "Data value",
                       "type": "Object",
                       "optional": true
                     },
@@ -603,8 +603,8 @@ Packages["ose"] = {
                       "optional": true
                     },
                     {
-                      "name": "state",
-                      "description": "State",
+                      "name": "sval",
+                      "description": "State value",
                       "type": "Object",
                       "optional": true
                     },
@@ -919,10 +919,10 @@ Packages["ose"] = {
                 }
               ]
             },
-            "entry": {
-              "name": "entry",
+            "newEntry": {
+              "name": "newEntry",
               "type": "method",
-              "description": "Create a new entry and add it to `this.cache`.",
+              "description": "Create a new entry and add it to `this.cache` and optional database backend.",
               "params": [
                 {
                   "name": "id",
@@ -935,7 +935,35 @@ Packages["ose"] = {
                   "type": "Object|String"
                 },
                 {
-                  "name": "data",
+                  "name": "val",
+                  "description": "Optional entry data value",
+                  "type": "Object",
+                  "optional": true
+                },
+                {
+                  "name": "cb",
+                  "description": "Response callback",
+                  "type": "Function(err, entry"
+                }
+              ]
+            },
+            "entry": {
+              "name": "entry",
+              "type": "method",
+              "description": "Create a new entry and add it to `this.cache` and optional database backend.\n\nTODO: replace with async newEntry",
+              "params": [
+                {
+                  "name": "id",
+                  "description": "Entry `id` unique within shard",
+                  "type": "String|Number"
+                },
+                {
+                  "name": "kind",
+                  "description": "Entry kind",
+                  "type": "Object|String"
+                },
+                {
+                  "name": "val",
                   "description": "Optional entry data",
                   "type": "Object",
                   "optional": true
@@ -1024,10 +1052,10 @@ Packages["ose"] = {
                 }
               ]
             },
-            "getView": {
-              "name": "getView",
+            "getMap": {
+              "name": "getMap",
               "type": "method",
-              "description": "**Views logic will be changed in principle**",
+              "description": "**Maps logic will be changed in principle**",
               "params": [
                 {
                   "name": "req",
@@ -1085,7 +1113,7 @@ Packages["ose"] = {
                   "type": "String"
                 },
                 {
-                  "name": "data",
+                  "name": "val",
                   "description": "Configuration data",
                   "type": "Object"
                 },
@@ -1244,10 +1272,12 @@ Packages["ose"] = {
                   "type": "Object"
                 }
               ]
-            },
+            }
+          },
+          "handler": {
             "command": {
               "name": "command",
-              "type": "method",
+              "type": "handler",
               "description": "Command handler executing a command on a target entry",
               "params": [
                 {
@@ -1281,9 +1311,44 @@ Packages["ose"] = {
                 }
               ]
             },
+            "new": {
+              "name": "new",
+              "type": "handler",
+              "description": "Handler called when a slave shard attempts to add new entry",
+              "params": [
+                {
+                  "name": "req",
+                  "description": "",
+                  "type": "Object",
+                  "props": [
+                    {
+                      "name": "id",
+                      "description": "New entry id",
+                      "type": "String"
+                    },
+                    {
+                      "name": "kind",
+                      "description": "New entry kind name",
+                      "type": "String"
+                    },
+                    {
+                      "name": "val",
+                      "description": "New entry data",
+                      "type": "Object"
+                    }
+                  ]
+                },
+                {
+                  "name": "socket",
+                  "description": "Client socket",
+                  "type": "Object",
+                  "optional": true
+                }
+              ]
+            },
             "get": {
               "name": "get",
-              "type": "method",
+              "type": "handler",
               "description": "Handler called when a slave shard attempts to get an entry",
               "params": [
                 {
@@ -1313,7 +1378,7 @@ Packages["ose"] = {
             },
             "readStream": {
               "name": "readStream",
-              "type": "method",
+              "type": "handler",
               "description": "Handler called when a slave shard attempts to get an entry",
               "params": [
                 {
@@ -1330,7 +1395,7 @@ Packages["ose"] = {
             },
             "link": {
               "name": "link",
-              "type": "method",
+              "type": "handler",
               "description": "Handler called when a slave shard attempts to create a link to an entry",
               "params": [
                 {
@@ -1357,15 +1422,15 @@ Packages["ose"] = {
                   "optional": true
                 }
               ]
-            }
-          },
-          "undefined": {
-            "undefined": {
-              "description": "Handler called when a slave shard requests a view",
+            },
+            "map": {
+              "name": "map",
+              "type": "handler",
+              "description": "Handler called when a slave shard requests a map.\nTODO: rename to \"map\"",
               "params": [
                 {
                   "name": "req",
-                  "description": "Request to be sent to `shard.getView()`",
+                  "description": "Request to be sent to `shard.getMap()`",
                   "type": "Object"
                 },
                 {
@@ -1650,7 +1715,7 @@ Packages["ose"] = {
                   "type": "String"
                 },
                 {
-                  "name": "data",
+                  "name": "val",
                   "description": "Configuration data",
                   "type": "Object"
                 },
@@ -1885,6 +1950,12 @@ Packages["ose"] = {
               "type": "property",
               "dtype": "String",
               "description": "Kind name unique within a scope"
+            },
+            "ddes": {
+              "name": "ddes",
+              "type": "property",
+              "dtype": "Object",
+              "description": "`entry.dval` structure description\n\nContains an [ose/lib/orm/object] instance"
             }
           }
         },
@@ -1951,10 +2022,10 @@ Packages["ose"] = {
                 }
               ]
             },
-            "getView": {
-              "name": "getView",
+            "getMap": {
+              "name": "getMap",
               "type": "method",
-              "description": "Creates a view based on params",
+              "description": "Respond a map based on params",
               "params": [
                 {
                   "name": "kind",
@@ -1964,7 +2035,7 @@ Packages["ose"] = {
                 },
                 {
                   "name": "params",
-                  "description": "View parameters",
+                  "description": "map parameters",
                   "type": "Object",
                   "optional": true
                 },
@@ -2353,7 +2424,7 @@ Packages["ose"] = {
               "description": "Verify event handler. Called before a remote peer WebSocket\nconnects as a client to this HTTP server.",
               "params": [
                 {
-                  "name": "data",
+                  "name": "val",
                   "description": "Verification request data.",
                   "type": "Object"
                 }
@@ -2368,10 +2439,871 @@ Packages["ose"] = {
         }
       }
     },
+    "orm": {
+      "name": "orm",
+      "caption": "Object-relational mapping",
+      "readme": "This component allows to describe JSON data structures. Data descriptions contian no particular data.",
+      "file": "lib/orm/wrap.js",
+      "line": 10,
+      "features": "- JSON data editing\n- lookups",
+      "modules": {
+        "lib/orm/field": {
+          "name": "lib/orm/field",
+          "type": "module",
+          "caption": "Common field description",
+          "readme": "Ancestor for field descriptions",
+          "file": "lib/orm/field.js",
+          "property": {
+            "name": {
+              "name": "name",
+              "type": "property",
+              "dtype": "String",
+              "description": "Field name"
+            },
+            "order": {
+              "name": "order",
+              "type": "property",
+              "dtype": "Number",
+              "description": "Field order"
+            },
+            "required": {
+              "name": "required",
+              "type": "property",
+              "dtype": "Boolean",
+              "description": "Whether field is required"
+            }
+          },
+          "method": {
+            "constructor": {
+              "name": "constructor",
+              "type": "method",
+              "description": "Field constructor",
+              "params": [
+                {
+                  "name": "name",
+                  "description": "Field name",
+                  "type": "String"
+                },
+                {
+                  "name": "params",
+                  "description": "Optional parameters",
+                  "type": "Object",
+                  "optional": true,
+                  "props": [
+                    {
+                      "name": "order",
+                      "description": "Order of field",
+                      "type": "Number",
+                      "optional": true
+                    },
+                    {
+                      "name": "required",
+                      "description": "Whether field is required",
+                      "type": "Boolean",
+                      "optional": true
+                    }
+                  ]
+                }
+              ]
+            },
+            "iterPatch": {
+              "name": "iterPatch",
+              "type": "method",
+              "internal": true
+            },
+            "": {
+              "name": "",
+              "type": "method",
+              "internal": true
+            },
+            "getVal": {
+              "name": "getVal",
+              "type": "method",
+              "internal": true
+            },
+            "getPatch": {
+              "name": "getPatch",
+              "type": "method",
+              "internal": true
+            },
+            "format": {
+              "name": "format",
+              "type": "method",
+              "description": "Format field value",
+              "params": [
+                {
+                  "name": "type",
+                  "description": "Field type ('csv', 'slk', 'sort', 'edit', 'display')",
+                  "type": "String"
+                },
+                {
+                  "name": "val",
+                  "description": "Raw value to format",
+                  "type": "*"
+                },
+                {
+                  "name": "params",
+                  "description": "Optional formatting parameters",
+                  "type": "Object",
+                  "optional": true
+                }
+              ]
+            },
+            "unformat": {
+              "name": "unformat",
+              "type": "method",
+              "description": "Unformat field and return raw value",
+              "params": [
+                {
+                  "name": "val",
+                  "description": "Edited field value",
+                  "type": "*"
+                },
+                {
+                  "name": "params",
+                  "description": "Optional unformatting parameters",
+                  "type": "Object"
+                }
+              ]
+            },
+            "getField": {
+              "name": "getField",
+              "type": "method",
+              "internal": true
+            },
+            "formatField": {
+              "name": "formatField",
+              "type": "method",
+              "internal": true
+            },
+            "doValidate": {
+              "name": "doValidate",
+              "type": "method",
+              "description": "TODO",
+              "internal": true
+            },
+            "setOrder": {
+              "name": "setOrder",
+              "type": "method",
+              "description": "Automatic field ordering",
+              "params": [
+                {
+                  "name": "order",
+                  "description": "Object defining the order of fields",
+                  "type": "Object",
+                  "props": [
+                    {
+                      "name": "value",
+                      "description": "Numeric order of field",
+                      "type": "Number"
+                    }
+                  ]
+                }
+              ],
+              "internal": true
+            }
+          }
+        },
+        "lib/orm/list": {
+          "name": "lib/orm/list",
+          "type": "module",
+          "caption": "List of field wraps",
+          "readme": "Manages particular data against field description objects. Converts\nthe description tree hierarchy into a simple list. This can be\nused, for example, by the [detail view] to display and edit entry\ndata.  Makes it possible to obtain patches or full data objects\nfrom edited fields.",
+          "file": "lib/orm/list.js",
+          "property": {
+            "view": {
+              "name": "view",
+              "type": "property",
+              "dtype": "Object",
+              "description": "Current view displaying data"
+            },
+            "fields": {
+              "name": "fields",
+              "type": "property",
+              "dtype": "Array",
+              "description": "List of [field wrappers]"
+            },
+            "canStopEdit": {
+              "name": "canStopEdit",
+              "type": "property",
+              "dtype": "Boolean",
+              "description": "Whether editing can be stopped"
+            },
+            "edit": {
+              "name": "edit",
+              "type": "property",
+              "dtype": "Boolean",
+              "description": "Whether the list is currently being edited\n\nTODO: Consider renaming to `isEdited`"
+            }
+          },
+          "method": {
+            "constructor": {
+              "name": "constructor",
+              "type": "method",
+              "description": "Field list constructor",
+              "params": [
+                {
+                  "name": "view",
+                  "description": "Current view",
+                  "type": "Object"
+                }
+              ]
+            },
+            "each": {
+              "name": "each",
+              "type": "method",
+              "description": "param cb {Function} Callback",
+              "internal": true
+            },
+            "sort": {
+              "name": "sort",
+              "type": "method",
+              "internal": true
+            },
+            "add": {
+              "name": "add",
+              "type": "method",
+              "params": [
+                {
+                  "name": "def",
+                  "description": ""
+                },
+                {
+                  "name": "val",
+                  "description": ""
+                },
+                {
+                  "name": "profile",
+                  "description": ""
+                }
+              ],
+              "internal": true
+            },
+            "getVal": {
+              "name": "getVal",
+              "type": "method",
+              "params": [
+                {
+                  "name": "def",
+                  "description": ""
+                },
+                {
+                  "name": "orig",
+                  "description": ""
+                }
+              ],
+              "internal": true
+            },
+            "getPatch": {
+              "name": "getPatch",
+              "type": "method",
+              "params": [
+                {
+                  "name": "def",
+                  "description": ""
+                },
+                {
+                  "name": "orig",
+                  "description": ""
+                }
+              ],
+              "internal": true
+            },
+            "patch": {
+              "name": "patch",
+              "type": "method",
+              "params": [
+                {
+                  "name": "def",
+                  "description": ""
+                },
+                {
+                  "name": "patch",
+                  "description": ""
+                },
+                {
+                  "name": "orig",
+                  "description": ""
+                }
+              ],
+              "internal": true
+            },
+            "startEdit": {
+              "name": "startEdit",
+              "type": "method",
+              "params": [
+                {
+                  "name": "wrap",
+                  "description": ""
+                }
+              ],
+              "internal": true
+            },
+            "stopEdit": {
+              "name": "stopEdit",
+              "type": "method",
+              "params": [
+                {
+                  "name": "wrap",
+                  "description": ""
+                }
+              ],
+              "internal": true
+            }
+          }
+        },
+        "lib/orm/lookup": {
+          "name": "lib/orm/lookup",
+          "type": "class",
+          "super": "ose/lib.orm.text",
+          "caption": "Lookup field description",
+          "readme": "Makes it possible to select from predefined values or a map",
+          "file": "lib/orm/lookup.js",
+          "property": {
+            "lookup": {
+              "name": "lookup",
+              "type": "property",
+              "dtype": "Object",
+              "description": "Object containing lookup description"
+            },
+            "[lookup.values]": {
+              "name": "[lookup.values]",
+              "type": "property",
+              "dtype": "Array",
+              "description": "Array of values"
+            },
+            "[lookup.get]": {
+              "name": "[lookup.get]",
+              "type": "property",
+              "dtype": "Function",
+              "description": "Method obtaining lookup values"
+            },
+            "[lookup.filter]": {
+              "name": "[lookup.filter]",
+              "type": "property",
+              "dtype": "Object",
+              "description": "Map filtering"
+            },
+            "[lookup.ident]": {
+              "name": "[lookup.ident]",
+              "type": "property",
+              "dtype": "Object",
+              "description": "Map identificaation"
+            },
+            "[lookup.view]": {
+              "name": "[lookup.view]",
+              "type": "property",
+              "dtype": "String",
+              "description": "View name"
+            }
+          },
+          "method": {
+            "constructor": {
+              "name": "constructor",
+              "type": "method",
+              "description": "Lookup field constructor",
+              "params": [
+                {
+                  "name": "name",
+                  "description": "Field name",
+                  "type": "String"
+                },
+                {
+                  "name": "params",
+                  "description": "Optional parameters",
+                  "type": "Object",
+                  "optional": true,
+                  "props": [
+                    {
+                      "name": "values",
+                      "description": "Array of values",
+                      "type": "Array",
+                      "optional": true
+                    },
+                    {
+                      "name": "get",
+                      "description": "Method obtaining lookup values",
+                      "type": "Function",
+                      "optional": true
+                    },
+                    {
+                      "name": "filter",
+                      "description": "Map filtering",
+                      "type": "Object",
+                      "optional": true
+                    },
+                    {
+                      "name": "ident",
+                      "description": "Map identificaation",
+                      "type": "Object",
+                      "optional": true
+                    },
+                    {
+                      "name": "view",
+                      "description": "View name",
+                      "type": "String",
+                      "optional": true
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "lib/orm/millitime": {
+          "name": "lib/orm/millitime",
+          "type": "class",
+          "super": "ose/lib.orm.number",
+          "caption": "Millitime field description",
+          "readme": "Description of fields containing time in milliseconds",
+          "file": "lib/orm/millitime.js",
+          "method": {
+            "constructor": {
+              "name": "constructor",
+              "type": "method",
+              "description": "Millitime field constructor",
+              "params": [
+                {
+                  "name": "name",
+                  "description": "Field name",
+                  "type": "String"
+                },
+                {
+                  "name": "params",
+                  "description": "Optional parameters",
+                  "type": "Object",
+                  "optional": true
+                }
+              ]
+            }
+          }
+        },
+        "lib/orm/number": {
+          "name": "lib/orm/number",
+          "type": "class",
+          "super": "ose/lib.orm.field",
+          "caption": "Number field description",
+          "readme": "Description of fields containing a number",
+          "file": "lib/orm/number.js",
+          "property": {
+            "[params.min]": {
+              "name": "[params.min]",
+              "type": "property",
+              "dtype": "Number",
+              "description": "Minimum value"
+            },
+            "[params.max]": {
+              "name": "[params.max]",
+              "type": "property",
+              "dtype": "Number",
+              "description": "Maximum value"
+            },
+            "[params.decimal]": {
+              "name": "[params.decimal]",
+              "type": "property",
+              "dtype": "Number",
+              "description": "Number of decimal places"
+            },
+            "[params.radix]": {
+              "name": "[params.radix]",
+              "type": "property",
+              "dtype": "Number",
+              "description": "Formatting radix"
+            },
+            "[params.unit]": {
+              "name": "[params.unit]",
+              "type": "property",
+              "dtype": "String",
+              "description": "Unit"
+            }
+          },
+          "method": {
+            "constructor": {
+              "name": "constructor",
+              "type": "method",
+              "description": "Number field constructor",
+              "params": [
+                {
+                  "name": "name",
+                  "description": "Field name",
+                  "type": "String"
+                },
+                {
+                  "name": "params",
+                  "description": "Optional parameters",
+                  "type": "Object",
+                  "optional": true,
+                  "props": [
+                    {
+                      "name": "min",
+                      "description": "Minimum value",
+                      "type": "Number",
+                      "optional": true
+                    },
+                    {
+                      "name": "max",
+                      "description": "Maximum value",
+                      "type": "Number",
+                      "optional": true
+                    },
+                    {
+                      "name": "decimal",
+                      "description": "Number of decimal places",
+                      "type": "Number",
+                      "optional": true
+                    },
+                    {
+                      "name": "radix",
+                      "description": "Formatting radix",
+                      "type": "Number",
+                      "optional": true
+                    },
+                    {
+                      "name": "unit",
+                      "description": "Unit",
+                      "type": "String",
+                      "optional": true
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "lib/orm/object": {
+          "name": "lib/orm/object",
+          "type": "module",
+          "super": "ose/lib.orm.field",
+          "caption": "JSON object description",
+          "file": "lib/orm/object.js",
+          "property": {
+            "children": {
+              "name": "children",
+              "type": "property",
+              "dtype": "Object",
+              "description": "Child fields"
+            }
+          },
+          "method": {
+            "constructor": {
+              "name": "constructor",
+              "type": "method",
+              "description": "Object field constructor"
+            },
+            "afterInit": {
+              "name": "afterInit",
+              "type": "method",
+              "internal": true
+            },
+            "add": {
+              "name": "add",
+              "type": "method",
+              "description": "Add new field to this object description",
+              "params": [
+                {
+                  "name": "name",
+                  "description": "Field name",
+                  "type": "String"
+                },
+                {
+                  "name": "type",
+                  "description": "Field type",
+                  "type": "String"
+                },
+                {
+                  "name": "params",
+                  "description": "Optional field parameters",
+                  "type": "Object",
+                  "optional": true
+                }
+              ]
+            },
+            "getChild": {
+              "name": "getChild",
+              "type": "method",
+              "params": [
+                {
+                  "name": "path",
+                  "description": "Path to the field",
+                  "type": "String"
+                }
+              ],
+              "internal": true
+            },
+            "getVal": {
+              "name": "getVal",
+              "type": "method",
+              "description": "Get JSON value for this object",
+              "params": [
+                {
+                  "name": "get",
+                  "description": "[Function] Callback that gets called for each primitive field"
+                }
+              ],
+              "internal": true
+            },
+            "iterPatch": {
+              "name": "iterPatch",
+              "type": "method",
+              "description": "Iterate over a patch and call `cb` for each primitive field",
+              "params": [
+                {
+                  "name": "patch",
+                  "description": "JSON patch",
+                  "type": "Object"
+                },
+                {
+                  "name": "orig",
+                  "description": "Original JSON",
+                  "type": "Object"
+                },
+                {
+                  "name": "cb",
+                  "description": "Callback to be called on each primitive field",
+                  "type": "Function"
+                }
+              ],
+              "internal": true
+            },
+            "iterFields": {
+              "name": "iterFields",
+              "type": "method",
+              "description": "Iterate over described fields and call `cb` for each primitive field",
+              "params": [
+                {
+                  "name": "val",
+                  "description": "JSON data",
+                  "type": "Object"
+                },
+                {
+                  "name": "profile",
+                  "description": "Optional profile modifyinng the description",
+                  "type": "Object|Boolean",
+                  "optional": true
+                },
+                {
+                  "name": "cb",
+                  "description": "Callback called for each primitive field",
+                  "type": "Function"
+                }
+              ],
+              "internal": true
+            },
+            "getField": {
+              "name": "getField",
+              "type": "method",
+              "params": [
+                {
+                  "name": "path",
+                  "description": "",
+                  "type": "String"
+                },
+                {
+                  "name": "depth",
+                  "description": "",
+                  "type": "Number"
+                }
+              ],
+              "internal": true
+            },
+            "formatField": {
+              "name": "formatField",
+              "type": "method",
+              "params": [
+                {
+                  "name": "path",
+                  "description": ""
+                },
+                {
+                  "name": "type",
+                  "description": ""
+                },
+                {
+                  "name": "val",
+                  "description": ""
+                },
+                {
+                  "name": "params",
+                  "description": ""
+                },
+                {
+                  "name": "index",
+                  "description": ""
+                }
+              ],
+              "internal": true
+            },
+            "doValidate": {
+              "name": "doValidate",
+              "type": "method",
+              "params": [
+                {
+                  "name": "val",
+                  "description": ""
+                },
+                {
+                  "name": "path",
+                  "description": ""
+                },
+                {
+                  "name": "errors",
+                  "description": ""
+                }
+              ],
+              "internal": true
+            }
+          }
+        },
+        "lib/orm/text": {
+          "name": "lib/orm/text",
+          "type": "class",
+          "super": "ose/lib.orm.field",
+          "caption": "Text field description",
+          "readme": "Description of fields containing text",
+          "file": "lib/orm/text.js"
+        },
+        "lib/orm/wrap": {
+          "name": "lib/orm/wrap",
+          "type": "class",
+          "caption": "Field value wrapper",
+          "readme": "Connects the value of particular field with its description",
+          "file": "lib/orm/wrap.js",
+          "aliases": "fieldWrappers",
+          "property": {
+            "owner": {
+              "name": "owner",
+              "type": "property",
+              "dtype": "Object",
+              "description": "List of field wraps"
+            },
+            "field": {
+              "name": "field",
+              "type": "property",
+              "dtype": "Object",
+              "description": "Field description"
+            },
+            "value": {
+              "name": "value",
+              "type": "property",
+              "dtype": "*",
+              "description": "Field value"
+            },
+            "valueError": {
+              "name": "valueError",
+              "type": "property",
+              "dtype": "Object",
+              "description": "Optional error returned from field.format"
+            },
+            "profile": {
+              "name": "profile",
+              "type": "property",
+              "dtype": "Object",
+              "description": "Optional profile for altering description"
+            },
+            "edit": {
+              "name": "edit",
+              "type": "property",
+              "dtype": "Object",
+              "description": "Current edit information"
+            },
+            "edit.last": {
+              "name": "edit.last",
+              "type": "property",
+              "dtype": "",
+              "description": "Field value before last edit"
+            },
+            "edit.value": {
+              "name": "edit.value",
+              "type": "property",
+              "dtype": "",
+              "description": "Edited field value"
+            },
+            "el": {
+              "name": "el",
+              "type": "property",
+              "dtype": "",
+              "description": "Displayed HTML element"
+            },
+            "editError": {
+              "name": "editError",
+              "type": "property",
+              "dtype": "Object",
+              "description": "Optional error returned from field.unformat"
+            }
+          },
+          "method": {
+            "constructor": {
+              "name": "constructor",
+              "type": "method",
+              "description": "Field wrapper constructor",
+              "params": [
+                {
+                  "name": "owner",
+                  "description": "Owning wrap list",
+                  "type": "Object"
+                },
+                {
+                  "name": "field",
+                  "description": "Field description",
+                  "type": "Object"
+                },
+                {
+                  "name": "val",
+                  "description": "Field value",
+                  "type": "*"
+                },
+                {
+                  "name": "profile",
+                  "description": "Optional profile for altering description",
+                  "type": "Object",
+                  "optional": true
+                }
+              ]
+            },
+            "patch": {
+              "name": "patch",
+              "type": "method",
+              "params": [
+                {
+                  "name": "val",
+                  "description": "",
+                  "type": "*"
+                }
+              ],
+              "internal": true
+            },
+            "update": {
+              "name": "update",
+              "type": "method",
+              "description": "Update value",
+              "internal": true
+            },
+            "stopEdit": {
+              "name": "stopEdit",
+              "type": "method",
+              "description": "Called when value is edited",
+              "params": [
+                {
+                  "name": "val",
+                  "description": "New value",
+                  "type": "*"
+                },
+                {
+                  "name": "update",
+                  "description": "Whether to call update",
+                  "type": "Boolean"
+                }
+              ],
+              "internal": true
+            }
+          }
+        }
+      }
+    },
     "peer": {
       "name": "peer",
       "caption": "Peers",
-      "readme": "The system, which is based on the OSE framework, consist of one or\nmore configured instances, called OSE instances. An OSE instance is\nidentified by a unique `name` an can run in Node.js or in a web\nbrowser.\n\nFrom the point of view of an OSE instance, a peer is another OSE\ninstance. Each peer is assinged to a certain [space]. Two peers can\ncommunicate with each other using the WebSocket protocol. Peers can\nbe accessed directly, when a WebSocket channel exists, or\nindirectly, by using another peer as a gateway.\n\nThis component allows the following communication between OSE\ninstances:\n\n- Obtaining [entries] and views of entries.\n- Synchronization of [states of entries] in near real-time.\n- Sending commands to entries.\n- Streaming blobs contained by entries\n- Establishing transparent, asynchronous bidirectional [links]\n  between entries.",
+      "readme": "The system, which is based on the OSE framework, consist of one or\nmore configured instances, called OSE instances. An OSE instance is\nidentified by a unique `name` an can run in Node.js or in a web\nbrowser.\n\nFrom the point of view of an OSE instance, a peer is another OSE\ninstance. Each peer is assinged to a certain [space]. Two peers can\ncommunicate with each other using the WebSocket protocol. Peers can\nbe accessed directly, when a WebSocket channel exists, or\nindirectly, by using another peer as a gateway.\n\nThis component allows the following communication between OSE\ninstances:\n\n- Obtaining [entries] and maps of entries.\n- Synchronization of [states of entries] in near real-time.\n- Sending commands to entries.\n- Streaming blobs contained by entries\n- Establishing transparent, asynchronous bidirectional [links]\n  between entries.",
       "file": "lib/ws/writable.js",
       "line": 10,
       "aliases": "peers homeOseInstance homeInstance oseInstance home peer-to-peer peersComponent",
@@ -2569,7 +3501,7 @@ Packages["ose"] = {
                   "type": "Object"
                 },
                 {
-                  "name": "data",
+                  "name": "val",
                   "description": "JSON data",
                   "type": "Object"
                 }
@@ -2886,7 +3818,7 @@ Packages["ose"] = {
               "description": "Transmit data to peer via WebSocket object.",
               "params": [
                 {
-                  "name": "data",
+                  "name": "val",
                   "description": "Data to be sent",
                   "type": "Object"
                 }
@@ -3572,7 +4504,7 @@ Packages["ose"] = {
       "file": "lib/plugins.js",
       "line": 5,
       "aliases": "osePlugin oseConfig pluginsComponent",
-      "description": "## OSE framework setup\n\nBasic classes and singletons are set up depending on the specified\nruntime environment (browser or server).\n\n\n## Preparation of plugins\n\nEach property of the main configuration object contains the\nconfiguration of a single OSE plugin. The `id` property of each\nplugin configuration specifies the module to be loaded with\n`require()`. If the `id` property is omitted, the key of the plugin\nconfiguration is taken as the module id.\n\nAny CommonJS module can be a plugin. If a module defines a class,\nits instance is created without parameters and becomes a plugin.\nIf a module defines a singleton, it gets initialized without any\narguments. Modules not defining a class or singleton are simply\nrequired.\n\n\n## Configuration of plugins\n\nAfter all plugins are created, individual plugins are configured\nusing the `plugin.config(key, data, deps)` method, where `key` is\nthe key taken from the main configuration object, `data` is a\nproperty corresponding to the key, and `deps` is the dependencies\nobject, which is the same for all plugins.\n\nThe `config` method, if it exists, is called on every prototype in\na plugin prototype chain. It must not call the ancestor `config()`\nmethod.\n\n\n## Dependencies\n\nDependencies make it possible to carry out asynchronous operations\nin a specific order.\n\nDuring the previous step or in any dependency callback, a new\ndependency can be registered by calling `deps.add(name, after,\ncb)`, where `cb()` represents the particular dependency.  Optional\nparameter `name` is the name of a group of dependencies to which\nthe given dependency belongs. Optional parameter `after` is the\nname of a group whose all dependencies must be processed before the\ndependency is called by the `deps` object.\n\nEach dependency receives a callback as a parameter. This callback\nmust be called after the dependency is processed. If a dependency\nis registered using a `name` of a group, the provided callback must\nbe called with the same name as its parameter.\n\n\nExample:\n\nTODO deps.add\n\nWhen there are no dependencies left, the `done` event is emitted on\nthe `deps` object.\n\nTo run some code after all plugins are initialized, register a\nmethod via `deps.on('done', <method>)` during the\n\"configuration\" or \"dependencies\" phase.\n\n\n## Order of plugins initialization\n\n- `O.readConfig()` reads configuration object and create all plugins\n- `config()` is called on each plugin.\n- `deps.exec()` processes the following dependency groups:\n  - \"core\" - creates kinds\n  - \"peers\" - creates peers in spaces\n  - \"shards\" - creates all shards\n  - \"entries\" - creates all entries\n  - \"connect\" - connects all peers with `url` property defined\n  - \"lhs\" - finishes spaces, shards and entries initialization\n- `deps.emit(\"done\")`\n\nIt is possible to add new groups and use existing ones.\n\n\n## Extending\n\nIt is easy to extend OSE by creating a new npm package and adding\nan empty object with the package name as a key to the main\nconfiguration object of an [OSE instance].\n\nTo use some configuration, define the `config()` method on the\npackage's main `module.exports` and provide some configuration data\nto the package configuration property of the main configuration\nobject. The [Plugins component] then initialiazes the new package as\nanother OSE plugin during startup of an [OSE instance].\n\nTODO: example"
+      "description": "## OSE framework setup\n\nBasic classes and singletons are set up depending on the specified\nruntime environment (browser or server).\n\n\n## Preparation of plugins\n\nEach property of the main configuration object contains the\nconfiguration of a single OSE plugin. The `id` property of each\nplugin configuration specifies the module to be loaded with\n`require()`. If the `id` property is omitted, the key of the plugin\nconfiguration is taken as the module id.\n\nAny CommonJS module can be a plugin. If a module defines a class,\nits instance is created without parameters and becomes a plugin.\nIf a module defines a singleton, it gets initialized without any\narguments. Modules not defining a class or singleton are simply\nrequired.\n\n\n## Configuration of plugins\n\nAfter all plugins are created, individual plugins are configured\nusing the `plugin.config(key, val, deps)` method, where `key` is\nthe key taken from the main configuration object, `val` is a\nproperty corresponding to the key, and `deps` is the dependencies\nobject, which is the same for all plugins.\n\nThe `config` method, if it exists, is called on every prototype in\na plugin prototype chain. It must not call the ancestor `config()`\nmethod.\n\n\n## Dependencies\n\nDependencies make it possible to carry out asynchronous operations\nin a specific order.\n\nDuring the previous step or in any dependency callback, a new\ndependency can be registered by calling `deps.add(name, after,\ncb)`, where `cb()` represents the particular dependency.  Optional\nparameter `name` is the name of a group of dependencies to which\nthe given dependency belongs. Optional parameter `after` is the\nname of a group whose all dependencies must be processed before the\ndependency is called by the `deps` object.\n\nEach dependency receives a callback as a parameter. This callback\nmust be called after the dependency is processed. If a dependency\nis registered using a `name` of a group, the provided callback must\nbe called with the same name as its parameter.\n\n\nExample:\n\nTODO deps.add\n\nWhen there are no dependencies left, the `done` event is emitted on\nthe `deps` object.\n\nTo run some code after all plugins are initialized, register a\nmethod via `deps.on('done', <method>)` during the\n\"configuration\" or \"dependencies\" phase.\n\n\n## Order of plugins initialization\n\n- `O.readConfig()` reads configuration object and create all plugins\n- `config()` is called on each plugin.\n- `deps.exec()` processes the following dependency groups:\n  - \"core\" - creates kinds\n  - \"peers\" - creates peers in spaces\n  - \"shards\" - creates all shards\n  - \"entries\" - creates all entries\n  - \"connect\" - connects all peers with `url` property defined\n  - \"lhs\" - finishes spaces, shards and entries initialization\n- `deps.emit(\"done\")`\n\nIt is possible to add new groups and use existing ones.\n\n\n## Extending\n\nIt is easy to extend OSE by creating a new npm package and adding\nan empty object with the package name as a key to the main\nconfiguration object of an [OSE instance].\n\nTo use some configuration, define the `config()` method on the\npackage's main `module.exports` and provide some configuration data\nto the package configuration property of the main configuration\nobject. The [Plugins component] then initialiazes the new package as\nanother OSE plugin during startup of an [OSE instance].\n\nTODO: example"
     },
     "wrap": {
       "name": "wrap",
@@ -4459,10 +5391,10 @@ Packages["ose"] = {
         "readConfig": {
           "name": "readConfig",
           "type": "method",
-          "description": "Read main configuration object (`data`), creates all plugins based\non this object and processes all dependencies, and finally emit the\n`done` event. See the [plugins component].",
+          "description": "Read main configuration object (`val`), creates all plugins based\non this object and processes all dependencies, and finally emit the\n`done` event. See the [plugins component].",
           "params": [
             {
-              "name": "data",
+              "name": "val",
               "description": "Main configuration object",
               "type": "Object"
             }
@@ -4790,7 +5722,7 @@ Packages["ose"] = {
     "status": "- Pre-alpha stage (insecure and buggy)\n- Unstable API\n- Patchy documentation\n- No test suite\n\nThis is not yet a piece of download-and-use software. It is important\nto understand the basic principles covered by the\n[documentation](http://opensmartenvironment.github.io/doc/).",
     "install": "# Installation\n\n## Node.js\nThe main prerequisite is a working installation of a recent\nversion of\n[Node.js](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager)\n(>= 0.10).\n\nOn Debian Jessie, you can install the default package:\n\n    sudo apt-get install nodejs\n\nOn Raspbian, you can install Node.js, for example, by doing:\n\n    wget http://node-arm.herokuapp.com/node_latest_armhf.deb\n    sudo dpkg -i node_latest_armhf.deb\n\n\nYou also need the following prerequisites\n\n- libdbus-1-dev package or its equivalent for your distribution\n- pkg-config package or its equivalent in your distribution\n\nIf you run Debian Jessie, just run:\n\n    sudo apt-get install libdbus-1-dev pkg-config\n\n\n## Manual installation of OSE packages\nInstead of using npm, you can install OSE packages by cloning their\nGitHub repositories.",
     "licence": "This software is released under the terms of the [GNU General\nPublic Licence v3.0](http://www.gnu.org/copyleft/gpl.html) or\nlater.",
-    "contrib": "# Contributions\nTo get started with contributing or coding, it is good to read about the\ntwo main npm packages [ose] and [ose-gaia].\n\nThis software is in the pre-alpha stage. At the moment, it is\npremature to file bugs. Input is, however, much welcome in the form\nof ideas, comments and general suggestions.  Feel free to contact\nus via\n[github.com/opensmartenvironment](https://github.com/opensmartenvironment).",
+    "contrib": "# Contributions\nTo get started with contributing or coding, it is good to read about the\ntwo main npm packages [ose] and [ose-gaia].\n\nThis software is in the pre-alpha stage. Any input is welcome, for\nexample, in the form of bug reports, ideas, comments and general\nsuggestions, either under the appropriate repository if you know\nwhich one it is, or the [main OSE\nrepository](https://github.com/opensmartenvironment/ose) if you are\nunsure.",
     "aboutDoc": "# About the documentation\n\n## State of the documentation\nThis documentation is currently under construction and is being\ncontinuously improved. Links may be broken and information\nincomplete or erroneous.\n\n\n## Packages and components\nOSE documentation is compiled from source files of all official OSE\nnpm packages.\n\nEach package consists of components. Each component is a logical\nconcept consisting of modules.\n\nThe documentation of each package contains basic information about\nthe package, its components and modules not assigned to any\ncomponent.\n\nThe documentation of each component contains basic information\nabout the component and its modules.\n\n\n## Modules\nModules are mostly source files conforming to the CommonJS Modules\nspec.\n\nThe module view is a reference of methods, properties and events\nprovided by the given module.\n\nA module can be one of the following:\n- simple module with exported methods and properties\n- class definition\n- singleton\n- package core module",
     "platforms": "OSE has the following prerequisites:\n- Node.js (>0.10) running on Debian Jessie and Raspbian\n- Firefox 37 or newer with Web Components enabled",
     "start": "The best way to get started with OSE is to try out the examples:\n- [Media player](#example-player)\n- [Raspberry Pi](#example-rpi) (or other device with GPIO)\n- [LIRC](#example-lirc)\n- [DVB streamer](#example-dvb)"

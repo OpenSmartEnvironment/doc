@@ -2,7 +2,7 @@ Packages["control"] = {
   "name": "control",
   "npmname": "ose-control",
   "caption": "Control",
-  "readme": "This package contains definitions of general [kinds of entries]\nthat represent real objects found in most environments (lights,\nswitches, heaters, sensors etc.). Entries are configured by\ndefining `entry.data` values. Communication between or among\nentries is realized via [links].",
+  "readme": "This package contains definitions of general [kinds of entries]\nthat represent real objects found in most environments (lights,\nswitches, heaters, sensors etc.). Entries are configured by\ndefining `entry.dval` values. Communication between or among\nentries is realized via [links].",
   "line": 10,
   "features": "",
   "scope": "control",
@@ -20,24 +20,18 @@ Packages["control"] = {
           "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Digital input pin kind",
-          "readme": "Kind defining digital input entries\n\nThe `din` entry connects to the controller by creating a [link] to\nthe master controller pin.  The state of the `din` entry then\nchanges with the state of the physical pin on the controller side.",
+          "readme": "Kind defining digital input entries\n\nThe `din` entry connects to the controller by creating a [link] to\nthe master controller pin.  The `sval` of the `din` entry then\nchanges with the state of the physical pin on the controller side.",
           "file": "lib/din/index.js",
           "kind": "din",
           "property": {
-            "data": {
-              "name": "data",
-              "type": "property",
-              "dtype": "Object",
-              "description": "Entry data object"
-            },
-            "data.master": {
-              "name": "data.master",
+            "dval.master": {
+              "name": "dval.master",
               "type": "property",
               "dtype": "String | Object",
               "description": "Identification of entry representing a controller"
             },
-            "data.pin": {
-              "name": "data.pin",
+            "dval.pin": {
+              "name": "dval.pin",
               "type": "property",
               "dtype": "String",
               "description": "The pin index of the corresponding pin on the controller."
@@ -58,7 +52,7 @@ Packages["control"] = {
           "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Flow meter kind",
-          "readme": "Kind defining flow meters of liquids or gasses.\n\nEach entry of this kind established a new [link] to the master by\nsending a `registerPin()` command with `type: \"din\"`, `flavour:\n\"counter\"` and a client socket. The `state.value` of the entry then\nincrements with each master pin change. State changes are debounced\nusing the `state.debounce` value.",
+          "readme": "Kind defining flow meters of liquids or gasses.\n\nEach entry of this kind established a new [link] to the master by\nsending a `registerPin()` command with `type: \"din\"`, `flavour:\n\"counter\"` and a client socket. The `sval.value` of the entry then\nincrements with each master pin change. State changes are debounced\nusing the `sval.debounce` value.",
           "file": "lib/flowMeter/index.js",
           "kind": "flowMeter"
         }
@@ -67,7 +61,7 @@ Packages["control"] = {
     "pin": {
       "name": "pin",
       "caption": "Pins",
-      "readme": "This component allows to simply define an [entry kind] describing\nsome type of controller with individual physical or logical\npins, such as a [Raspberry Pi] with its GPIO pins.\n\nFor each entry of the Raspberry Pi [entry kind], a new [pin list]\nis created. The [pin list] constructor receives an entry\nrepresenting a Raspberry Pi, a list of pin types and a list of pins\nthat can be controlled.\n\nEach Raspberry Pi entry is then ready to receive `registerPin` commands.\n\nAn example [entry kind] that establishes a link to a Raspberry Pi\nentry is the [switch kind]. After it is created, each entry of the\n[switch kind] sends a `registerPin` command with a new client\nsocket to the controller entry defined by `entry.data.master`.\n\nBased on this request, a new response socket controlling a\nrequested pin is created and set up by the Raspberry Pi entry. As a\nresponse to the `registerPin` command, the current state of the\ngiven switch is sent to the `open()` handler of the corresponding\nclient socket.\n\nEach time a physical pin changes its state, the `press` or\n`release` commands of the client socket are invoked.\n\nThe [light entry kind] or [heater entry kind], for example, are\nimplemented in a similar way",
+      "readme": "This component allows to simply define an [entry kind] describing\nsome type of controller with individual physical or logical\npins, such as a [Raspberry Pi] with its GPIO pins.\n\nFor each entry of the Raspberry Pi [entry kind], a new [pin list]\nis created. The [pin list] constructor receives an entry\nrepresenting a Raspberry Pi, a list of pin types and a list of pins\nthat can be controlled.\n\nEach Raspberry Pi entry is then ready to receive `registerPin` commands.\n\nAn example [entry kind] that establishes a link to a Raspberry Pi\nentry is the [switch kind]. After it is created, each entry of the\n[switch kind] sends a `registerPin` command with a new client\nsocket to the controller entry defined by `entry.dval.master`.\n\nBased on this request, a new response socket controlling a\nrequested pin is created and set up by the Raspberry Pi entry. As a\nresponse to the `registerPin` command, the current state of the\ngiven switch is sent to the `open()` handler of the corresponding\nclient socket.\n\nEach time a physical pin changes its state, the `press` or\n`release` commands of the client socket are invoked.\n\nThe [light entry kind] or [heater entry kind], for example, are\nimplemented in a similar way",
       "file": "lib/pin/switch.js",
       "line": 11,
       "aliases": "pinFlavour",
@@ -77,7 +71,7 @@ Packages["control"] = {
           "name": "lib/din/pin",
           "type": "class",
           "caption": "Digital input-to-controller pin client socket",
-          "readme": "Client socket connecting to a controller pin. Updates digital input\nentry state.",
+          "readme": "Client socket connecting to a controller pin. Updates digital input\nentry sval.",
           "file": "lib/din/pin.js",
           "handler": {
             "update": {
@@ -367,7 +361,7 @@ Packages["control"] = {
                 },
                 {
                   "name": "state",
-                  "description": "Prepared state object",
+                  "description": "Prepared sval patch object",
                   "type": "Object"
                 },
                 {
@@ -558,46 +552,46 @@ Packages["control"] = {
           "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Door kind",
-          "readme": "Each [entry] of this kind establishes a [link] to the `data.master`\ncontroller entry with `type: \"din\"`. Entry state is changed\ndepending on the incoming data, and the `open` or `close` events\nare fired. These events can be listened for, and appropriate\nactions can be taken.",
+          "readme": "Each [entry] of this kind establishes a [link] to the `dval.master`\ncontroller entry with `type: \"din\"`. Entry sval is changed\ndepending on the incoming data, and the `open` or `close` events\nare fired. These events can be listened for, and appropriate\nactions can be taken.",
           "file": "lib/door/index.js",
           "kind": "door",
           "aliases": "door doors doorEntry",
           "property": {
-            "data.master": {
-              "name": "data.master",
+            "dval.master": {
+              "name": "dval.master",
               "type": "property",
               "dtype": "String | Object",
               "description": "Controller entry identification object.\n\nThe switch entry establishes a new link to this controller."
             },
-            "data.pin": {
-              "name": "data.pin",
+            "dval.pin": {
+              "name": "dval.pin",
               "type": "property",
               "dtype": "String",
               "description": "Master pin index\n\nIndex of digital input pin on the master controller"
             },
-            "data.debounce": {
-              "name": "data.debounce",
+            "dval.debounce": {
+              "name": "dval.debounce",
               "type": "property",
               "dtype": "Number",
               "description": "Debounce timeout\n\nDefines debounce timeout of the digital input in milliseconds.\n\nThe default value is `O.consts.switchDebounce`."
             },
-            "state.value": {
-              "name": "state.value",
+            "sval.value": {
+              "name": "sval.value",
               "type": "property",
               "dtype": "Number (0, 1)",
               "description": "Current switch state value"
             },
-            "state.at": {
-              "name": "state.at",
+            "sval.at": {
+              "name": "sval.at",
               "type": "property",
               "dtype": "Number",
               "description": "Timestamp of the last switch change."
             },
-            "state.debounce": {
-              "name": "state.debounce",
+            "sval.debounce": {
+              "name": "sval.debounce",
               "type": "property",
               "dtype": "Number",
-              "description": "Debounce timeout\n\nDefines debounce timeout of the digital input in milliseconds. The\nvalue is taken from `data.debounce`."
+              "description": "Debounce timeout\n\nDefines debounce timeout of the digital input in milliseconds. The\nvalue is taken from `dval.debounce`."
             }
           },
           "event": {
@@ -617,7 +611,7 @@ Packages["control"] = {
           "name": "lib/door/pin",
           "type": "class",
           "caption": "Door-to-controller pin client socket",
-          "readme": "Establishes a link to the `data.master` controller pin `data.pin`\nwith `type: \"din\"`. The controller can be a [Raspberry Pi], for\nexample.",
+          "readme": "Establishes a link to the `dval.master` controller pin `dval.pin`\nwith `type: \"din\"`. The controller can be a [Raspberry Pi], for\nexample.",
           "file": "lib/door/pin.js",
           "method": {
             "constructor": {
@@ -663,28 +657,28 @@ Packages["control"] = {
           "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Heater kind",
-          "readme": "[Entry kind] defining behaviour of heaters. Each heater establishes\na [link] to the `data.master` entry and to an optional\n`data.tariff` entry to watch low and high tariff switching.",
+          "readme": "[Entry kind] defining behaviour of heaters. Each heater establishes\na [link] to the `dval.master` entry and to an optional\n`dval.tariff` entry to watch low and high tariff switching.",
           "file": "lib/heater/index.js",
           "kind": "heater",
           "aliases": "heater heaters heaterEntry heaterEntryKind",
           "property": {
-            "data.master": {
-              "name": "data.master",
+            "dval.master": {
+              "name": "dval.master",
               "type": "property",
               "dtype": "String | Object",
               "description": "Controller entry identification\n\nThe heater entry establishes a new link to the controller."
             },
-            "data.pin": {
-              "name": "data.pin",
+            "dval.pin": {
+              "name": "dval.pin",
               "type": "property",
               "dtype": "String",
               "description": "Master pin index\n\nIndex of digital input pin on the master controller"
             },
-            "data.tariff": {
-              "name": "data.tariff",
+            "dval.tariff": {
+              "name": "dval.tariff",
               "type": "property",
               "dtype": "String | Object",
-              "description": "Tariff entry identification\n\nIf specified, the heater establishes a new link to the\n`data.tariff` entry and gets controlled by it."
+              "description": "Tariff entry identification\n\nIf specified, the heater establishes a new link to the\n`dval.tariff` entry and gets controlled by it."
             }
           },
           "handler": {
@@ -712,7 +706,7 @@ Packages["control"] = {
           "name": "lib/heater/pin",
           "type": "class",
           "caption": "Heater-to-controller pin client socket",
-          "readme": "Establishes a [link] to the `data.master` [controller pin]\n`data.pin` with `type: \"dout\"`. The master can be a [Raspberry Pi],\nfor example.",
+          "readme": "Establishes a [link] to the `dval.master` [controller pin]\n`dval.pin` with `type: \"dout\"`. The master can be a [Raspberry Pi],\nfor example.",
           "file": "lib/heater/pin.js",
           "method": {
             "constructor": {
@@ -750,7 +744,7 @@ Packages["control"] = {
           "name": "lib/heater/tariff",
           "type": "class",
           "caption": "Heater-to-tariff client socket",
-          "readme": "Establishes a link to the `data.tariff` entry.",
+          "readme": "Establishes a link to the `dval.tariff` entry.",
           "file": "lib/heater/tariff.js",
           "method": {
             "constructor": {
@@ -838,35 +832,35 @@ Packages["control"] = {
           "aliases": "light lights lightEntry lightEntryKind",
           "description": "## Description\nEach light channel can be controlled either through a digital\noutput pin or a pin supporting PWM. Smooth changes of light\nintensity can be controlled through the `speed` value, which\ndefines the time in milliseconds it takes change the light\nintensity from 0 to 100% or vice versa.\n\nEach light supports auto-off timeout since last change with\nconfigurable dim speed.\n\nEvery light can be controlled by a [switch entry] with the\nfollowing behaviour:\n- One tap when shining: Switch the light off.\n- One tap when off: Switch to the default configurable value.\n- Two taps: Switch the light fully on.\n- Hold: Switch the light off.",
           "property": {
-            "data.channels": {
-              "name": "data.channels",
+            "dval.channels": {
+              "name": "dval.channels",
               "type": "property",
               "dtype": "Object",
-              "description": "Light channels\n\nA light entry can consist of one or more channels. An example light\ncan have 3 LED strips (warm white, cold white and RGB). The entry\ndescribing such a light consists of 5 independently controllable\nchannels (warm, cold, red, green and blue).\n\nEach property of `data.channels` is one channel. The key is a\nchannel name and the value is the pin index on the `data.master`\ncontroller."
+              "description": "Light channels\n\nA light entry can consist of one or more channels. An example light\ncan have 3 LED strips (warm white, cold white and RGB). The entry\ndescribing such a light consists of 5 independently controllable\nchannels (warm, cold, red, green and blue).\n\nEach property of `dval.channels` is one channel. The key is a\nchannel name and the value is the pin index on the `dval.master`\ncontroller."
             },
-            "data.master": {
-              "name": "data.master",
+            "dval.master": {
+              "name": "dval.master",
               "type": "property",
               "dtype": "String | Object",
               "description": "Controller entry identification object.\n\nThe light entry establishes a new link to the controller."
             },
-            "data.profiles": {
-              "name": "data.profiles",
+            "dval.profiles": {
+              "name": "dval.profiles",
               "type": "property",
               "dtype": "Object",
               "description": "Each property of this object defines one profile of the\nlight. There are predefined profiles `\"off\"`, `\"on\"` and `\"full\"`.\n\nDefault values are:\n- `\"off\": 0`\n- `\"on\": O.consts.lightDefaultOn`\n- `\"full\": 1`"
             },
-            "data.switch": {
-              "name": "data.switch",
+            "dval.switch": {
+              "name": "dval.switch",
               "type": "property",
               "dtype": "String | Object",
               "description": "Switch entry identification object.\n\nIf specified, the light establishes a new link to a switch and gets\ncontrolled by it."
             },
-            "data.autoOff": {
-              "name": "data.autoOff",
+            "dval.autoOff": {
+              "name": "dval.autoOff",
               "type": "property",
               "dtype": "Boolean | Number | Object",
-              "description": "Auto off value\n\nDefines how long the light will wait before it starts dimming and\nthe speed of the dimming. The auto off timer is enabled each time\nany light channel is changed.\n\nThe value can be one of the following:\n- `true`: Enable auto off with default values\n- `false`: Disable auto off\n- Number: Wait timeout in seconds\n- Object: `{wait: <seconds>, speed: <milliseconds>}`\n\nDefault values:\n- `data.autoOff.wait: O.consts.lightAutoOffWait`\n- `data.autoOff.speed: O.consts.lightAutoOffSpeed`"
+              "description": "Auto off value\n\nDefines how long the light will wait before it starts dimming and\nthe speed of the dimming. The auto off timer is enabled each time\nany light channel is changed.\n\nThe value can be one of the following:\n- `true`: Enable auto off with default values\n- `false`: Disable auto off\n- Number: Wait timeout in seconds\n- Object: `{wait: <seconds>, speed: <milliseconds>}`\n\nDefault values:\n- `dval.autoOff.wait: O.consts.lightAutoOffWait`\n- `dval.autoOff.speed: O.consts.lightAutoOffSpeed`"
             }
           },
           "handler": {
@@ -972,7 +966,7 @@ Packages["control"] = {
               "params": [
                 {
                   "name": "req",
-                  "description": "Auto off configuration conforming to data.autoOff.",
+                  "description": "Auto off configuration conforming to dval.autoOff.",
                   "type": "Boolean | Number | Object"
                 },
                 {
@@ -988,7 +982,7 @@ Packages["control"] = {
           "name": "lib/light/pin",
           "type": "class",
           "caption": "Light channel-to-controller pin client socket",
-          "readme": "Establishes a link for a channel to the `data.master`\ncontroller.",
+          "readme": "Establishes a link for a channel to the `dval.master`\ncontroller.",
           "file": "lib/light/pin.js",
           "method": {
             "constructor": {
@@ -1064,20 +1058,20 @@ Packages["control"] = {
           "file": "lib/room/index.js",
           "kind": "room",
           "property": {
-            "state.activity": {
-              "name": "state.activity",
+            "sval.activity": {
+              "name": "sval.activity",
               "type": "property",
               "dtype": "Object",
               "description": "Activity\n\nCurrently selected room activity"
             },
-            "state.activity.name": {
-              "name": "state.activity.name",
+            "sval.activity.name": {
+              "name": "sval.activity.name",
               "type": "property",
               "dtype": "String",
               "description": "Activity name\n\nCurrently selected room activity name"
             },
-            "data.activities": {
-              "name": "data.activities",
+            "dval.activities": {
+              "name": "dval.activities",
               "type": "property",
               "dtype": "Object",
               "description": "Configurations of activities for current room. Keys are names, and\nvalues are optional configuration objects."
@@ -1120,67 +1114,67 @@ Packages["control"] = {
           "type": "kind",
           "super": "ose/lib.kind",
           "caption": "Switch kind",
-          "readme": "Each switch is a digital input that has two logical values: `0` or `1`.\n\nEach [entry] of this kind establishes a [link] to the `data.master`\ncontroller entry with `flavour: \"switch\"`.\n\n`press`, `release`, `tap` and `hold` events are fired on the entry,\nand the state of the entry is updated depending on controller pin\nchanges. These events can be listened for, and appropriate actions\ncan be taken.\n\nIt is also possible to establish a new [link] to a switch as a\nclient socket with the \"relay\" command. The events listed above are\nthen relayed to the client socket.\n\nFor example, a [light entry] connects to a switch (if defined in\n`light.data.switch`) as a client socket and is turned on or off\ndepending on pressing the switch.\n\nCurrently, only momentary switches (push-to-make) are\nsupported. Support for all other kinds of switches is planned.",
+          "readme": "Each switch is a digital input that has two logical values: `0` or `1`.\n\nEach [entry] of this kind establishes a [link] to the `dval.master`\ncontroller entry with `flavour: \"switch\"`.\n\n`press`, `release`, `tap` and `hold` events are fired on the entry,\nand the `sval` of the entry is updated depending on controller pin\nchanges. These events can be listened for, and appropriate actions\ncan be taken.\n\nIt is also possible to establish a new [link] to a switch as a\nclient socket with the \"relay\" command. The events listed above are\nthen relayed to the client socket.\n\nFor example, a [light entry] connects to a switch (if defined in\n`light.dval.switch`) as a client socket and is turned on or off\ndepending on pressing the switch.\n\nCurrently, only momentary switches (push-to-make) are\nsupported. Support for all other kinds of switches is planned.",
           "file": "lib/switch/index.js",
           "kind": "switch",
           "aliases": "switch switchEntry",
           "property": {
-            "state.value": {
-              "name": "state.value",
+            "sval.value": {
+              "name": "sval.value",
               "type": "property",
               "dtype": "Number (0, 1)",
               "description": "Current switch state value"
             },
-            "state.at": {
-              "name": "state.at",
+            "sval.at": {
+              "name": "sval.at",
               "type": "property",
               "dtype": "Number",
               "description": "Timestamp of the last switch change."
             },
-            "state.debounce": {
-              "name": "state.debounce",
+            "sval.debounce": {
+              "name": "sval.debounce",
               "type": "property",
               "dtype": "Number",
-              "description": "Debounce timeout\n\nDefines the debounce timeout of the digital input in\nmilliseconds. The value is taken from `data.debounce`."
+              "description": "Debounce timeout\n\nDefines the debounce timeout of the digital input in\nmilliseconds. The value is taken from `dval.debounce`."
             },
-            "state.hold": {
-              "name": "state.hold",
+            "sval.hold": {
+              "name": "sval.hold",
               "type": "property",
               "dtype": "Number",
-              "description": "Hold timeout\n\nDefines the hold timeout of the switch in milliseconds. The value is\ntaken from `data.hold`."
+              "description": "Hold timeout\n\nDefines the hold timeout of the switch in milliseconds. The value is\ntaken from `dval.hold`."
             },
-            "state.tap": {
-              "name": "state.tap",
+            "sval.tap": {
+              "name": "sval.tap",
               "type": "property",
               "dtype": "Number",
-              "description": "Tap timeout\n\nDefines the tap timeout of the switch in milliseconds. The value is\ntaken from `data.tap`."
+              "description": "Tap timeout\n\nDefines the tap timeout of the switch in milliseconds. The value is\ntaken from `dval.tap`."
             },
-            "data.master": {
-              "name": "data.master",
+            "dval.master": {
+              "name": "dval.master",
               "type": "property",
               "dtype": "String | Object",
-              "description": "Controller entry identification object.\n\nThe switch entry establishes a new link to this controller."
+              "description": "Master controller entry identification object.\n\nThe switch entry establishes a new link to this controller."
             },
-            "data.pin": {
-              "name": "data.pin",
+            "dval.pin": {
+              "name": "dval.pin",
               "type": "property",
               "dtype": "String",
               "description": "Master pin index\n\nIndex of digital input pin on the master controller"
             },
-            "data.debounce": {
-              "name": "data.debounce",
+            "dval.debounce": {
+              "name": "dval.debounce",
               "type": "property",
               "dtype": "Number",
               "description": "Debounce timeout\n\nDefines debounce timeout of the digital input in milliseconds.\n\nDefault value is `O.consts.switchDebounce`."
             },
-            "data.tap": {
-              "name": "data.tap",
+            "dval.tap": {
+              "name": "dval.tap",
               "type": "property",
               "dtype": "Number",
               "description": "Tap timeout\n\nDefines tap timeout of the switch in milliseconds.\n\nDefault value is `O.consts.switchTap`."
             },
-            "data.hold": {
-              "name": "data.hold",
+            "dval.hold": {
+              "name": "dval.hold",
               "type": "property",
               "dtype": "Number",
               "description": "Hold timeout\n\nDefines hold timeout of the switch in milliseconds.\n\nDefault value is `O.consts.switchHold`."
@@ -1227,7 +1221,7 @@ Packages["control"] = {
           "type": "class",
           "super": "ose/lib.entry.command",
           "caption": "Switch-to-controller client socket",
-          "readme": "Establishes a link to the `data.master` controller. The controller\ncan be a [Raspberry Pi], for example.",
+          "readme": "Establishes a link to the `dval.master` controller. The controller\ncan be a [Raspberry Pi], for example.",
           "file": "lib/switch/pin.js",
           "method": {
             "constructor": {
@@ -1259,7 +1253,7 @@ Packages["control"] = {
               "params": [
                 {
                   "name": "count",
-                  "description": "Tap counts within `state.tap` timeout",
+                  "description": "Tap counts within `sval.tap` timeout",
                   "type": "Object"
                 }
               ]
@@ -1532,7 +1526,7 @@ Packages["control"] = {
                   "type": "Number"
                 },
                 {
-                  "name": "data",
+                  "name": "val",
                   "description": "Action to be taken",
                   "type": "Object"
                 }
@@ -1593,7 +1587,7 @@ Packages["control"] = {
                   "type": "Object"
                 },
                 {
-                  "name": "data",
+                  "name": "val",
                   "description": "Data object",
                   "type": "Object",
                   "props": [
@@ -1622,7 +1616,7 @@ Packages["control"] = {
                   "type": "Object"
                 },
                 {
-                  "name": "data",
+                  "name": "val",
                   "description": "Data object",
                   "type": "Object",
                   "props": [
@@ -1656,7 +1650,7 @@ Packages["control"] = {
                   "type": "Object"
                 },
                 {
-                  "name": "data",
+                  "name": "val",
                   "description": "Data object",
                   "type": "Object",
                   "props": [
@@ -1695,7 +1689,7 @@ Packages["control"] = {
       "type": "kind",
       "super": "ose/lib.kind",
       "caption": "IP pool kind",
-      "readme": "IP address pool. Respond to \"getIp\" commands by providing a new IP\naddress from a pool defined by the `data.start` .. `data.end`\ninterval. Used by the [ose-dvb] package to assign multicast group\naddresses to DVB channels.",
+      "readme": "IP address pool. Respond to \"getIp\" commands by providing a new IP\naddress from a pool defined by the `dval.start` .. `dval.end`\ninterval. Used by the [ose-dvb] package to assign multicast group\naddresses to DVB channels.",
       "file": "lib/ippool/index.js",
       "kind": "ippool",
       "handler": {

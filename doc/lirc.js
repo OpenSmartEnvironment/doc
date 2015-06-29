@@ -21,7 +21,7 @@ Packages["lirc"] = {
           "description": "Fired when the lirc module receives a command",
           "params": [
             {
-              "name": "data",
+              "name": "val",
               "description": "",
               "type": "Object",
               "props": [

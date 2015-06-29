@@ -85,11 +85,12 @@ var Fs = require('fs');
  * To get started with contributing or coding, it is good to read about the
  * two main npm packages [ose] and [ose-gaia].
  *
- * This software is in the pre-alpha stage. At the moment, it is
- * premature to file bugs. Input is, however, much welcome in the form
- * of ideas, comments and general suggestions.  Feel free to contact
- * us via
- * [github.com/opensmartenvironment](https://github.com/opensmartenvironment).
+ * This software is in the pre-alpha stage. Any input is welcome, for
+ * example, in the form of bug reports, ideas, comments and general
+ * suggestions, either under the appropriate repository if you know
+ * which one it is, or the [main OSE
+ * repository](https://github.com/opensmartenvironment/ose) if you are
+ * unsure.
  *
  *
  * @status

@@ -86,9 +86,9 @@ var Fs = require('fs');
  * two main npm packages [ose] and [ose-gaia].
  *
  * This software is in the pre-alpha stage. Any input is welcome, for
- * example, in the form of bug reports, ideas, comments and general
- * suggestions, either under the appropriate repository if you know
- * which one it is, or the [main OSE
+ * example, in the form of bug reports, pull requests, ideas, comments
+ * and general suggestions, either under the appropriate repository if
+ * you know which one it is, or the [main OSE
  * repository](https://github.com/opensmartenvironment/ose) if you are
  * unsure.
  *

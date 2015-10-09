@@ -267,7 +267,7 @@ Packages["gaia"] = {
               "name": "layout",
               "type": "property",
               "dtype": "String",
-              "description": "Defines the layout which extends this view. Layouts are defined\nin modules located in the \"gaia\" subdirectory of the entry kind\ndirectory. ."
+              "description": "Defines the layout which extends this view. Layouts are defined\nin modules located in the \"gaia\" subdirectory of the entry kind\ndirectory."
             }
           }
         },

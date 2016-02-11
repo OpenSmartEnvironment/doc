@@ -3,8 +3,7 @@ Packages["xorg"] = {
   "npmname": "ose-xorg",
   "caption": "X.Org",
   "readme": "This package allows to control the mouse and pointer in X.Org\n\nSee [Media player example].",
-  "line": 10,
-  "scope": "control",
+  "line": 13,
   "modules": {
     "lib/xorg": {
       "name": "lib/xorg",
@@ -237,7 +236,7 @@ Packages["xorg"] = {
       "name": "lib",
       "type": "singleton",
       "caption": "X.Org core",
-      "readme": "Core singleton of ose-xorg npm package. Registers [entry kinds]\ndefined by this package to the `\"control\"` [scope].",
+      "readme": "Core singleton of ose-xorg npm package. Registers [entry kinds]\ndefined by this package to the `\"control\"` [schema].",
       "file": "lib/index.js"
     },
     "content": {

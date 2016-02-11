@@ -3,8 +3,7 @@ Packages["icecast"] = {
   "npmname": "ose-icecast",
   "caption": "Icecast",
   "readme": "This package makes it possible to search for Icecast streams in the\nIcecast directory (http://dir.xiph.org)\n\nIt defines the icecast stream [entry kind] and registers it as a\nsource to [Media player].\n\nSee [Media player example].",
-  "line": 10,
-  "scope": "icecast",
+  "line": 13,
   "modules": {
     "lib/stream": {
       "name": "lib/stream",
@@ -36,7 +35,7 @@ Packages["icecast"] = {
       "name": "lib",
       "type": "singleton",
       "caption": "Icecast core",
-      "readme": "Core singleton of [ose-icecast] npm package. Registers [entry kinds]\ndefined by this package to the `\"icecast\"` [scope].",
+      "readme": "Core singleton of [ose-icecast] npm package. Registers [entry kinds]\ndefined by this package to the `\"icecast\"` [schema].",
       "file": "lib/index.js"
     },
     "content": {

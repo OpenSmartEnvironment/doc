@@ -3,8 +3,7 @@ Packages["dvb"] = {
   "npmname": "ose-dvb",
   "caption": "DVB",
   "readme": "This package contains the general definition of DVB-related logic.\nIt is able to parse `channels.conf` files (output of\n[`w_scan`](http://www.linuxtv.org/wiki/index.php/W_scan)) and\nregister them as sources used by the [Media player].\n\nSee [DVB streamer example]",
-  "line": 10,
-  "scope": "media",
+  "line": 13,
   "modules": {
     "lib/channel/boon": {
       "name": "lib/channel/boon",
@@ -69,7 +68,7 @@ Packages["dvb"] = {
       "name": "lib",
       "type": "singleton",
       "caption": "DVB core",
-      "readme": "Core singleton of [ose-dvb] npm package. Registers [entry kinds]\ndefined by this package to the `\"media\"` [scope].",
+      "readme": "Core singleton of [ose-dvb] npm package. Registers [entry kinds]\ndefined by this package to the `\"media\"` [schema].",
       "file": "lib/index.js",
       "method": {
         "parseChannels": {
@@ -78,8 +77,8 @@ Packages["dvb"] = {
           "description": "Create multiplex (mplex) and channel entries by parsing output from\n`w_scan`. For each channel, assign a multicast group ip address\nfrom `pool`.",
           "params": [
             {
-              "name": "shard",
-              "description": "Shard of \"media\" scope for channel entries",
+              "name": "trans",
+              "description": "Transaction of \"media\" shard for channel entries",
               "type": "Object"
             },
             {

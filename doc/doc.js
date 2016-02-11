@@ -3,7 +3,7 @@ Packages["doc"] = {
   "npmname": "ose-doc",
   "caption": "OSE software documentation",
   "readme": "This package is used to build documentation for all official OSE\npackages.",
-  "line": 16,
+  "line": 17,
   "modules": {
     "bin/doc": {
       "name": "bin/doc",

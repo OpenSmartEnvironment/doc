@@ -3,8 +3,7 @@ Packages["pa"] = {
   "npmname": "ose-pa",
   "caption": "PulseAudio",
   "readme": "This package implements volume control for the [Media player].\n\nSee [Media player example].",
-  "line": 10,
-  "scope": "control",
+  "line": 13,
   "modules": {
     "lib/dbus": {
       "name": "lib/dbus",
@@ -64,7 +63,7 @@ Packages["pa"] = {
       "name": "lib",
       "type": "singleton",
       "caption": "PulseAudio core",
-      "readme": "Core singleton of [ose-pa] npm package. Registers [entry kinds]\ndefined by this package to the `\"control\"` [scope].",
+      "readme": "Core singleton of [ose-pa] npm package. Registers [entry kinds]\ndefined by this package to the `\"control\"` [schema].",
       "file": "lib/index.js"
     },
     "content": {

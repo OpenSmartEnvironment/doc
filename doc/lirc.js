@@ -3,9 +3,8 @@ Packages["lirc"] = {
   "npmname": "ose-lirc",
   "caption": "LIRC",
   "readme": "This package allows to use LIRC in OSE. It is thus possible to\nmanage your environment using IR remote controllers.\n\nIt forwards received commands to the [control.remote] component.",
-  "line": 10,
+  "line": 13,
   "description": "## Command names pre-processing\n\nReceived LIRC command names are pre-processed by removing\n\"KEY_\" and \"BTN_\" and converting the rest of the command names to\nlowercase.\n\nIt also suppresses double presses of the same button within 150 ms.\n\nSee [LIRC example].",
-  "scope": "control",
   "modules": {
     "lib/lirc": {
       "name": "lib/lirc",
@@ -55,7 +54,7 @@ Packages["lirc"] = {
       "name": "lib",
       "type": "singleton",
       "caption": "LIRC core",
-      "readme": "Core singleton of ose-lirc npm package. Register [entry kinds]\ndefined by this package to the `\"control\"` [scope].",
+      "readme": "Core singleton of ose-lirc npm package. Register [entry kinds]\ndefined by this package to the `\"control\"` [schema].",
       "file": "lib/index.js"
     },
     "content": {

@@ -3,8 +3,7 @@ Packages["youtube"] = {
   "npmname": "ose-youtube",
   "caption": "YouTube",
   "readme": "This package integrates searching and playing YouTube videos into\nthe [Media player].\n\nIt contains the definition of the YouTube stream [entry kind] and\nregisters it as a source to [Media player].\n\nSee [Media player example].",
-  "line": 10,
-  "scope": "youtube",
+  "line": 13,
   "modules": {
     "lib/video": {
       "name": "lib/video",
@@ -36,7 +35,7 @@ Packages["youtube"] = {
       "name": "lib",
       "type": "singleton",
       "caption": "YouTube core",
-      "readme": "Core singleton of [ose-youtube] npm package. Registers [entry kinds]\ndefined by this package to the `\"media\"` [scope].",
+      "readme": "Core singleton of [ose-youtube] npm package. Registers [entry kinds]\ndefined by this package to the `\"media\"` [schema].",
       "file": "lib/index.js"
     },
     "content": {

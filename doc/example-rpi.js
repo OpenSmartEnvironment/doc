@@ -3,9 +3,8 @@ Packages["example-rpi"] = {
   "npmname": "ose-example-rpi",
   "caption": "Raspberry Pi example",
   "readme": "This application allows to control features of the Raspberry Pi. It\ncan be used on its own or together with other example OSE\napplications, see [Media player example].",
-  "line": 59,
+  "line": 58,
   "features": "- GPIO digital input/output (light, switch, heater)\n- taking pictures using `raspistill`",
-  "scope": "control",
   "usage": "## Usage\n\nFor the Raspberry Pi example application to work, you need the following prerequisites:\n- Node.js > 0.10, npm, git\n- bower<br>\n  `sudo npm install -g bower`\n\nTo install the example application, do the following:\n\n    git clone https://github.com/OpenSmartEnvironment/ose-example-rpi\n    cd ose-example-rpi\n    npm install\n\nIf you want to use this example on a BeagleBone, see [these\ninstructions](https://github.com/fivdi/onoff#installation).\n\nIf you wish to use this example together with the [Media player example],\nconfigure its IP address and port number within your network in\n`bin/run.js`.\n\n    player: 'ws://IP_ADDRESS:PORT'\n\nStart the Raspberry Pi example as follows:\n\n    ./bin/run.js\n\n\nTo access the [HTML5 frontend], open the following URL in Firefox\n**37 or newer** (Iceweasel in Debian Jessie is too old).<br>\n**Before opening the link, enable the `dom.webcomponents.enabled`\noption in `about:config`.**\n\n    http://localhost:4432",
   "modules": {
     "bin/run": {

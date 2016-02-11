@@ -3,17 +3,16 @@ Packages["media"] = {
   "npmname": "ose-media",
   "caption": "Media",
   "readme": "The Media package implements a general media player into your\nenvironment. Together with other OSE packages (e.g. [ose-pa],\n[ose-videolan] and [ose-dvb]), it can be used to create a\nmulti-instance media application.\n\nSee [Media player example].",
-  "line": 10,
+  "line": 13,
   "aliases": "oseMediaPlayer",
   "features": "- Media sources extended by other npm packages\n- Predefined media streams, files and playback history\n- Media playback using a configurable set of applications\n  (currently DVBlast as DVB stramer, PulseAudio as audio backend\n  and VLC as media player)",
-  "scope": "media",
   "comps": {
     "history": {
       "name": "history",
       "caption": "Media history",
       "readme": "OSE Media package keeps track of played media items. These items\ncan be displayed in the player history and played again.",
       "file": "lib/item/index.js",
-      "line": 18,
+      "line": 21,
       "modules": {
         "lib/item": {
           "name": "lib/item",
@@ -31,7 +30,7 @@ Packages["media"] = {
       "caption": "Media player",
       "readme": "The media player [kind] contains the logic for media control. It\ncontrols the volume, playback and DVB streamer on Linux boxes. In\nthe [OSE UI] it displays information about currently playing media\nand allows to control the player remotely. It's possible to display\none of registered media sources and select an item.",
       "file": "lib/remote.js",
-      "line": 11,
+      "line": 13,
       "modules": {
         "lib/player": {
           "name": "lib/player",
@@ -494,7 +493,7 @@ Packages["media"] = {
       "caption": "Media streams",
       "readme": "It is possible to predefine streams or files into the OSE\nMedia player. These can be easily selected and played.",
       "file": "lib/stream/index.js",
-      "line": 18,
+      "line": 21,
       "modules": {
         "lib/stream": {
           "name": "lib/stream",
@@ -544,7 +543,7 @@ Packages["media"] = {
       "name": "lib",
       "type": "singleton",
       "caption": "Media core",
-      "readme": "Core singleton of [ose-media] npm package. Registers [entry kinds]\ndefined by this package to the `media` [scope].",
+      "readme": "Core singleton of [ose-media] npm package. Registers [entry kinds]\ndefined by this package to the `media` [schema].",
       "file": "lib/index.js"
     },
     "content": {

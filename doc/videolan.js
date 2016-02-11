@@ -3,8 +3,7 @@ Packages["videolan"] = {
   "npmname": "ose-videolan",
   "caption": "VideoLAN",
   "readme": "This package contains [entry kinds] integrating VideoLAN software\ninto OSE.\n\nIt allows the [Media player] to use VLC as its playback\napplication and DVBlast as its DVB streamer.\n\nSee [Media player example].",
-  "line": 10,
-  "scope": "control",
+  "line": 13,
   "modules": {
     "lib/dvblast/boon": {
       "name": "lib/dvblast/boon",
@@ -32,11 +31,6 @@ Packages["videolan"] = {
                   "name": "channel",
                   "description": "Channel entry identification",
                   "type": "Object"
-                },
-                {
-                  "name": "mplex",
-                  "description": "Multiplex id",
-                  "type": "String"
                 },
                 {
                   "name": "playback",
@@ -330,26 +324,12 @@ Packages["videolan"] = {
         "next": {
           "name": "next",
           "type": "handler",
-          "description": "Skip to next media",
-          "params": [
-            {
-              "name": "req",
-              "description": "Request object TODO",
-              "type": "Object"
-            }
-          ]
+          "description": "Skip to next media"
         },
         "previous": {
           "name": "previous",
           "type": "handler",
-          "description": "Skip to previous media",
-          "params": [
-            {
-              "name": "req",
-              "description": "Request object TODO",
-              "type": "Object"
-            }
-          ]
+          "description": "Skip to previous media"
         }
       }
     },
@@ -357,7 +337,7 @@ Packages["videolan"] = {
       "name": "lib",
       "type": "singleton",
       "caption": "VideoLAN core",
-      "readme": "Core singleton of [ose-videolan] npm package. Registers [entry kinds]\ndefined by this package to the `\"control\"` [scope].",
+      "readme": "Core singleton of [ose-videolan] npm package. Registers [entry kinds]\ndefined by this package to the `\"control\"` [schema].",
       "file": "lib/index.js"
     },
     "content": {

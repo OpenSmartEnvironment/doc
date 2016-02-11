@@ -3,9 +3,8 @@ Packages["rpi"] = {
   "npmname": "ose-rpi",
   "caption": "Raspberry Pi",
   "readme": "This package contains [entry kinds] for integrating hardware from\nthe Raspberry Pi Foundation into OSE.\n\nSee [Raspberry Pi example].",
-  "line": 10,
+  "line": 13,
   "aliases": "raspberry raspberryPi raspberryCamera",
-  "scope": "control",
   "modules": {
     "lib/camera": {
       "name": "lib/camera",
@@ -23,13 +22,39 @@ Packages["rpi"] = {
       "caption": "Raspberry Pi kind",
       "readme": "[Entry kind] describing Raspberry Pi boards. It is possible to\ncontrol GPIO pins using the [Pins] component.",
       "file": "lib/rpi/index.js",
-      "kind": "rpi"
+      "kind": "rpi",
+      "property": {
+        "dval.alias": {
+          "name": "dval.alias",
+          "type": "property",
+          "dtype": "String",
+          "description": "Alias"
+        },
+        "dval.name": {
+          "name": "dval.name",
+          "type": "property",
+          "dtype": "String",
+          "description": "Name"
+        },
+        "dval.dummy": {
+          "name": "dval.dummy",
+          "type": "property",
+          "dtype": "Boolean",
+          "description": "Dummy emulation"
+        },
+        "sval.pins": {
+          "name": "sval.pins",
+          "type": "property",
+          "dtype": "Object",
+          "description": "States of individual pins connected by client sockets"
+        }
+      }
     },
     "lib": {
       "name": "lib",
       "type": "singleton",
       "caption": "Raspberry core",
-      "readme": "Core singleton of [ose-rpi] npm package. Registers [entry kinds]\ndefined by this package to the `\"control\"` [scope].",
+      "readme": "Core singleton of [ose-rpi] npm package. Registers [entry kinds]\ndefined by this package to the `\"control\"` [schema].",
       "file": "lib/index.js"
     },
     "content": {

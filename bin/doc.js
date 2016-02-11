@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 'use strict';
 
 var _ = require('underscore');
@@ -83,7 +84,7 @@ var Fs = require('fs');
  * @contrib
  * # Contributions
  * To get started with contributing or coding, it is good to read about the
- * two main npm packages [ose] and [ose-gaia].
+ * two main npm packages [ose] and [ose-html5].
  *
  * This software is in the pre-alpha stage. Any input is welcome, for
  * example, in the form of bug reports, pull requests, ideas, comments
@@ -187,7 +188,7 @@ exports.build = function() {  // {{{2
     paths: [
       './doc',
       './ose',
-      './gaia',
+      './html5',
       './control',
       './fs',
       './rpi',
@@ -255,7 +256,6 @@ function prepPackage(name) {  // {{{2
   d.aliases = comp.aliases;
   d.description = comp.description;
   d.features = comp.features;
-  d.scope = comp.scope;
   d.usage = comp.usage;
 
   Packages[d.name] = d;
@@ -279,7 +279,6 @@ function prepComp(name) {  // {{{2
   d.aliases = comp.aliases;
   d.description = comp.description;
   d.features = comp.features;
-  d.scope = comp.scope;
 
   var p = Packages[comp.module];
   if (! ('comps' in p)) {
@@ -301,8 +300,8 @@ function prepModule(name) {  // {{{2
   d.caption = m.caption;
   d.readme = m.readme;
   d.file = packageFile(m.file);
-  d.scope = m.scope;
   if (m.kind) {
+    d.schema = m.schema;
     d.kind = m.kind;
     d.type = 'kind';
   }

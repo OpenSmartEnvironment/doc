@@ -8,7 +8,7 @@ var Keywords = {};
 var Current = {};
 var Files = {};
 var DontScrollToc = false;
-var Scopes = {};
+var Schemas = {};
 
 var Search = $('#search');
 Search.val('');
@@ -68,8 +68,6 @@ function filter() {  // {{{2
 };
 
 function addPackage(p) {  // {{{2
-  var scope = p.scope;
-
   if (! p.features) p.features = '';
 
   keyword(p.name, p.name, p.npmname, p.caption, p.name + 'Package', p.npmname + 'Package', p.aliases && p.aliases.split(/\s/));
@@ -100,8 +98,6 @@ function addPackage(p) {  // {{{2
   }
 
   function addComp(c) {  // {{{3
-    scope = c.scope || p.scope;
-
     if (c.features) {
       p.features += c.features;
     }
@@ -149,16 +145,16 @@ function addPackage(p) {  // {{{2
   }
 
   function addKind(ref, m) {  // {{{3
-    var s = Scopes[m.scope || scope];
+    var s = Schemas[m.schema];
 
     if (! s) {
-      s = {name: m.scope || scope};
-      Scopes[s.name] = s;
+      s = {name: m.schema};
+      Schemas[s.name] = s;
 
       s.ul = $('<ul>').appendTo(
         $('<li>', {class: 'h1'})
           .append($('<a>'/*, {href: '#' + s.name + '#'}*/).html(s.name))
-          .appendTo('#scopes')
+          .appendTo('#schemas')
       );
     }
 
@@ -437,7 +433,9 @@ function mdModule(done, pkg, comp, mod, all) {  // {{{2
   }
   r.push('');
 
-  r.push('Scope: **' + (mod.scope || comp && comp.scope || pkg.scope) + '**');
+  if (mod.schema) {
+    r.push('Schema: * ' + (mod.schema) + '**');
+  }
 
   r.push('<br>Type: **' + mod.type + '**');
   if (mod.super) {

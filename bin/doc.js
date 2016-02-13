@@ -44,36 +44,15 @@ var Fs = require('fs');
  *
  * @platforms
  * OSE has the following prerequisites:
- * - Node.js (>0.10) running on Debian Jessie and Raspbian
- * - Firefox 37 or newer with Web Components enabled
+ * - Node.js (>0.12) running on Debian Jessie and Raspbian
+ * - Recent version of Firefox or Chrome browser
  *
  * @install
  * # Installation
  *
  * ## Node.js
  * The main prerequisite is a working installation of a recent
- * version of
- * [Node.js](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager)
- * (>= 0.10).
- *
- * On Debian Jessie, you can install the default package:
- *
- *     sudo apt-get install nodejs
- *
- * On Raspbian, you can install Node.js, for example, by doing:
- *
- *     wget http://node-arm.herokuapp.com/node_latest_armhf.deb
- *     sudo dpkg -i node_latest_armhf.deb
- *
- *
- * You also need the following prerequisites
- *
- * - libdbus-1-dev package or its equivalent for your distribution
- * - pkg-config package or its equivalent in your distribution
- *
- * If you run Debian Jessie, just run:
- *
- *     sudo apt-get install libdbus-1-dev pkg-config
+ * version of Node.js (>= 0.12).
  *
  *
  * ## Manual installation of OSE packages
@@ -142,11 +121,6 @@ var Fs = require('fs');
  * The module view is a reference of methods, properties and events
  * provided by the given module.
  *
- * A module can be one of the following:
- * - simple module with exported methods and properties
- * - class definition
- * - singleton
- * - package core module
  *
  * @module doc
  * @main doc
@@ -200,15 +174,10 @@ exports.build = function() {  // {{{2
       './xorg',
       './yoctopuce',
       './icecast',
-      './youtube',
       './example-dvb',
       './example-lirc',
       './example-player',
       './example-rpi',
-
-      /*
-      './boards',
-      */
     ],
   };
 

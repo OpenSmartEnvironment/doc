@@ -77,11 +77,15 @@ var Fs = require('fs');
  * - Pre-alpha stage (insecure and buggy)
  * - Unstable API
  * - Patchy documentation
- * - No test suite
+ * - Low test coverage (1 %)
  *
  * This is not yet a piece of download-and-use software. It is important
  * to understand the basic principles covered by the
  * [documentation](http://opensmartenvironment.github.io/doc/).
+ *
+ * However, this software is successfully and continuously used since end
+ * of 2013 in one installation in a family house running 7 OSE instances
+ * spread over several Raspberries, HTPC and notebook.
  *
  *
  * @licence

@@ -4,7 +4,6 @@ Packages["control"] = {
   "caption": "Control",
   "readme": "This package contains definitions of general [kinds of entries]\nthat role real objects found in most environments (lights,\nswitches, heaters, sensors etc.). Entries are configured by\ndefining `entry.dval` values. Communication between or among\nentries is realized via [links].",
   "line": 13,
-  "features": "",
   "comps": {
     "room": {
       "name": "room",
@@ -21,6 +20,7 @@ Packages["control"] = {
           "caption": "Blinds kind",
           "readme": "[Entry kind] defining blinds behaviour.",
           "file": "lib/blinds/index.js",
+          "schema": "control",
           "kind": "blinds",
           "handler": {
             "power": {
@@ -50,6 +50,7 @@ Packages["control"] = {
           "caption": "Door kind",
           "readme": "Each [entry] of this kind establishes a [link] to the `dval.master`\ncontroller entry with `type: \"din\"`. Entry sval is changed\ndepending on the incoming data, and the `open` or `close` events\nare fired. These events can be listened for, and appropriate\nactions can be taken.",
           "file": "lib/door/index.js",
+          "schema": "control",
           "kind": "door",
           "aliases": "door doors doorEntry",
           "property": {
@@ -155,6 +156,7 @@ Packages["control"] = {
           "caption": "Heater kind",
           "readme": "[Entry kind] defining behaviour of heaters. Each heater establishes\na [link] to the `dval.master` entry and to an optional\n`dval.tariff` entry to watch low and high tariff switching.",
           "file": "lib/heater/index.js",
+          "schema": "control",
           "kind": "heater",
           "aliases": "heater heaters heaterEntry heaterEntryKind",
           "property": {
@@ -264,6 +266,7 @@ Packages["control"] = {
           "caption": "Light kind",
           "readme": "[Entry kind] defining behaviour of lights. Each light consists of\nchannels. Each channel is controlled by some `master`\ncontroller. It is possible to use dimming when the controller\nsupports it. This component allows to easily create lights composed\nof LED strips that can smoothly change the colour and intensity,\nand do any other effects.",
           "file": "lib/light/index.js",
+          "schema": "control",
           "kind": "light",
           "aliases": "light lights lightEntry lightEntryKind",
           "description": "## Description\nEach light channel can be controlled either through a digital\noutput pin or a pin supporting PWM. Smooth changes of light\nintensity can be controlled through the `speed` value, which\ndefines the time in milliseconds it takes change the light\nintensity from 0 to 100% or vice versa.\n\nEach light supports auto-off timeout since last change with\nconfigurable dim speed.\n\nEvery light can be controlled by a [switch entry] with the\nfollowing behaviour:\n- One tap when shining: Switch the light off.\n- One tap when off: Switch to the default configurable value.\n- Two taps: Switch the light fully on.\n- Hold: Switch the light off.",
@@ -504,6 +507,7 @@ Packages["control"] = {
           "caption": "Room kind",
           "readme": "[Entry kind] defining behaviour of rooms.\n\nVarious activities can be defined for each room. Activities govern\nthe behaviour of rooms. When an activity is selected, it sends\ncommands to entries and trigger scheduled actions.\n\nEach activity is identified by its name and can be selected by a\ncommand sent to the room entry. Each activity should be a\ndescendant of the [activity class].\n\nExample:\n\nThe living room may have the following activities defined:\n\n- watching TV (lights dimmed, TV on, blinds down if dark outside,\n    etc.)\n- tidying (lights fully on, radio on)\n- reading (lights half on, multimedia off)\n\nAnother example:\n\nThe house may have the following activities:\n- at home (full comfort)\n- empty house (detection of intruders, heating down, etc.)\n- vacation (random actions simulating the presence of inhabitants)",
           "file": "lib/room/index.js",
+          "schema": "control",
           "kind": "room",
           "property": {
             "sval.activity": {
@@ -564,6 +568,7 @@ Packages["control"] = {
           "caption": "Switch kind",
           "readme": "Each switch is a digital input that has two logical values: `0` or `1`.\n\nEach [entry] of this kind establishes a [link] to the `dval.master`\ncontroller entry with `flavour: \"switch\"`.\n\n`press`, `release`, `tap` and `hold` events are fired on the entry,\nand the `sval` of the entry is updated depending on controller pin\nchanges. These events can be listened for, and appropriate actions\ncan be taken.\n\nIt is also possible to establish a new [link] to a switch as a\nclient socket with the \"relay\" command. The events listed above are\nthen relayed to the client socket.\n\nFor example, a [light entry] connects to a switch (if defined in\n`light.dval.switch`) as a client socket and is turned on or off\ndepending on pressing the switch.\n\nCurrently, only momentary switches (push-to-make) are\nsupported. Support for all other kinds of switches is planned.",
           "file": "lib/switch/index.js",
+          "schema": "control",
           "kind": "switch",
           "aliases": "switch switchEntry",
           "property": {
@@ -1141,6 +1146,7 @@ Packages["control"] = {
           "caption": "Digital input pin kind",
           "readme": "Kind defining digital input entries\n\nThe `din` entry connects to the controller by creating a [link] to\nthe master controller pin.  The `sval` of the `din` entry then\nchanges with the state of the physical pin on the controller side.",
           "file": "lib/din/index.js",
+          "schema": "control",
           "kind": "din",
           "property": {
             "dval.master": {
@@ -1164,6 +1170,7 @@ Packages["control"] = {
           "caption": "Power distributor kind",
           "readme": "TBD\n\n[Entry kind] defining behaviour of power distributors.",
           "file": "lib/distributor/index.js",
+          "schema": "control",
           "kind": "distributor"
         },
         "lib/flowMeter": {
@@ -1173,6 +1180,7 @@ Packages["control"] = {
           "caption": "Flow meter kind",
           "readme": "Kind defining flow meters of liquids or gasses.\n\nEach entry of this kind established a new [link] to the master by\nsending a `registerPin()` command with `type: \"din\"`, `flavour:\n\"counter\"` and a client socket. The `sval.value` of the entry then\nincrements with each master pin change. State changes are debounced\nusing the `sval.debounce` value.",
           "file": "lib/flowMeter/index.js",
+          "schema": "control",
           "kind": "flowMeter"
         }
       }
@@ -1732,6 +1740,7 @@ Packages["control"] = {
       "caption": "IP pool kind",
       "readme": "IP address pool. Respond to \"getIp\" commands by providing a new IP\naddress from a pool defined by the `dval.start` .. `dval.end`\ninterval. Used by the [ose-dvb] package to assign multicast group\naddresses to DVB channels.",
       "file": "lib/ippool/index.js",
+      "schema": "control",
       "kind": "ippool",
       "handler": {
         "getIp": {

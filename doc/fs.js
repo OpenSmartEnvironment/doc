@@ -19,6 +19,7 @@ Packages["fs"] = {
       "caption": "Filesystem inode kind",
       "readme": "[Entry kind] describing filesystem inodes (files, directories, etc)",
       "file": "lib/inode.js",
+      "schema": "fs",
       "kind": "inode"
     },
     "content": {

@@ -12,6 +12,7 @@ Packages["lirc"] = {
       "caption": "LIRC kind",
       "readme": "Entry kind for connecting to and communicating with the LIRC\ndaemon.\n\nReceives and processes LIRC commands from the LIRC Unix socket\n(/var/run/lirc/lircd). Emits the `\"receive\"` event, which can then\nbe, for example, handled by the [control.remote] component.",
       "file": "lib/lirc/index.js",
+      "schema": "control",
       "kind": "lirc",
       "event": {
         "receive": {

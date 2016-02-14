@@ -89,6 +89,7 @@ Packages["videolan"] = {
       "caption": "DVBlast kind",
       "readme": "[Entry kind] allowing to control DVBlast software\n\nSee [DVB streamer example]",
       "file": "lib/dvblast/node.js",
+      "schema": "control",
       "kind": "dvblast",
       "property": {
         "current": {
@@ -238,6 +239,7 @@ Packages["videolan"] = {
       "caption": "VLC kind",
       "readme": "[Entry kind] allowing to control VLC\n\nSee [Media player example]",
       "file": "lib/vlc/index.js",
+      "schema": "control",
       "kind": "vlc",
       "aliases": "vlc",
       "description": "Implementation of media player playback using VLC over D-Bus",

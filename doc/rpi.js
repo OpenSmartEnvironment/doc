@@ -13,6 +13,7 @@ Packages["rpi"] = {
       "caption": "Raspberry Pi camera kind",
       "readme": "[Entry kind] describing Raspberry Pi cameras. It uses the raspicam\nnpm package to take pictures.",
       "file": "lib/camera/index.js",
+      "schema": "control",
       "kind": "raspicam"
     },
     "lib/rpi": {
@@ -22,6 +23,7 @@ Packages["rpi"] = {
       "caption": "Raspberry Pi kind",
       "readme": "[Entry kind] describing Raspberry Pi boards. It is possible to\ncontrol GPIO pins using the [Pins] component.",
       "file": "lib/rpi/index.js",
+      "schema": "control",
       "kind": "rpi",
       "property": {
         "dval.alias": {

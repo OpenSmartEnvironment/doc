@@ -5,15 +5,15 @@ Packages["ose"] = {
   "readme": "Extensible framework for development and rapid prototyping of\napplications based on Node.js and HTML5.",
   "line": 13,
   "aliases": "framework oseFramework supportedBrowser supportedBrowsers",
-  "features": "- Robust multi-instance architecture\n- Transparent network communication via WebSockets\n- Near real-time synchronization\n- Code sharing between Node.js and web browsers\n- Partitioned data model\n- Extensible via npm packages",
+  "features": "- Robust multi-instance architecture\n- Document-oriented partitioned data model\n- Event-driven network transparent communication\n- Near real-time synchronization\n- Code sharing between Node.js and web browsers\n- Extensible via npm packages",
   "comps": {
     "data": {
       "name": "data",
       "caption": "Data model",
-      "readme": "The data model of the framework is designed so that individual\ninstances of OSE hold subsets of the data and together create a\nsingle whole.\n\nData partitions are called [shards]. Basic data units\n(similar to table records) contained by [shards] are called\n[entries].\n\nEach [entry] is of a certain [kind]. [Kinds] define the properties\nand behaviour of [entries]. Each kind is assigned to some [schema].\n\nEach [shard] belongs to a [space] that acts as the shard's\nnamespace. Each shard uses a certain [schema]. This schema defines\nthe entries that can be contained in the shard and how entry data\nare stored and retrieved. For example, the \"control\" schema,\ndefined in the [ose-control] package, uses LevelDB as the entry\ndata store. The \"fs\" schema, defined in the [ose-fs] package, uses\nthe filesystem.\n\nSchemas and kinds define data structures with the following\nhierarchy:\n* schema\n  * kind\n\nBy contrast, spaces, shards and entries contain actual data\norganized as follows:\n* space\n  * shard\n    * entry\n\nExample:\n\nThe `reading.light` is an entry of the kind `light`, the `light`\nkind belongs to the `control` schema, and the `reading.light` entry\nis saved in the shard `living.room`, which belongs to the space\n`my.house`.\n\nTo retrieve an entry, call, for example, `shard.get(entryId,\ncallback)`. To get a list of entries, call `shard.query(queryName,\nrequest, callback)`. How data are retrieved depends on the\nparticular schema.\n\nChanges to shard data are made via [transactions]. Via\ntransactions, it is possible to add, patch and delete entries.\n\nEach shard is managed by a certain [peer], which is its [home]. The\nOSE frameword makes it possible to work with shards and entries\nscattered across multiple [peers].",
+      "readme": "The data model of the framework is designed so that individual\ninstances of OSE hold subsets of the data and together create a\nsingle whole. Data model is document-oriented.\n\nData partitions are called [shards]. Basic data units\n(similar to table records) contained by [shards] are called\n[entries].\n\nEach [entry] is of a certain [kind]. [Kinds] define the properties\nand behaviour of [entries]. Each kind is assigned to some [schema].\nEach kind can define document structure using [fields] component.\n\nEach [shard] belongs to a [space] that acts as the shard's\nnamespace. Each shard uses a certain [schema]. This schema defines\nthe entries that can be contained in the shard and how entry data\nare stored and retrieved. For example, the \"control\" schema,\ndefined in the [ose-control] package, uses LevelDB as the entry\ndata store. The \"fs\" schema, defined in the [ose-fs] package, uses\nthe filesystem and exposes files and directories as entries.\n\nSchemas and kinds define data structures with the following\nhierarchy:\n* schema\n  * kind\n\nBy contrast, spaces, shards and entries contain actual data\norganized as follows:\n* space\n  * shard\n    * entry\n\nExample:\n\nThe `reading.light` is an entry of the kind `light`, the `light`\nkind belongs to the `control` schema, and the `reading.light` entry\nis saved in the shard `living.room`, which belongs to the space\n`my.house`.\n\nTo retrieve an entry, call, for example, `shard.get(entryId,\ncallback)`. To get a list of entries, call `shard.query(queryName,\nrequest, callback)`. How data are retrieved depends on the\nparticular schema.\n\nChanges to shard data are made via [transactions]. Via\ntransactions, it is possible to add, patch and delete entries.<br>\n**IMPORTANT:**<br>\nTransactions are not yet ACID compliant, data may be lost during\npower outages or for other reasons.\n\nEach shard is managed by a certain [peer], which is its [home]. The\nOSE frameword makes it possible to work with shards and entries\nscattered across multiple [peers].",
       "file": "lib/subject.js",
       "line": 10,
-      "aliases": "command commands entryCommand entryCommands commandHandler commandHandlers",
+      "aliases": "command commands entryCommand entryCommands commandHandler commandHandlers schema schemas",
       "description": "## Commands\nIt is possible to send commands to individual [entries] using\n`shard.post(entryIdentification, commandName, commandData,\nclientSocket)`. Each command is delivered to the [home] of the\ngiven [entry]. Commands consist of a command name and optional\ndata. A command can be a request for data or to establish a new\n[link].\n\nCommand handlers can be registered for a [kind] with an `on()`\nmethod call. The [Kind] class is not an [Event Emitter] descendant.\nIn command handler code, the target `entry` can be accessed in\n`this.entry`.\n\nExample:\n    TODO",
       "modules": {
         "lib/entry/command": {
@@ -92,7 +92,7 @@ Packages["ose"] = {
           "caption": "Entry class",
           "readme": "An [Entry] instance is a data structure representing a physical\nobject or logical concept. Each [entry] belongs to a certain\n[shard]. Within the [shard], it has a unique `id`. Each [entry] is\nof a certain [kind] that defines its behaviour.\n\nAn [entry] can contain a data value `dval` object in JSON format\n(analogous to a database table row).\n\nThe `sval` JSON object, unlike `dval`, can\noften change and is non-persistent by design because it reflects\nchanging objective reality. Changes of `sval` objects are\npropagated to [peers] tracking changes of certain [entries].\n\nThe `dval` and `sval` objects can contain any valid JSON excluding\n`null`, which is used for deleting keys during patching.\n\nIn addition, the `blob` object may contain arbitrary binary\ndata. Each `blob` can be read as a stream.",
           "file": "lib/entry/index.js",
-          "aliases": "entry entries dval data sval state statesOfEntries",
+          "aliases": "entry entries dval data sval state statesOfEntries entryIdentification",
           "property": {
             "kind": {
               "name": "kind",
@@ -522,11 +522,11 @@ Packages["ose"] = {
             }
           }
         },
-        "lib/schema/cache/": {
-          "name": "lib/schema/cache/",
+        "lib/schema/cache": {
+          "name": "lib/schema/cache",
           "type": "Object",
-          "caption": "Schema singleton",
-          "readme": "",
+          "caption": "Cache schema singleton",
+          "readme": "Provides schema without any data store. All entries are cached to `shard.cache`.",
           "file": "lib/schema/cache.js",
           "description": "",
           "method": {
@@ -684,7 +684,7 @@ Packages["ose"] = {
           "readme": "A shard is a container for [entries]. Each shard belongs to a certain\n[space]. Every shard has an id that is unique within\nits [space]. Each shard is tied to a single [schema] (ie. it cannot\ncontain [entries] of [kinds] belonging to different\n[schemas]). Every shard either belongs to the same [home] as its\nspace or is assigned to a different one.",
           "file": "lib/shard/index.js",
           "aliases": "shard shards",
-          "description": "Each shard has a defined schema, which determines its data are\nhandled, such as:\n- (cache)[ose/lib/schema/cache],\n- (filesystem)[ose-fs/lib/index] or\n- (LevelDB)[ose-level/lib/index].",
+          "description": "Each shard has a defined schema, which determines its data are\nhandled, such as:\n- [ose/lib/schema/cache]\n- [ose-fs]\n- [ose-level]",
           "property": {
             "id": {
               "name": "id",
@@ -856,12 +856,12 @@ Packages["ose"] = {
               "params": [
                 {
                   "name": "ident",
-                  "description": "Target entry [identification]",
+                  "description": "Target [entry identification]",
                   "type": "Object|Array"
                 },
                 {
                   "name": "socket",
-                  "description": "Client socket to be connectted to the *\ntarget entry. If the socket is not provided, an new EventEmitter is\ncreated and returned.",
+                  "description": "Client socket to be connectted to the\ntarget entry. If the socket is not provided, an new EventEmitter is\ncreated and returned.",
                   "type": "Object",
                   "optional": true
                 }
@@ -955,6 +955,11 @@ Packages["ose"] = {
                   "type": "Object|String|Number"
                 }
               ]
+            },
+            "getDataDir": {
+              "name": "getDataDir",
+              "type": "method",
+              "description": "Return directory with shard data"
             },
             "command": {
               "name": "command",
@@ -1053,18 +1058,18 @@ Packages["ose"] = {
         "lib/shard/slave": {
           "name": "lib/shard/slave",
           "type": "class",
-          "caption": "Response socket to slave space",
-          "readme": "Socket created in response to a request from a slave space.",
-          "file": "lib/space/slave.js",
+          "caption": "Response socket to slave shard",
+          "readme": "Socket created in response to a request from a slave shard.",
+          "file": "lib/shard/slave.js",
           "method": {
             "constructor": {
               "name": "constructor",
               "type": "method",
-              "description": "Sends request to the master space to establish a link.",
+              "description": "Sends request to the master shard to establish a link.",
               "params": [
                 {
-                  "name": "space",
-                  "description": "Slave space",
+                  "name": "shard",
+                  "description": "Slave shard",
                   "type": "Object"
                 },
                 {
@@ -1224,18 +1229,6 @@ Packages["ose"] = {
                 }
               ]
             }
-          },
-          "undefined": {
-            "undefined": {
-              "description": "Get entry",
-              "params": [
-                {
-                  "name": "req",
-                  "description": "Entry id",
-                  "type": "Integer"
-                }
-              ]
-            }
           }
         },
         "lib/shard/trans": {
@@ -1244,6 +1237,7 @@ Packages["ose"] = {
           "caption": "Transaction class",
           "readme": "Changes to shards are made via transactions.\n\nTo add an entry to a shard, for example, create a new\ntransaction, add the entry and commit the transaction.\n\nExample:\n\n    var trans = shard.transaction();\n\n    var light = trans.add('light', {\n      alias: 'reading.light',\n      parent: 'living.room'\n    });\n\n    trans.commit(O.log.bindError());",
           "file": "lib/shard/trans.js",
+          "aliases": "transaction transactions",
           "method": {
             "constructor": {
               "name": "constructor",
@@ -1619,6 +1613,44 @@ Packages["ose"] = {
             }
           }
         },
+        "lib/space/slave": {
+          "name": "lib/space/slave",
+          "type": "class",
+          "caption": "Response socket to slave space",
+          "readme": "Socket created in response to a request from a slave space.",
+          "file": "lib/space/slave.js",
+          "method": {
+            "constructor": {
+              "name": "constructor",
+              "type": "method",
+              "description": "Sends request to the master space to establish a link.",
+              "params": [
+                {
+                  "name": "space",
+                  "description": "Slave space",
+                  "type": "Object"
+                },
+                {
+                  "name": "ws",
+                  "description": "WebSocket",
+                  "type": "Object"
+                }
+              ]
+            }
+          },
+          "undefined": {
+            "undefined": {
+              "description": "Get entry",
+              "params": [
+                {
+                  "name": "req",
+                  "description": "Entry id",
+                  "type": "Integer"
+                }
+              ]
+            }
+          }
+        },
         "lib/data": {
           "name": "lib/data",
           "type": "module",
@@ -1740,12 +1772,12 @@ Packages["ose"] = {
               "params": [
                 {
                   "name": "ident",
-                  "description": "Target entry [identification]",
+                  "description": "Target [entry identification]",
                   "type": "Object|Array"
                 },
                 {
                   "name": "socket",
-                  "description": "Client socket to be connectted to the *\ntarget entry. If the socket is not provided, an new EventEmitter is\ncreated and returned.",
+                  "description": "Client socket to be connectted to the\ntarget entry. If the socket is not provided, an new EventEmitter is\ncreated and returned.",
                   "type": "Object",
                   "optional": true
                 }
@@ -1928,10 +1960,11 @@ Packages["ose"] = {
     },
     "field": {
       "name": "field",
-      "caption": "Object-relational mapping",
-      "readme": "This component allows to describe JSON data structures.\n\nData descriptions contain no particular data.\n\nEntry kinds uses this component to describe `entry.data` and `entry.state` data structure.\n\nGenerate UI views (detail, list, listItem, ... )\n\nLayouts - Kinds\n\nGenerate flat list of fields from hierarchical document based on defined order",
+      "caption": "JSON document structure description",
+      "readme": "This component allows to describe JSON data structures.\n\nTODO\n\nData descriptions contain no particular data.\n\nEntry kinds uses this component to describe `entry.data` and `entry.state` data structure.\n\nGenerate UI views (detail, list, listItem, ... )\n\nLayouts - Kinds\n\nGenerate flat list of fields from hierarchical document based on defined order",
       "file": "lib/field/wraps.js",
       "line": 14,
+      "aliases": "fields",
       "modules": {
         "lib/field/array": {
           "name": "lib/field/array",
@@ -3100,8 +3133,8 @@ Packages["ose"] = {
                 }
               ]
             },
-            "readStream": {
-              "name": "readStream",
+            "read": {
+              "name": "read",
               "type": "method",
               "description": "Read entry stream handler",
               "params": [
@@ -3998,7 +4031,7 @@ Packages["ose"] = {
     "plugin": {
       "name": "plugin",
       "caption": "Plugins",
-      "readme": "To run, each [OSE instance] requires a main configuration object\n(JavaScript object or JSON). Each main configuration object\nproperty contains configuration data for one plugin. A plugin can\nbe a class, singleton or module.\n\nAll plugins are registered to the `O.plugins` object. From this\nobject are prepared configurations for the OSE browser instances as\npart of the response to HTTP requests for `config.js`.\n\nDuring [OSE instance] startup, the following steps are carried out:\n1. Setup of the framework\n2. Preparation of plugins\n3. Configuration of plugins\n4. Asynchronous processing of plugin dependencies\n\nWhen all dependencies are processed, the `done` event is emitted by\nthe `dependencies` object sent to the `config()` method of each\nplugin.",
+      "readme": "To run, each [OSE instance] requires a main configuration object\n(JavaScript object or JSON). Each main configuration object\nproperty contains configuration data for one plugin. A plugin can\nbe a class, singleton or module.\n\nDuring [OSE instance] startup, the following steps are carried out:\n1. Setup of the framework\n2. Preparation of plugins\n3. Configuration of plugins\n4. Asynchronous processing of plugin dependencies\n\nWhen all dependencies are processed, the `done` event is emitted by\nthe `dependencies` object sent to the `config()` method of each\nplugin.",
       "file": "lib/plugins.js",
       "line": 5,
       "aliases": "osePlugin oseConfig pluginsComponent",
@@ -4011,7 +4044,7 @@ Packages["ose"] = {
       "file": "lib/wrap.js",
       "line": 288,
       "aliases": "class classes singleton singletons eventEmitter super moduleWrapping wrappingModule wrappingModules",
-      "description": "## Description\n\nThere are several types of module wrapping:\n- simple module:<br>\n  `const O = require(\"ose\")(module);`\n- class definition:<br>\n  `const O = require(\"ose\")(module).class([constructor], [\"super_module_path\"]);`\n- singleton definition:<br>\n  `const O = require(\"ose\")(module).singleton([init_method], [\"super_module_path\"]);`\n\n**IMPORTANT:**<br />\nEach time a module is wrapped using `require(\"ose\")(module).class();` or `require(\"ose\")(module).singleton();`, the wrapper adds the `O` property\nto `module.exports`. The `O` property is read-only and\nnon-configurable. It is not safe to overwrite this property.\n\nSimple modules do nothing with `module` or `module.exports`. They\nonly provide the framework's methods and properties to the current\nmodule.\n\n\n## Extending `O`\n\nIt is possible to extend the framework using\n`O.extendO(\"property_name\", property_value)`. Calling this method\nadds the supplied property to the prototype of module wrapper (`const O = require('ose')...`\nvariable).\n\n\n## Classes\n\nA class is a function used as a class constructor with a prototype. It\nis good practice to define each class within its own module.\n\nOf course, it is still possible to use `util.inherits(...);`\n\nUsing the OSE module wrapping for class definition brings syntactic\nsugar for:\n- creating classes:<br>\n  `const O = require(\"ose\")(module).class(constructor_method, \"super_module_path\");`\n- chainable mixing modules into class prototypes:<br>\n  `const O = require(\"ose\")(module).class().prepend(\"module_path\").append(\"another_module_path\");`\n- runtime-specific behaviour with simple code sharing between\n    Node.js and the browser:<br>\n  `O.prepend(\"browser\")`, `O.append(\"runtime\");`\n- definition class prototype properties using `exports` variable:<br>\n  `exports.config = function(...) { ... };`\n- calling methods of superclass:<br>\n  `O.inherited(this, \"method\")(args ...);`\n- calling methods of all ancestors in prototype chain without\n    explicitly calling \"inherited\" methods in method definition:<br>\n  `O.callChain(this, \"method\")(args ...);`\n- creating class instances:<br>\n  `O.new(\"module_path\")(args ...);`\n\nTo use a class, you need to carry out three steps:\n\n1. Prepare a module containing the class definition.\n2. Obtain a class constructor.\n3. Create a new object.\n\nFirst, the class needs to be prepared in the module containing the\nclass definition by calling, for example, `const O =\nrequire(\"ose\")(module).class(init, super)`. The\n`init` parameter is an optional class initialization method. The `super` parameter\ndefines a superclass. The `super` parameter can be `undefined`, a\nclass constructor or a path to the module containing class definition.\n\nExample module with class preparation:\n\n    // Module \"ose/lib/entry\"\n    \"use strict\";\n\n    // Wrap a module to be used as a class inheriting `EventEmitter` with an `init` method.\n    const O = require(\"ose\")(module).class(init, \"EventEmitter\");\n\n    // Class constructor\n    function init(...) {\n      // Call super constructor\n      O.inherited(this)();\n      ...\n    }\n\n    // Add properties of the class prototype to the `exports` object:\n    exports.config = function(name, data) {\n      ...\n    };\n\n    // Define another property\n    exports.getIdent = function() {\n      return [this.id, this.shard.id, this.shard.space.name];\n    };\n\nThe second step is to obtain a class constructor with its\nprototype. This step is carried out when the class is first\naccessed by calling `O.getClass(\"ose/lib/entry\")`. Multiple calls to\n`O.getClass(\"ose/lib/entry\")` return the same, already created\nclass. When called for the first time, the class prototype is\ncreated from module exports and optional mixins. If the class has\nan ancestor, the constructor should usually call the super\nconstructor (see example above).\n\nThe last step is to create a new object based on the class.\n\nClass usage example:\n\n    // Some other module ...\n    \"use strict\";\n    const O = require(\"ose\")(module);\n\n    // Obtain class constructor (second step).\n    var Entry = O.getClass(\"ose/lib/entry\");\n\n    ...\n\n      // Create a new Entry instance object (third step).\n      entry = new Entry(shard, id);\n\n    ...\n\nOr another way:\n\n    // Some other module ...\n    \"use strict\";\n    const O = require(\"ose\")(module);\n\n    ...\n\n    // Create a new Entry instance object (second and third step together).\n    entry = O.new(\"ose/lib/entry\")(shard, id);\n\n\nThe **EventEmitter** class is built in. To use this\nclass, pass `\"EventEmitter\"` to the `class()` method (see the\nexamples above).\n\n\n## Mixins\n\nIt is possible to mix another module into a class prototype. To do\nthat, use the `prepend()` or `append()` methods of the `O` wrap\nobject.\n\nExample:\n\n    // Some module\n    \"use strict\";\n\n    // Wrap module as a class definition\n    const O = require(\"ose\")(module).class(C, \"EventEmitter\");\n\n    // Prepend a module\n    O.prepend(\"some_module\");\n\n    // Append a module depending on the runtime.\n    O.append(\"runtime\");\n\nThe `prepend()` or `append()` methods supports call chaining. Both\nmethods accept a module name or array of module names. Properties\nto a class prototype are mixed in the second step of\nclass creation. Conflicting properties are overwritten\nin the following order: Last prepended, prepended, module.exports,\nfirst appended, appended.\n\nIt is possible to use the following predefined values as module names:\n* \"browser\" – If in a browser environment, use the `browser.js`\n   module from the same directory.\n* \"node\" – If in a Node.js environment, use the `node.js`\n   module from the same directory.\n* \"runtime\" – Use either the `browser.js` or `node.js` module\n   depending on the environment.\n\nIt is possible to use relative paths as module names.\n\n\n## Singletons\n\nA singleton is a JavaScript object assigned to `module.exports`. It can be\ncreated as any class instance and can use the same `append()` and\n`prepend()` mixin methods as classes. There are two types of\nsingletons. The first initializes itself in its own module and the\nsecond is initialized outside the singleton module.\n\n**IMPORTANT:**<br />\nEvery singleton must always exist in only one instance\nwithin a single running instance of OSE. The use of npm can result\nin mixing multiple installations of packages using singletons\nwithin a single OSE instance. This situation must be avoided.\n\nLike the creation of a class, the creation of a singleton is a\nthree-step process:\n\n1. Prepare a module containing the singleton's definition and\n   create the singleton\n2. Obtain singleton initialization method\n3. Initialize and obtain the singleton\n\nExample module with self-initializing singleton::\n\n    // Wrap module to be used as a singleton\n    const O = require(\"ose\")(module).singleton(I, \"EventEmitter\");\n\n    // Initialize of the singleton\n    exports = O.init();\n\n    // Singleton initialization function\n    function I() {\n      // Call super constructor\n      O.inherited(this)();\n      ...\n    }\n\n    // Properties of the singleton are defined in the `exports` variable:\n\n    exports.getId = function() {\n      return id;\n    };\n\n    ...\n\nExample module without singleton self-initialization:\n\n    // Wrap module to be used as a singleton\n    const O = require(\"ose\")(module).singleton(I, \"EventEmitter\");\n\n    // Obtain singleton object\n    exports = O.exports;\n    ...\n\nExample module with separate singleton initialization:\n\n    // Some other module ...\n    \"use strict\";\n\n    // Wrap module as module\n    const O = require(\"ose\")(module);\n\n    ...\n\n    var result = require(\"ose/lib/peer/list\").O.init(arg);\n\n    ...\n\nTo access or extend any initialized singleton, standard `require` can be used:\n\n    // Module changing singleton.\n    \"use strict\";\n\n    // Require OSE.\n    const O = require(\"ose\")(module);\n\n    // Obtain singleton.\n    var result = require(\"ose/lib/id\");\n\n    // Add new method to the singleton.\n    result.newMethod = function() {...};\n\nBe careful when altering singletons before their initialization\nbecause your changes may get overwritten by mixing of other modules\nduring singleton initialization.",
+      "description": "## Description\n\nThere are several types of module wrapping:\n- simple module:<br>\n  `const O = require(\"ose\")(module);`\n- class definition:<br>\n  `const O = require(\"ose\")(module).class(constructor, \"super_module_path\");`\n- singleton definition:<br>\n  `const O = require(\"ose\")(module).singleton(init_method, \"super_module_path\");`\n\n**IMPORTANT:**<br>\nEach time a module is wrapped using `require(\"ose\")(module).class();` or `require(\"ose\")(module).singleton();`, the wrapper adds the `O` property\nto `module.exports`. The `O` property is read-only and\nnon-configurable. It is not safe to overwrite this property.\n\nSimple modules do nothing with `module` or `module.exports`. They\nonly provide the framework's methods and properties to the current\nmodule.\n\n\n## Extending `O`\n\nIt is possible to extend the framework using\n`O.extendO(\"property_name\", property_value)`. Calling this method\nadds the supplied property to the prototype of module wrapper (`const O = require('ose')...`\nvariable).\n\n\n## Classes\n\nA class is a function used as a class constructor with a prototype. It\nis good practice to define each class within its own module.\n\nOf course, it is still possible to use `util.inherits(...);`\n\nUsing the OSE module wrapping for class definition brings syntactic\nsugar for:\n- creating classes:<br>\n  `const O = require(\"ose\")(module).class(constructor_method, \"super_module_path\");`\n- chainable mixing modules into class prototypes:<br>\n  `const O = require(\"ose\")(module).class().prepend(\"module_path\").append(\"another_module_path\");`\n- runtime-specific behaviour with simple code sharing between\n    Node.js and the browser:<br>\n  `O.prepend(\"browser\")`, `O.append(\"runtime\");`\n- definition class prototype properties using `exports` variable:<br>\n  `exports.config = function(...) { ... };`\n- calling methods of superclass:<br>\n  `O.inherited(this, \"method\")(args ...);`\n- calling methods of all ancestors in prototype chain without\n    explicitly calling \"inherited\" methods in method definition:<br>\n  `O.callChain(this, \"method\")(args ...);`\n- creating class instances:<br>\n  `O.new(\"module_path\")(args ...);`\n\nTo use a class, you need to carry out three steps:\n\n1. Prepare a module containing the class definition.\n2. Obtain a class constructor.\n3. Create a new object.\n\nFirst, the class needs to be prepared in the module containing the\nclass definition by calling, for example, `const O =\nrequire(\"ose\")(module).class(init, super)`. The\n`init` parameter is an optional class initialization method. The `super` parameter\ndefines a superclass. The `super` parameter can be `undefined`, a\nclass constructor or a path to the module containing class definition.\n\nExample module with class preparation:\n\n    // Module \"ose/lib/entry\"\n    \"use strict\";\n\n    // Wrap a module to be used as a class inheriting `EventEmitter` with an `init` method.\n    const O = require(\"ose\")(module).class(init, \"EventEmitter\");\n\n    // Class constructor\n    function init(...) {\n      // Call super constructor\n      O.inherited(this)();\n      ...\n    }\n\n    // Add properties of the class prototype to the `exports` object:\n    exports.config = function(name, data) {\n      ...\n    };\n\n    // Define another property\n    exports.getIdent = function() {\n      return ...\n    };\n\nThe second step is to obtain a class constructor with its\nprototype. This step is carried out when the class is first\naccessed by calling `O.getClass(\"ose/lib/entry\")`. Multiple calls to\n`O.getClass(\"ose/lib/entry\")` return the same, already created\nclass. When called for the first time, the class prototype is\ncreated from module exports and optional mixins. If the class has\nan ancestor, the constructor should usually call the super\nconstructor (see example above).\n\nThe last step is to create a new object based on the class.\n\nClass usage example:\n\n    // Some other module ...\n    \"use strict\";\n    const O = require(\"ose\")(module);\n\n    // Obtain class constructor (second step).\n    var Entry = O.getClass(\"ose/lib/entry\");\n\n    ...\n\n      // Create a new Entry instance object (third step).\n      entry = new Entry(shard, id);\n\n    ...\n\nOr another way:\n\n    // Some other module ...\n    \"use strict\";\n    const O = require(\"ose\")(module);\n\n    ...\n\n    // Create a new Entry instance object (second and third step together).\n    entry = O.new(\"ose/lib/entry\")(shard, id);\n\n\nThe **EventEmitter** class is built in. To use this\nclass, pass `\"EventEmitter\"` to the `class()` method (see the\nexamples above).\n\n\n## Mixins\n\nIt is possible to mix another module into a class prototype. To do\nthat, use the `prepend()` or `append()` methods of the `O` wrap\nobject.\n\nExample:\n\n    // Some module\n    \"use strict\";\n\n    // Wrap module as a class definition\n    const O = require(\"ose\")(module).class(C, \"EventEmitter\");\n\n    // Prepend a module\n    O.prepend(\"some_module\");\n\n    // Append a module depending on the runtime.\n    O.append(\"runtime\");\n\nThe `prepend()` or `append()` methods supports call chaining. Both\nmethods accept a module name or array of module names. Properties\nto a class prototype are mixed in the second step of\nclass creation. Conflicting properties are overwritten\nin the following order: Last prepended, prepended, module.exports,\nfirst appended, appended.\n\nIt is possible to use the following predefined values as module names:\n* \"browser\" – If in a browser environment, use the `browser.js`\n   module from the same directory.\n* \"node\" – If in a Node.js environment, use the `node.js`\n   module from the same directory.\n* \"runtime\" – Use either the `browser.js` or `node.js` module\n   depending on the environment.\n\nIt is possible to use relative paths as module names.\n\n\n## Singletons\n\nA singleton is a JavaScript object assigned to `module.exports`. It can be\ncreated as any class instance and can use the same `append()` and\n`prepend()` mixin methods as classes. There are two types of\nsingletons. The first initializes itself in its own module and the\nsecond is initialized outside the singleton module.\n\n**IMPORTANT:**<br />\nEvery singleton must always exist in only one instance\nwithin a single running instance of OSE. The use of npm can result\nin mixing multiple installations of packages using singletons\nwithin a single OSE instance. This situation must be avoided.\n\nLike the creation of a class, the creation of a singleton is a\nthree-step process:\n\n1. Prepare a module containing the singleton's definition and\n   create the singleton\n2. Obtain singleton initialization method\n3. Initialize and obtain the singleton\n\nExample module with self-initializing singleton::\n\n    // Wrap module to be used as a singleton\n    const O = require(\"ose\")(module).singleton(I, \"EventEmitter\");\n\n    // Initialize of the singleton\n    exports = O.init();\n\n    // Singleton initialization function\n    function I() {\n      // Call super constructor\n      O.inherited(this)();\n      ...\n    }\n\n    // Properties of the singleton are defined in the `exports` variable:\n\n    exports.getId = function() {\n      return id;\n    };\n\n    ...\n\nExample module without singleton self-initialization:\n\n    // Wrap module to be used as a singleton\n    const O = require(\"ose\")(module).singleton(I, \"EventEmitter\");\n\n    // Obtain singleton object\n    exports = O.exports;\n    ...\n\nExample module with separate singleton initialization:\n\n    // Some other module ...\n    \"use strict\";\n\n    // Wrap module as module\n    const O = require(\"ose\")(module);\n\n    ...\n\n    var result = require(\"ose/lib/peer/list\").O.init(arg);\n\n    ...\n\nTo access or extend any initialized singleton, standard `require` can be used:\n\n    // Module changing singleton.\n    \"use strict\";\n\n    // Require OSE.\n    const O = require(\"ose\")(module);\n\n    // Obtain singleton.\n    var result = require(\"ose/lib/id\");\n\n    // Add new method to the singleton.\n    result.newMethod = function() {...};\n\nBe careful when altering singletons before their initialization\nbecause your changes may get overwritten by mixing of other modules\nduring singleton initialization.",
       "modules": {
         "lib/wrap": {
           "name": "lib/wrap",
@@ -4781,12 +4814,12 @@ Packages["ose"] = {
   },
   "quick": {
     "about": "<b>Open Smart Environment software is a suite for creating\nmulti-instance applications that work as a single whole.</b><br>\nImagine, for example, a personal mesh running on various devices\nincluding HTPCs, phones, tablets, workstations, servers, Raspberry\nPis, home automation gadgets, wearables, drones, etc.\n\nOSE software consists of several npm packages: a [framework] running\non Node.js, an [HTML5 frontend], extending\npackages and a set of example applications.\n\n<a href=\"http://opensmartenvironment.github.io/doc/resource/ose.svg\"><img width=100% src=\"http://opensmartenvironment.github.io/doc/resource/ose.svg\"></a>\n\n**Set-up of current example applications.** Here,\nOSE provides a [Media player](#example-player) running on an HTPC\nthat can be controlled by an IR remote through\n[LIRC](#example-lirc) and is capable of playing streams from a\n[DVB streamer](#example-dvb) and control devices through GPIO\npins on a [Raspberry Pi](#example-rpi)",
-    "status": "- Pre-alpha stage (insecure and buggy)\n- Unstable API\n- Patchy documentation\n- No test suite\n\nThis is not yet a piece of download-and-use software. It is important\nto understand the basic principles covered by the\n[documentation](http://opensmartenvironment.github.io/doc/).",
-    "install": "# Installation\n\n## Node.js\nThe main prerequisite is a working installation of a recent\nversion of\n[Node.js](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager)\n(>= 0.10).\n\nOn Debian Jessie, you can install the default package:\n\n    sudo apt-get install nodejs\n\nOn Raspbian, you can install Node.js, for example, by doing:\n\n    wget http://node-arm.herokuapp.com/node_latest_armhf.deb\n    sudo dpkg -i node_latest_armhf.deb\n\n\nYou also need the following prerequisites\n\n- libdbus-1-dev package or its equivalent for your distribution\n- pkg-config package or its equivalent in your distribution\n\nIf you run Debian Jessie, just run:\n\n    sudo apt-get install libdbus-1-dev pkg-config\n\n\n## Manual installation of OSE packages\nInstead of using npm, you can install OSE packages by cloning their\nGitHub repositories.",
+    "status": "- Pre-alpha stage (insecure and buggy)\n- Unstable API\n- Patchy documentation\n- Low test coverage (1 %)\n\nThis is not yet a piece of download-and-use software. It is important\nto understand the basic principles covered by the\n[documentation](http://opensmartenvironment.github.io/doc/).\n\nHowever, this software is successfully and continuously used since end\nof 2013 in one installation running 7 OSE instances spread over several\nRaspberries, HTPC and notebook.",
+    "install": "# Installation\n\n## Node.js\nThe main prerequisite is a working installation of a recent\nversion of Node.js (>= 0.12).\n\n\n## Manual installation of OSE packages\nInstead of using npm, you can install OSE packages by cloning their\nGitHub repositories.",
     "licence": "This software is released under the terms of the [GNU General\nPublic Licence v3.0](http://www.gnu.org/copyleft/gpl.html) or\nlater.",
     "contrib": "# Contributions\nTo get started with contributing or coding, it is good to read about the\ntwo main npm packages [ose] and [ose-html5].\n\nThis software is in the pre-alpha stage. Any input is welcome, for\nexample, in the form of bug reports, pull requests, ideas, comments\nand general suggestions, either under the appropriate repository if\nyou know which one it is, or the [main OSE\nrepository](https://github.com/opensmartenvironment/ose) if you are\nunsure.",
-    "aboutDoc": "# About the documentation\n\n## State of the documentation\nThis documentation is currently under construction and is being\ncontinuously improved. Links may be broken and information\nincomplete or erroneous.\n\n\n## Packages and components\nOSE documentation is compiled from source files of all official OSE\nnpm packages.\n\nEach package consists of components. Each component is a logical\nconcept consisting of modules.\n\nThe documentation of each package contains basic information about\nthe package, its components and modules not assigned to any\ncomponent.\n\nThe documentation of each component contains basic information\nabout the component and its modules.\n\n\n## Modules\nModules are mostly source files conforming to the CommonJS Modules\nspec.\n\nThe module view is a reference of methods, properties and events\nprovided by the given module.\n\nA module can be one of the following:\n- simple module with exported methods and properties\n- class definition\n- singleton\n- package core module",
-    "platforms": "OSE has the following prerequisites:\n- Node.js (>0.10) running on Debian Jessie and Raspbian\n- Firefox 37 or newer with Web Components enabled",
+    "aboutDoc": "# About the documentation\n\n## State of the documentation\nThis documentation is currently under construction and is being\ncontinuously improved. Links may be broken and information\nincomplete or erroneous.\n\n\n## Packages and components\nOSE documentation is compiled from source files of all official OSE\nnpm packages.\n\nEach package consists of components. Each component is a logical\nconcept consisting of modules.\n\nThe documentation of each package contains basic information about\nthe package, its components and modules not assigned to any\ncomponent.\n\nThe documentation of each component contains basic information\nabout the component and its modules.\n\n\n## Modules\nModules are mostly source files conforming to the CommonJS Modules\nspec.\n\nThe module view is a reference of methods, properties and events\nprovided by the given module.",
+    "platforms": "OSE has the following prerequisites:\n- Node.js (>0.12) running on Debian Jessie and Raspbian\n- Recent version of Firefox or Chrome browser",
     "start": "The best way to get started with OSE is to try out the examples:\n- [Media player](#example-player)\n- [Raspberry Pi](#example-rpi) (or other device with GPIO)\n- [LIRC](#example-lirc)\n- [DVB streamer](#example-dvb)"
   }
 };

@@ -12,6 +12,7 @@ Packages["xorg"] = {
       "caption": "X.Org server kind",
       "readme": "[Entry kind] for X.Org server\n\nUses xdotool to remotely control the keyboard and pointer",
       "file": "lib/xorg/index.js",
+      "schema": "control",
       "kind": "xorg",
       "handler": {
         "client": {

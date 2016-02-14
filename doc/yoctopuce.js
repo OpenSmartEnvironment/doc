@@ -12,6 +12,7 @@ Packages["yoctopuce"] = {
       "caption": "Yoctopuce VirtualHub kind",
       "readme": "[Entry kind] representing Yoctopuce VirtualHub.",
       "file": "lib/hub/index.js",
+      "schema": "control",
       "kind": "yoctoHub"
     },
     "lib": {

@@ -12,6 +12,7 @@ Packages["pa"] = {
       "caption": "PulseAudio control kind",
       "readme": "[Entry kind] for PulseAudio instances\n\nEach entry communicates with PulseAudio via its D-Bus\ninterface.",
       "file": "lib/dbus/node.js",
+      "schema": "control",
       "kind": "paDbus",
       "description": "PulseAudio control over D-Bus",
       "property": {

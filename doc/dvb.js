@@ -53,6 +53,7 @@ Packages["dvb"] = {
       "caption": "DVB channel kind",
       "readme": "[Entry kind] describing DVB channels.",
       "file": "lib/channel/index.js",
+      "schema": "media",
       "kind": "dvbChannel"
     },
     "lib/mplex": {
@@ -62,6 +63,7 @@ Packages["dvb"] = {
       "caption": "DVB multiplex kind",
       "readme": "[Entry kind] describing DVB multiplex.",
       "file": "lib/mplex/index.js",
+      "schema": "media",
       "kind": "dvbMplex"
     },
     "lib": {

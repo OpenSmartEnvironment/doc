@@ -21,6 +21,7 @@ Packages["media"] = {
           "caption": "Media item kind",
           "readme": "The media item entry represents a single media item that can be\nplayed back. It contains a reference to another entry and\nadditional data depending on the source.",
           "file": "lib/item/index.js",
+          "schema": "media",
           "kind": "item"
         }
       }
@@ -39,6 +40,7 @@ Packages["media"] = {
           "caption": "Media player kind",
           "readme": "On each entry initialization, [links] to volume control, playback\nand optional DVB streamer entries are established. Every entry of\nthis kind handles commands to control media playback.",
           "file": "lib/player/index.js",
+          "schema": "control",
           "kind": "player",
           "handler": {
             "mute": {
@@ -502,6 +504,7 @@ Packages["media"] = {
           "caption": "Media stream kind",
           "readme": "Media stream entry represents a single media stream that can be\nplayed back.",
           "file": "lib/stream/index.js",
+          "schema": "media",
           "kind": "stream",
           "method": {
             "getMediaKeys": {

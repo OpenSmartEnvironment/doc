@@ -3,7 +3,7 @@ Packages["html5"] = {
   "npmname": "ose-html5",
   "caption": "HTML5 frontend",
   "readme": "OSE package providing an mobile-first HTML5 user interface.\n\nEach browser page (tab) displaying the OSE frontend is an [OSE\ninstance]. As part of the base [OSE plugin] configuration, a\n[peer], representing the backend OSE instance, is created and\nconnected to.\n\nThe connection is realized via a WebSocket in a standard OSE\n[peer-to-peer] way. All information needed for displaying requested\ncontent is exchanged through this WebSocket channel. After a\nsuccessful connection is established, content is displayed using\ndynamic injection.",
-  "line": 11,
+  "line": 13,
   "aliases": "oseUi HTML5frontend",
   "description": "## Initialization\nWhen the browser sends an HTML request to a backend (Node.js) OSE\ninstance, this instance responds by generating and providing\nindex.html. The `<head>` of the index.html contains `<script>` and\n`<style>` tags. Most of these scripts are shared between Node.js\nand the browser environments. The `<body>` contains a single\n`<script>` that loads the application.\n\n## State object\nThe state object defines what is displayed by the application. It\ncan be saved in the browser's history. Views receive\nthe state object in as a parameter of their `display()` methods.",
   "features": "- HTML5 user interface optimized for phones and tablets",
@@ -23,8 +23,8 @@ Packages["html5"] = {
           "readme": "View for creating dashboard content.",
           "file": "lib/view/dashboard.js",
           "method": {
-            "addStateObj": {
-              "name": "addStateObj",
+            "addDemand": {
+              "name": "addDemand",
               "type": "method",
               "description": "Adds an item defined by `demand` to the dashboard.",
               "params": [
@@ -35,7 +35,7 @@ Packages["html5"] = {
                 },
                 {
                   "name": "demand",
-                  "description": "State object that should be displayed when the user taps on this item",
+                  "description": "Demand that should be displayed when the user taps on this item",
                   "type": "Object"
                 }
               ]
@@ -43,7 +43,7 @@ Packages["html5"] = {
             "addContent": {
               "name": "addContent",
               "type": "method",
-              "description": "Add multiple [State objects] to the dashboard.",
+              "description": "Add multiple demands to the dashboard.",
               "params": [
                 {
                   "name": "val",
@@ -197,11 +197,11 @@ Packages["html5"] = {
             "verifyDemand": {
               "name": "verifyDemand",
               "type": "method",
-              "description": "Each View descendant should define a \"verifyDemand\"\nmethod. This method compares the supplied state object with the\ncurrently displayed one.",
+              "description": "Each View descendant should define a \"verifyDemand\"\nmethod. This method compares the supplied demand with the\ncurrently displayed one.",
               "params": [
                 {
                   "name": "data",
-                  "description": "State object to be compared",
+                  "description": "Demand to be compared",
                   "type": "Object"
                 }
               ]
@@ -236,7 +236,7 @@ Packages["html5"] = {
               "params": [
                 {
                   "name": "demand",
-                  "description": "New state object",
+                  "description": "New demand",
                   "type": "Object"
                 },
                 {
@@ -365,6 +365,7 @@ Packages["html5"] = {
       "caption": "View box class",
       "readme": "View box object handles one view at a time. Calling `box.display(demand, source, cb)` new view is created or existing one is updated.",
       "file": "lib/box.js",
+      "aliases": "viewbox",
       "method": {
         "constructor": {
           "name": "constructor",
@@ -493,7 +494,7 @@ Packages["html5"] = {
     "lib/input": {
       "name": "lib/input",
       "type": "class",
-      "caption": "HTML Element wrapper",
+      "caption": "HTML events handler",
       "readme": "This class handles events on the HTML page",
       "file": "lib/input.js",
       "aliases": "eventHandling",
@@ -933,7 +934,8 @@ Packages["html5"] = {
             {
               "name": "ev",
               "description": "Event object",
-              "type": "Object"
+              "type": "Object",
+              "optional": true
             }
           ]
         },

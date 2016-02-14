@@ -84,8 +84,8 @@ var Fs = require('fs');
  * [documentation](http://opensmartenvironment.github.io/doc/).
  *
  * However, this software is successfully and continuously used since end
- * of 2013 in one installation in a family house running 7 OSE instances
- * spread over several Raspberries, HTPC and notebook.
+ * of 2013 in one installation running 7 OSE instances spread over several
+ * Raspberries, HTPC and notebook.
  *
  *
  * @licence
@@ -167,6 +167,7 @@ exports.build = function() {  // {{{2
       './doc',
       './ose',
       './html5',
+      './level',
       './control',
       './fs',
       './rpi',

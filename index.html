@@ -15,6 +15,7 @@
 
   <script src="doc/ose.js"></script>
   <script src="doc/html5.js"></script>
+  <script src="doc/level.js"></script>
   <script src="doc/control.js"></script>
   <script src="doc/fs.js"></script>
   <script src="doc/rpi.js"></script>
@@ -34,23 +35,12 @@
 
 <body>
   <div id="left" class='sidebar'>
-    <br />
-
-    <div class='head'>Current page TOC:</div>
-    <ul id="toc"></ul>
-    <br />
-  </div>
-
-  <div id="main">
-  </div>
-
-  <div id="right" class='sidebar'>
-    <br />
+    <img class="logo" src="resource/logo.png">
 
     <div class='head'>Filter sidebars:</div>
     <input id="search" />
-    <br />
-    <br />
+    <br>
+    <br>
 
     <div class='head'>Quick navigation:</div>
     <ul id="quick">
@@ -60,23 +50,33 @@
       <li class="h1"><a href="#aboutDoc">About documentation</a></li>
       <li class="h1"><a href="#all">All on one page</a></li>
     </ul>
-    <br />
+    <br>
 
     <div class='head'>Examples:</div>
     <ul id="examples"></ul>
-    <br />
+    <br>
 
     <div class='head'>Packages and components:</div>
     <ul id="packages"></ul>
-    <br />
+    <br>
 
     <div class='head'>Schemas and kinds:</div>
     <ul id="schemas"></ul>
-    <br />
+    <br>
 
     <div class='head'>All modules:</div>
     <ul id="modules"></ul>
-    <br />
+    <br>
+  </div>
+
+  <div id="main"></div>
+
+  <div id="right" class='sidebar'>
+    <br>
+
+    <div class='head'>Current page TOC:</div>
+    <ul id="toc"></ul>
+    <br>
   </div>
 
 </body>

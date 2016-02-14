@@ -21,7 +21,6 @@ for (var key in Packages) {
 onState();
 
 $(window).on('popstate', onState);
-$(window).on('resize', onResize);
 
 $('body').on('keypress', function(ev) {  // {{{2
   if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
@@ -223,17 +222,6 @@ function keyword(key) {  // {{{2
   }
 };
 
-function onResize() {  // {{{2
-  var width = $('body').width() - $('#right').width();
-  var lw = $('#left').width();
-
-  $('#right').css('left', width);
-  $('#main').css({
-    left: lw,
-    width: width - lw,
-  });
-};
-
 function onState() {  // {{{2
   var q, p, c, m;
   var chapter = '';
@@ -317,7 +305,6 @@ function onState() {  // {{{2
 
     toc(main);
     $('#main').replaceWith(main);
-    onResize();
 
     setTimeout(scroll, 0);
 
@@ -433,11 +420,11 @@ function mdModule(done, pkg, comp, mod, all) {  // {{{2
   }
   r.push('');
 
+  r.push('<br>Type: **' + mod.type + '**');
   if (mod.schema) {
-    r.push('Schema: * ' + (mod.schema) + '**');
+    r.push('Schema: ** ' + (mod.schema) + '**');
   }
 
-  r.push('<br>Type: **' + mod.type + '**');
   if (mod.super) {
     r.push('<br>Superclass: ' + links('[' + mod.super.replace('.', '/', 'g') + ']', true));
   }
@@ -645,7 +632,6 @@ function links(text, noNl) {  // {{{2
     if (text[i] === ']') {
       if ((text[i - 2] !== '[') || (i < 2)) {
         console.log('Invalid brackets', i, text[i - 2], text[i - 1], text);
-        throw new Error('aa');
         continue;
       }
 
@@ -701,8 +687,6 @@ function toc(main) {  // {{{2
       h: $(h)
         .attr('id', null)
         .click(function() {
-          console.log('HEADER CLICK', h, window.location.hash);
-
           if (hash === window.location.hash) {
             scrollTo(r, true);
           } else {
@@ -768,7 +752,7 @@ function scrollTo(chapter, toc) {  // {{{2
   if (typeof chapter === 'string') {
     chapter = chapter.split('|');
 
-    var sel = '#left';
+    var sel = '#right';
     for (var i = 0; i < chapter.length; i++) {
       sel += '>ul>li[chapter="' + chapter[i] + '"]'
     }
@@ -802,7 +786,7 @@ function scrollTo(chapter, toc) {  // {{{2
   }
 
   if (toc) {
-    var l = $('#left');
+    var l = $('#right');
     l.scrollTop(l.scrollTop() + chapter.li.offset().top);
   }
 
@@ -819,4 +803,3 @@ function s2kw(val) {  // {{{2
 // }}}2
 
 });
-

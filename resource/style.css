@@ -16,12 +16,18 @@ a:hover {
   text-decoration: underline;
 }
 
+img.logo {
+  margin: 10px 0 20px 80px;
+  width: 60px;
+}
+
 /* Sidebars {{{1 */
 
 .sidebar {
   position: fixed;
-  height: 100%;
+  top: 0;
   width: 16rem;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -107,10 +113,21 @@ ul#modules {
   font-size: 0.8rem;
 }
 
+div#left {
+  left: 0;
+}
+
+div#right {
+  right: 0;
+}
+
 /* Main {{{1 */
 
 div#main {
   position: fixed;
+  left: 16rem;
+  top: 0;
+  width: calc(100% - 32rem);
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
@@ -130,11 +147,13 @@ div#main {
 }
 
 #main h1, #main h3, #main h5 {
-  color: #d98527;
+  color: rgb(58, 170, 53);
+/*  color: #d98527;*/
 }
 
 #main h2, #main h4, #main h6 {
-  color: #30418c;
+  color: rgb(241, 137, 45);
+/*  color: #30418c;*/
 }
 
 #main pre, #main code {

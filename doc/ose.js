@@ -896,6 +896,40 @@ Packages["ose"] = {
                 }
               ]
             },
+            "pipeFrom": {
+              "name": "pipeFrom",
+              "type": "method",
+              "description": "Pipe from entry blob to `stream`",
+              "params": [
+                {
+                  "name": "eid",
+                  "description": "Entry id",
+                  "type": "Number|String"
+                },
+                {
+                  "name": "stream",
+                  "description": "Stream to be piped to",
+                  "type": "Object"
+                }
+              ]
+            },
+            "read": {
+              "name": "read",
+              "type": "method",
+              "description": "Read entry blob",
+              "params": [
+                {
+                  "name": "eid",
+                  "description": "Entry id",
+                  "type": "Number|String"
+                },
+                {
+                  "name": "cb",
+                  "description": "Callback",
+                  "type": "Function(err, stream)"
+                }
+              ]
+            },
             "query": {
               "name": "query",
               "type": "method",
@@ -1168,7 +1202,7 @@ Packages["ose"] = {
             "read": {
               "name": "read",
               "type": "handler",
-              "description": "Handler called when a slave shard attempts to get an entry",
+              "description": "Handler called when a slave shard attempts to get an entry blob",
               "params": [
                 {
                   "name": "req",
@@ -3447,12 +3481,6 @@ Packages["ose"] = {
                   "description": "Data to be sent to the client",
                   "type": "Object",
                   "optional": true
-                },
-                {
-                  "name": "safe",
-                  "description": "Optionally return an error object instead of throwing it, when the error can't be handled by the `socket`",
-                  "type": "Boolean",
-                  "optional": true
                 }
               ]
             },
@@ -4814,7 +4842,7 @@ Packages["ose"] = {
   },
   "quick": {
     "about": "<b>Open Smart Environment software is a suite for creating\nmulti-instance applications that work as a single whole.</b><br>\nImagine, for example, a personal mesh running on various devices\nincluding HTPCs, phones, tablets, workstations, servers, Raspberry\nPis, home automation gadgets, wearables, drones, etc.\n\nOSE software consists of several npm packages: a [framework] running\non Node.js, an [HTML5 frontend], extending\npackages and a set of example applications.\n\n<a href=\"http://opensmartenvironment.github.io/doc/resource/ose.svg\"><img width=100% src=\"http://opensmartenvironment.github.io/doc/resource/ose.svg\"></a>\n\n**Set-up of current example applications.** Here,\nOSE provides a [Media player](#example-player) running on an HTPC\nthat can be controlled by an IR remote through\n[LIRC](#example-lirc) and is capable of playing streams from a\n[DVB streamer](#example-dvb) and control devices through GPIO\npins on a [Raspberry Pi](#example-rpi)",
-    "status": "- Pre-alpha stage (insecure and buggy)\n- Unstable API\n- Patchy documentation\n- Low test coverage (1 %)\n\nThis is not yet a piece of download-and-use software. It is important\nto understand the basic principles covered by the\n[documentation](http://opensmartenvironment.github.io/doc/).\n\nHowever, this software is successfully and continuously used since end\nof 2013 in one installation running 7 OSE instances spread over several\nRaspberries, HTPC and notebook.",
+    "status": "- Pre-alpha stage (insecure and buggy)\n- Unstable API\n- Patchy documentation\n- Low test coverage (1 %)\n\nThis is not yet a piece of download-and-use software. It is important\nto understand the basic principles covered by the\n[documentation](http://opensmartenvironment.github.io/doc/).\n\nHowever, this software has been successfully used continuously since the end\nof 2013 in a house running 7 OSE instances spread over several\nRaspberry Pis, notebooks and an HTPC.",
     "install": "# Installation\n\n## Node.js\nThe main prerequisite is a working installation of a recent\nversion of Node.js (>= 0.12).\n\n\n## Manual installation of OSE packages\nInstead of using npm, you can install OSE packages by cloning their\nGitHub repositories.",
     "licence": "This software is released under the terms of the [GNU General\nPublic Licence v3.0](http://www.gnu.org/copyleft/gpl.html) or\nlater.",
     "contrib": "# Contributions\nTo get started with contributing or coding, it is good to read about the\ntwo main npm packages [ose] and [ose-html5].\n\nThis software is in the pre-alpha stage. Any input is welcome, for\nexample, in the form of bug reports, pull requests, ideas, comments\nand general suggestions, either under the appropriate repository if\nyou know which one it is, or the [main OSE\nrepository](https://github.com/opensmartenvironment/ose) if you are\nunsure.",

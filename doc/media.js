@@ -54,9 +54,9 @@ Packages["media"] = {
                   "type": "Boolean"
                 },
                 {
-                  "name": "socket",
-                  "description": "Client socket",
-                  "type": "Object",
+                  "name": "cb",
+                  "description": "Callback",
+                  "type": "Function",
                   "optional": true
                 }
               ]

@@ -12,8 +12,8 @@ Packages["html5"] = {
       "name": "view",
       "caption": "Views",
       "readme": "A view is a part of a page.\n\nEach view is a descendant of the [Element wrapper class]. There\nare several types of views (see `lib/view` directory). TODO:\nInsert link\n\nThe dashboard view defines the dashboard of the application.\nThe two other basic views are the detail view (displays the\ndetail of one entry) and the list view (displays a list of\nentries).\n\nEach [entry kind] can define own UI layout and behaviour for any\nview type displaying entry in an individual file.\n\nViews can contain other views.",
-      "file": "lib/view/listItem.js",
-      "line": 11,
+      "file": "lib/box.js",
+      "line": 12,
       "modules": {
         "lib/view/dashboard": {
           "name": "lib/view/dashboard",
@@ -307,6 +307,39 @@ Packages["html5"] = {
               "description": "Called when user taps on a list item"
             }
           }
+        },
+        "lib/main": {
+          "name": "lib/main",
+          "type": "class",
+          "super": "html5/lib.wrap",
+          "caption": "View box class",
+          "readme": "View box object handles one view at a time. Calling `box.display(demand, source, cb)` new view is created or existing one is updated.",
+          "file": "lib/box.js",
+          "aliases": "viewbox",
+          "method": {
+            "constructor": {
+              "name": "constructor",
+              "type": "method",
+              "description": "Main section initialization"
+            },
+            "display": {
+              "name": "display",
+              "type": "method",
+              "description": "Display new view or update existing one inside this box based on `demand`.",
+              "params": [
+                {
+                  "name": "demand",
+                  "description": "Object defining what is to be displayed",
+                  "type": "Object"
+                },
+                {
+                  "name": "cb",
+                  "description": "Final callback",
+                  "type": "Function"
+                }
+              ]
+            }
+          }
         }
       }
     }
@@ -353,39 +386,6 @@ Packages["html5"] = {
               "description": "Callback",
               "type": "Function",
               "optional": true
-            }
-          ]
-        }
-      }
-    },
-    "lib/main": {
-      "name": "lib/main",
-      "type": "class",
-      "super": "html5/lib.wrap",
-      "caption": "View box class",
-      "readme": "View box object handles one view at a time. Calling `box.display(demand, source, cb)` new view is created or existing one is updated.",
-      "file": "lib/box.js",
-      "aliases": "viewbox",
-      "method": {
-        "constructor": {
-          "name": "constructor",
-          "type": "method",
-          "description": "Main section initialization"
-        },
-        "display": {
-          "name": "display",
-          "type": "method",
-          "description": "Display new view or update existing one inside this box based on `demand`.",
-          "params": [
-            {
-              "name": "demand",
-              "description": "Object defining what is to be displayed",
-              "type": "Object"
-            },
-            {
-              "name": "cb",
-              "description": "Final callback",
-              "type": "Function"
             }
           ]
         }

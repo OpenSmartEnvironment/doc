@@ -83,9 +83,9 @@ var Fs = require('fs');
  * to understand the basic principles covered by the
  * [documentation](http://opensmartenvironment.github.io/doc/).
  *
- * However, this software is successfully and continuously used since end
- * of 2013 in one installation running 7 OSE instances spread over several
- * Raspberries, HTPC and notebook.
+ * However, this software has been successfully used continuously since the end
+ * of 2013 in a house running 7 OSE instances spread over several
+ * Raspberry Pis, notebooks and an HTPC.
  *
  *
  * @licence
@@ -366,6 +366,7 @@ function getReadme(pkg) {  // {{{2
   r.push('- [' + pkg.caption + ' documentation](http://opensmartenvironment.github.io/doc/#' + pkg.name + ')');
   r.push('- [OSE suite documentation](http://opensmartenvironment.github.io/doc/)');
   r.push('- [All packages](https://github.com/opensmartenvironment/)');
+  r.push('- [All issues](https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+user%3AOpenSmartEnvironment+)');
   r.push('');
 
   r.push('## About OSE');
